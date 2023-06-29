@@ -5,7 +5,7 @@ import Logo from "@/assets/svgs/Logo.svg";
 
 type HeaderProps = {
   stepNum: number;
-}
+};
 
 const Header = ({ stepNum }: HeaderProps) => {
   const backgroundColor = stepNum === 0 ? "#fff" : "#e4dcd3";
