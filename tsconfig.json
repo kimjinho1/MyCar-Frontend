@@ -23,12 +23,7 @@
     /* path */
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"],
-      "@/svgs/*": ["./src/assets/svgs/*'"],
-      "@/common/*": ["./src/common/*'"],
-      "@/layout": ["./src/layout/*'"],
-      "@/pages": ["./src/pages/*'"],
-      "@/stores": ["./src/stores/*'"]
+      "@/*": ["./src/*"]
     }
   },
   "include": ["src", "svg.d.ts"],
