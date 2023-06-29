@@ -3,37 +3,37 @@ import { useRecoilValue } from "recoil";
 import { CarInfoState } from "@/stores/carState";
 import Logo from "@/assets/svgs/Logo.svg";
 
-type HeaderProps = {
-  stepNum: number;
-};
-
-export const Header = ({ stepNum }: HeaderProps) => {
-  const backgroundColor = stepNum === 0 ? "#fff" : "#e4dcd3";
+export const MakingModelHeader = () => {
   const CarInfo = useRecoilValue(CarInfoState);
 
   return (
-    <HeaderDiv backgroundColor={backgroundColor}>
-      <HeaderTop>
+    <SelectModelHeaderDiv>
+      <LogoDiv>
         <img src={Logo} alt="현대 로고" />
         <p>{CarInfo.name}</p>
-      </HeaderTop>
-      {stepNum === 0 ? null : (
+      </LogoDiv>
+      <StepWrap>
         <StepDiv>
-          <p>{String(stepNum).padStart(2, "0")}</p>
-          <p>{stepNum === 1 ? "모델 선택" : "내 차 만들기"}</p>
+          <strong>01&nbsp;&nbsp;모델 선택</strong>
         </StepDiv>
-      )}
-    </HeaderDiv>
+        <StepDiv>
+          <VerticalLine />
+        </StepDiv>
+        <StepDiv>
+          <p>02&nbsp;&nbsp;내 차 만들기</p>
+        </StepDiv>
+      </StepWrap>
+    </SelectModelHeaderDiv>
   );
 };
 
-const HeaderDiv = styled.div<{ backgroundColor: string }>`
+const SelectModelHeaderDiv = styled.div`
   width: 100%;
   padding: 15px 25px;
-  background-color: ${({ backgroundColor }) => backgroundColor};
+  background-color: #e4dcd3;
 `;
 
-const HeaderTop = styled.div`
+const LogoDiv = styled.div`
   display: flex;
   flex-direction: row;
 
@@ -50,14 +50,25 @@ const HeaderTop = styled.div`
   }
 `;
 
-const StepDiv = styled.div`
+const StepWrap = styled.div`
   margin-top: 20px;
   display: flex;
+  gap: 25px;
+`;
+
+const StepDiv = styled.div`
+  display: flex;
+
+  > strong {
+    font-size: 14px;
+  }
 
   > p {
     margin: 0;
-    margin-right: 18px;
     font-size: 14px;
-    font-weight: bold;
   }
+`;
+
+const VerticalLine = styled.div`
+  border-left: 1px solid grey;
 `;

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import LogoWhiteIcon from "@/assets/svgs/LogoWhite.svg";
 
-const Footer = () => {
+export const Footer = () => {
   return (
     <FooterDiv>
       <FooterWrap>
@@ -70,5 +70,3 @@ const InfoListDiv = styled.div`
     text-decoration: none;
   }
 `;
-
-export default Footer;

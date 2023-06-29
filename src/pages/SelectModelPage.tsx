@@ -7,7 +7,7 @@ import { API_ROUTES } from "@/apis/constants/API_ROUTES";
 import { ROUTES } from "@/routes/ROUTES";
 import { apiInstance } from "@/apis/instance";
 
-const SelectModel = () => {
+export const SelectModelPage = () => {
   const { carCode } = useParams();
   const [carInfo, setCarInfo] = useRecoilState(CarInfoState);
   const navigate = useNavigate();
@@ -38,5 +38,3 @@ const SelectModel = () => {
     </div>
   );
 };
-
-export default SelectModel;
