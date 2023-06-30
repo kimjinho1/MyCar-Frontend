@@ -1,17 +1,16 @@
 import styled from "styled-components";
 import { useRecoilValue } from "recoil";
 import { CarInfoState } from "@/stores/carState";
-import Logo from "@/assets/svgs/Logo.svg";
+import { Logo } from "@/common";
+import { VerticalLine } from "..";
 
 export const SelectModelHeader = () => {
   const CarInfo = useRecoilValue(CarInfoState);
+  const carName = CarInfo.name;
 
   return (
     <SelectModelHeaderDiv>
-      <LogoDiv>
-        <img src={Logo} alt="현대 로고" />
-        <p>{CarInfo.name}</p>
-      </LogoDiv>
+      <Logo carName={carName} />
       <StepWrap>
         <StepDiv>
           <strong>01&nbsp;&nbsp;모델 선택</strong>
@@ -33,23 +32,6 @@ const SelectModelHeaderDiv = styled.div`
   background-color: #e4dcd3;
 `;
 
-const LogoDiv = styled.div`
-  display: flex;
-  flex-direction: row;
-
-  > img {
-    width: 120px;
-    margin-right: 15px;
-    cursor: pointer;
-  }
-
-  > p {
-    margin: 0;
-    font-size: 12px;
-    font-weight: bold;
-  }
-`;
-
 const StepWrap = styled.div`
   margin-top: 20px;
   display: flex;
@@ -67,8 +49,4 @@ const StepDiv = styled.div`
     margin: 0;
     font-size: 14px;
   }
-`;
-
-const VerticalLine = styled.div`
-  border-left: 1px solid grey;
 `;

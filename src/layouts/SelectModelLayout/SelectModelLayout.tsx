@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import { SelectModelHeader } from "../SelectModelHeader";
+import { SelectModelHeader } from ".";
 
 export const SelectModelLayout = () => {
   return (
