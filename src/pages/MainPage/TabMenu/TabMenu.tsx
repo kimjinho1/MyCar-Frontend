@@ -2,7 +2,7 @@ import styled from "styled-components";
 import {
   carTypesSelector,
   selectedCarTypeCodeState,
-} from "@/stores/carInfosState";
+} from "@/routes/stores/carInfosState";
 import { useRecoilState, useRecoilValue } from "recoil";
 
 type CarTypeTextProps = {
