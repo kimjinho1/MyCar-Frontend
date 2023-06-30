@@ -1,13 +1,13 @@
 import styled from "styled-components";
 import { useRecoilValue } from "recoil";
-import { CarInfoState } from "@/stores/carState";
+import { selectedCarInfoState } from "@/stores";
 import { useNavigate } from "react-router-dom";
 import { Logo } from "@/common";
 import { VerticalLine } from "..";
 import { routerPath } from "@/routes";
 
 export const MakingModelHeader = () => {
-  const carInfo = useRecoilValue(CarInfoState);
+  const carInfo = useRecoilValue(selectedCarInfoState);
   const carCode = carInfo.code;
   const carName = carInfo.name;
 

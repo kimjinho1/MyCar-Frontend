@@ -30,6 +30,9 @@ export const Footer = () => {
 };
 
 const FooterDiv = styled.div`
+  position: absolute;
+  bottom: 0;
+
   width: 100%;
   padding: 15px 80px;
   display: flex;
@@ -57,14 +60,15 @@ const LogoImgDiv = styled.div`
 `;
 
 const InfoListDiv = styled.div`
+  height: 100px;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 10px;
   justify-content: center;
 
   > a {
-    font-size: 12px;
+    font-size: 10px;
     margin: 0;
     color: #999999;
     text-decoration: none;

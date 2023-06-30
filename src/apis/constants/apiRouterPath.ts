@@ -1,6 +1,7 @@
 class ApiRouterPath {
   public ROOT = "/";
   public CAR_INFO = "/model/carInfo";
+  public CAR_INFOS = "/model/carInfos";
   public MODEL_INFO = "/model/modelInfo";
 
   public getCarInfoPath(carCode: string): string {

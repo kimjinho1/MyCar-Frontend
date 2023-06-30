@@ -1,11 +1,6 @@
 import React from "react";
 import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
-import {
-  Footer,
-  MainLayout,
-  MakingModelLayout,
-  SelectModelLayout,
-} from "@/layouts";
+import { MainLayout, MakingModelLayout, SelectModelLayout } from "@/layouts";
 import { MainPage, SelectModelPage, SelectOptionPage } from "@/pages";
 import { routerPath } from ".";
 
@@ -44,7 +39,6 @@ const Router: React.FC = () => {
 
         <Route path="*" element={<RedirectComponent />} />
       </Routes>
-      <Footer />
     </BrowserRouter>
   );
 };
