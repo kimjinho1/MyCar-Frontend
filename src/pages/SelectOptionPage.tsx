@@ -12,7 +12,7 @@ export const SelectOptionPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const get = async () => {
+    const fetchData = async () => {
       if (modelCode !== undefined) {
         try {
           const data = await getModelInfo(modelCode);
@@ -31,7 +31,7 @@ export const SelectOptionPage = () => {
         }
       }
     };
-    get();
+    fetchData();
   }, [modelCode]);
 
   return (

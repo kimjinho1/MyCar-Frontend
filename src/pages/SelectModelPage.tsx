@@ -11,7 +11,7 @@ export const SelectModelPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const get = async () => {
+    const fetchData = async () => {
       if (carCode !== undefined) {
         try {
           const data = await getCarInfo(carCode);
@@ -24,7 +24,7 @@ export const SelectModelPage = () => {
         }
       }
     };
-    get();
+    fetchData();
   }, [carCode]);
 
   return (
