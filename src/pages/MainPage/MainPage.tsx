@@ -1,10 +1,34 @@
-import { MainTitle } from "./MainTitle";
+import { useEffect } from "react";
+import { MainTitle, TabMenu, CarList } from ".";
+import { getCarInfos } from "@/apis/api";
+import {
+  carInfosState,
+  selectedCarTypeCodeState,
+} from "@/stores/carInfosState";
+import { useSetRecoilState } from "recoil";
 
 export const MainPage = () => {
+  const SetselectedCarTypeCode = useSetRecoilState(selectedCarTypeCodeState);
+  const setCarInfos = useSetRecoilState(carInfosState);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getCarInfos();
+        setCarInfos(data);
+        SetselectedCarTypeCode(data[0].carTypeCode);
+      } catch (error) {
+        alert("백엔드가 시딩이 안된 상태입니다.");
+      }
+    };
+    fetchData();
+  }, []);
+
   return (
     <div>
       <MainTitle />
-      <h2>차량 선택 페이지</h2>
+      <TabMenu />
+      <CarList />
     </div>
   );
 };

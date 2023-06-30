@@ -1,7 +1,7 @@
 import { apiInstance } from "@/apis/instance";
 import { apiRouterPath } from "@/apis/constants/apiRouterPath";
 
-export type CarInfo = {
+type CarInfo = {
   carId: number;
   carCode: string;
   carName: string;

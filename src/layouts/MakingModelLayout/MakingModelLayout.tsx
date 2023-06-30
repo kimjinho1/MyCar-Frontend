@@ -1,11 +1,15 @@
 import { Outlet } from "react-router-dom";
 import { MakingModelHeader } from ".";
+import { Footer, MainDiv, MainWrap } from "..";
 
 export const MakingModelLayout = () => {
   return (
-    <>
-      <MakingModelHeader />
-      <Outlet />
-    </>
+    <MainDiv>
+      <MainWrap>
+        <MakingModelHeader />
+        <Outlet />
+      </MainWrap>
+      <Footer />
+    </MainDiv>
   );
 };

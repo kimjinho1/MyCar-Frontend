@@ -8,7 +8,7 @@ class RouterPath {
     return `/model/${carCode}`;
   }
 
-  public getMakingModelPathPath(modelCode: string): string {
+  public getMakingModelPath(modelCode: string): string {
     return `/model/making/${modelCode}`;
   }
 }

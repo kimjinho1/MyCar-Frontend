@@ -2,12 +2,12 @@ import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { routerPath } from "@/routes";
-import { CarInfoState } from "@/stores/carState";
+import { selectedCarInfoState } from "@/stores";
 import { getCarInfo } from "@/apis/api";
 
 export const SelectModelPage = () => {
   const { carCode } = useParams();
-  const [carInfo, setCarInfo] = useRecoilState(CarInfoState);
+  const [carInfo, setCarInfo] = useRecoilState(selectedCarInfoState);
   const navigate = useNavigate();
 
   useEffect(() => {
