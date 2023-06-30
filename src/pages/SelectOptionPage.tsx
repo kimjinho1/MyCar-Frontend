@@ -2,12 +2,12 @@ import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { ModelInfo } from "../apis/api";
-import { CarInfoState } from "../stores/carState";
-import { modelInfoState } from "../stores/modelState";
 import { API_ROUTES } from "@/apis/constants/API_ROUTES";
 import { apiInstance } from "@/apis/instance";
+import { routerPath } from "@/routes";
+import { CarInfoState, modelInfoState } from "@/stores";
 
-const SelectOption = () => {
+export const SelectOptionPage = () => {
   const { modelCode } = useParams();
   const [carInfo, setCarInfo] = useRecoilState(CarInfoState);
   const [modelInfo, setModelInfo] = useRecoilState(modelInfoState);
@@ -30,7 +30,7 @@ const SelectOption = () => {
           price: data.modelPrice,
         });
       } catch (error) {
-        navigate("/");
+        navigate(routerPath.ROOT);
       }
     };
     getModelInfo();
@@ -47,5 +47,3 @@ const SelectOption = () => {
     </div>
   );
 };
-
-export default SelectOption;

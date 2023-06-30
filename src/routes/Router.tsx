@@ -1,19 +1,19 @@
 import React from "react";
 import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
-import { ROUTES } from "./ROUTES";
 import {
   Footer,
   MainLayout,
   MakingModelLayout,
   SelectModelLayout,
 } from "@/layouts";
-import { MainPage, SelectModelPage } from "@/pages";
+import { MainPage, SelectModelPage, SelectOptionPage } from "@/pages";
+import { routerPath } from ".";
 
 const RedirectComponent: React.FC = () => {
   const navigate = useNavigate();
 
   React.useEffect(() => {
-    navigate(ROUTES.ROOT);
+    navigate(routerPath.ROOT);
   }, [navigate]);
 
   return null;
@@ -24,20 +24,23 @@ const Router: React.FC = () => {
     <BrowserRouter>
       <Routes>
         <Route element={<MainLayout />}>
-          <Route path={ROUTES.ROOT} element={<MainPage />} />
+          <Route path={routerPath.ROOT} element={<MainPage />} />
         </Route>
 
         <Route element={<SelectModelLayout />}>
-          <Route path={ROUTES.SELECT_MODEL} element={<SelectModelPage />} />
+          <Route path={routerPath.SELECT_MODEL} element={<SelectModelPage />} />
         </Route>
 
         <Route element={<MakingModelLayout />}>
-          <Route path={ROUTES.MAKING_MODEL} element={<MainPage />} />
+          <Route
+            path={routerPath.MAKING_MODEL}
+            element={<SelectOptionPage />}
+          />
         </Route>
 
-        <Route element={<SelectModelLayout />}>
-          <Route path={ROUTES.ESTIMATION} element={<MainPage />} />
-        </Route>
+        {/* <Route element={<SelectModelLayout />}>
+          <Route path={routerPath.ESTIMATION} element={<MainPage />} />
+        </Route> */}
 
         <Route path="*" element={<RedirectComponent />} />
       </Routes>
