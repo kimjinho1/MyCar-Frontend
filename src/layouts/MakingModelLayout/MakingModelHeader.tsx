@@ -13,8 +13,7 @@ export const MakingModelHeader = () => {
 
   const navigate = useNavigate();
   const handleClick = () => {
-    console.log(routerPath.getSelectModel(carCode));
-    navigate(routerPath.getSelectModel(carCode));
+    navigate(routerPath.getSelectModelPath(carCode));
   };
 
   return (

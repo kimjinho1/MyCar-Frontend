@@ -4,11 +4,11 @@ class RouterPath {
   public MAKING_MODEL = "/model/making/:modelCode";
   public ESTIMATION = "/estimation";
 
-  public getSelectModel(carCode: string): string {
+  public getSelectModelPath(carCode: string): string {
     return `/model/${carCode}`;
   }
 
-  public getMakingModel(modelCode: string): string {
+  public getMakingModelPathPath(modelCode: string): string {
     return `/model/making/${modelCode}`;
   }
 }

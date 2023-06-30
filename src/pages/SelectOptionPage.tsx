@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { ModelInfo } from "../apis/api";
-import { API_ROUTES } from "@/apis/constants/API_ROUTES";
+import { apiRouterPath } from "@/apis/constants/apiRouterPath";
 import { apiInstance } from "@/apis/instance";
 import { routerPath } from "@/routes";
 import { CarInfoState, modelInfoState } from "@/stores";
@@ -15,22 +15,24 @@ export const SelectOptionPage = () => {
 
   useEffect(() => {
     const getModelInfo = async () => {
-      try {
-        const data: ModelInfo = await apiInstance.get(
-          `${API_ROUTES.MODELINFO}/${modelCode}`
-        );
-        setCarInfo({
-          code: data.carCode,
-          name: data.carName,
-        });
-        setModelInfo({
-          code: data.modelCode,
-          fullName: data.modelName,
-          name: `${data.carName} - ${data.trimName}`,
-          price: data.modelPrice,
-        });
-      } catch (error) {
-        navigate(routerPath.ROOT);
+      if (modelCode !== undefined) {
+        try {
+          const data: ModelInfo = await apiInstance.get(
+            apiRouterPath.getModelInfoPath(modelCode)
+          );
+          setCarInfo({
+            code: data.carCode,
+            name: data.carName,
+          });
+          setModelInfo({
+            code: data.modelCode,
+            fullName: data.modelName,
+            name: `${data.carName} - ${data.trimName}`,
+            price: data.modelPrice,
+          });
+        } catch (error) {
+          navigate(routerPath.ROOT);
+        }
       }
     };
     getModelInfo();
