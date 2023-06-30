@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { carInfosSelector } from "@/stores/carInfosState";
+import { carInfosSelector } from "@/routes/stores/carInfosState";
 import { useRecoilValue } from "recoil";
 import { routerPath } from "@/routes";
 import { useNavigate } from "react-router-dom";

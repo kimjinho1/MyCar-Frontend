@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useRecoilValue } from "recoil";
-import { selectedCarInfoState } from "@/stores";
+import { selectedCarInfoState } from "@/routes/stores";
 import { Logo } from "@/common";
 import { VerticalLine } from "..";
 

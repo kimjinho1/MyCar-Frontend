@@ -1,6 +1,11 @@
 import React from "react";
 import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
-import { MainLayout, MakingModelLayout, SelectModelLayout } from "@/layouts";
+import {
+  Layout,
+  MainHeader,
+  MakingModelHeader,
+  SelectModelHeader,
+} from "@/layouts";
 import { MainPage, SelectModelPage, SelectOptionPage } from "@/pages";
 import { routerPath } from ".";
 
@@ -18,20 +23,32 @@ const Router: React.FC = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route element={<MainLayout />}>
-          <Route path={routerPath.ROOT} element={<MainPage />} />
-        </Route>
+        <Route
+          path={routerPath.ROOT}
+          element={
+            <Layout header={<MainHeader />}>
+              <MainPage />
+            </Layout>
+          }
+        />
 
-        <Route element={<SelectModelLayout />}>
-          <Route path={routerPath.SELECT_MODEL} element={<SelectModelPage />} />
-        </Route>
+        <Route
+          path={routerPath.SELECT_MODEL}
+          element={
+            <Layout header={<SelectModelHeader />}>
+              <SelectModelPage />
+            </Layout>
+          }
+        />
 
-        <Route element={<MakingModelLayout />}>
-          <Route
-            path={routerPath.MAKING_MODEL}
-            element={<SelectOptionPage />}
-          />
-        </Route>
+        <Route
+          path={routerPath.MAKING_MODEL}
+          element={
+            <Layout header={<MakingModelHeader />}>
+              <SelectOptionPage />
+            </Layout>
+          }
+        />
 
         {/* <Route element={<SelectModelLayout />}>
           <Route path={routerPath.ESTIMATION} element={<MainPage />} />

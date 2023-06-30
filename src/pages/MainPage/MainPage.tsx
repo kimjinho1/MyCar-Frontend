@@ -4,7 +4,7 @@ import { getCarInfos } from "@/apis/api";
 import {
   carInfosState,
   selectedCarTypeCodeState,
-} from "@/stores/carInfosState";
+} from "@/routes/stores/carInfosState";
 import { useSetRecoilState } from "recoil";
 
 export const MainPage = () => {

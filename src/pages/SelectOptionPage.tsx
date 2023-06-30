@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { routerPath } from "@/routes";
-import { selectedCarInfoState, selectedModelInfoState } from "@/stores";
+import { selectedCarInfoState, selectedModelInfoState } from "@/routes/stores";
 import { getModelInfo } from "@/apis/api";
 
 export const SelectOptionPage = () => {
