@@ -1,11 +1,9 @@
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import { CarInfo } from "../apis/api";
-import { apiInstance } from "@/apis/instance";
-import { apiRouterPath } from "@/apis/constants/apiRouterPath";
 import { routerPath } from "@/routes";
 import { CarInfoState } from "@/stores/carState";
+import { getCarInfo } from "@/apis/api";
 
 export const SelectModelPage = () => {
   const { carCode } = useParams();
@@ -13,12 +11,10 @@ export const SelectModelPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const getCarInfo = async () => {
+    const get = async () => {
       if (carCode !== undefined) {
         try {
-          const data: CarInfo = await apiInstance.get(
-            apiRouterPath.getCarInfoPath(carCode)
-          );
+          const data = await getCarInfo(carCode);
           setCarInfo({
             code: data.carCode,
             name: data.carName,
@@ -28,7 +24,7 @@ export const SelectModelPage = () => {
         }
       }
     };
-    getCarInfo();
+    get();
   }, [carCode]);
 
   return (

@@ -1,11 +1,9 @@
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import { ModelInfo } from "../apis/api";
-import { apiRouterPath } from "@/apis/constants/apiRouterPath";
-import { apiInstance } from "@/apis/instance";
 import { routerPath } from "@/routes";
 import { CarInfoState, modelInfoState } from "@/stores";
+import { getModelInfo } from "@/apis/api";
 
 export const SelectOptionPage = () => {
   const { modelCode } = useParams();
@@ -14,12 +12,10 @@ export const SelectOptionPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const getModelInfo = async () => {
+    const get = async () => {
       if (modelCode !== undefined) {
         try {
-          const data: ModelInfo = await apiInstance.get(
-            apiRouterPath.getModelInfoPath(modelCode)
-          );
+          const data = await getModelInfo(modelCode);
           setCarInfo({
             code: data.carCode,
             name: data.carName,
@@ -35,7 +31,7 @@ export const SelectOptionPage = () => {
         }
       }
     };
-    getModelInfo();
+    get();
   }, [modelCode]);
 
   return (
