@@ -1,5 +1,5 @@
-import { apiRouterPath } from "../constants/apiRouterPath";
-import { apiInstance } from "../instance";
+import { apiRouterPath } from "@/apis/constants/apiRouterPath";
+import { apiInstance } from "@/apis/instance";
 
 export type ModelInfo = {
   modelId: number;
