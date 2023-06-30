@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { MainTitle, TabMenu, CarList } from ".";
+import { MainTitle, TabMenu, CarList, NoticeList } from ".";
 import { getCarInfos } from "@/apis/api";
 import {
   carInfosState,
@@ -29,6 +29,7 @@ export const MainPage = () => {
       <MainTitle />
       <TabMenu />
       <CarList />
+      <NoticeList />
     </div>
   );
 };
