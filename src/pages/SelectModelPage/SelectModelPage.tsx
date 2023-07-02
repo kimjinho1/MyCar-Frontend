@@ -12,7 +12,7 @@ import {
 import { getCarInfo, getTrimInfos } from "@/apis/api";
 import { getModelFilters } from "@/apis/api/getModelFilters";
 import { useEffect } from "react";
-import { FilterList, TrimList } from ".";
+import { FilterList, NoticeList, TrimList } from ".";
 
 export const SelectModelPage = () => {
   const { carCode } = useParams();
@@ -67,6 +67,7 @@ export const SelectModelPage = () => {
     <div>
       <FilterList />
       <TrimList />
+      <NoticeList />
     </div>
   );
 };
