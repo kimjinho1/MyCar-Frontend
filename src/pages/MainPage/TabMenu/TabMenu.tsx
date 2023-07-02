@@ -1,8 +1,5 @@
 import styled from "styled-components";
-import {
-  carTypesSelector,
-  selectedCarTypeCodeState,
-} from "@/routes/stores/carInfosState";
+import { carTypesSelector, carTypeCodeState } from "@/stores/carState";
 import { useRecoilState, useRecoilValue } from "recoil";
 
 type CarTypeTextProps = {
@@ -10,9 +7,8 @@ type CarTypeTextProps = {
 };
 
 export const TabMenu = () => {
-  const [selectedCarTypeCode, SetselectedCarTypeCode] = useRecoilState(
-    selectedCarTypeCodeState
-  );
+  const [selectedCarTypeCode, SetselectedCarTypeCode] =
+    useRecoilState(carTypeCodeState);
   const carTypes = useRecoilValue(carTypesSelector);
 
   const handleCarTypeClick = (carTypeCode: string) => {

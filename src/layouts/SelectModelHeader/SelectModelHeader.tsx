@@ -1,12 +1,12 @@
 import styled from "styled-components";
 import { useRecoilValue } from "recoil";
-import { selectedCarInfoState } from "@/routes/stores";
+import { carInfoState } from "@/stores";
 import { Logo } from "@/common";
-import { VerticalLine } from "..";
+import { VerticalLine } from "@/common/VerticalLine/VerticalLine";
 
 export const SelectModelHeader = () => {
-  const CarInfo = useRecoilValue(selectedCarInfoState);
-  const carName = CarInfo.name;
+  const carInfo = useRecoilValue(carInfoState);
+  const carName = carInfo.name;
 
   return (
     <SelectModelHeaderDiv>

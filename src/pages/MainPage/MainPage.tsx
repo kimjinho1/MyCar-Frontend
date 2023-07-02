@@ -1,15 +1,12 @@
 import { useEffect } from "react";
 import { MainTitle, TabMenu, CarList, NoticeList } from ".";
 import { getCarInfos } from "@/apis/api";
-import {
-  carInfosState,
-  selectedCarTypeCodeState,
-} from "@/routes/stores/carInfosState";
+import { carListState, carTypeCodeState } from "@/stores/carState";
 import { useSetRecoilState } from "recoil";
 
 export const MainPage = () => {
-  const SetselectedCarTypeCode = useSetRecoilState(selectedCarTypeCodeState);
-  const setCarInfos = useSetRecoilState(carInfosState);
+  const SetselectedCarTypeCode = useSetRecoilState(carTypeCodeState);
+  const setCarInfos = useSetRecoilState(carListState);
 
   useEffect(() => {
     const fetchData = async () => {
