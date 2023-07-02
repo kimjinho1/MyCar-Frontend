@@ -1,10 +1,13 @@
+import { getTrimInfos } from "@/apis/api";
 import {
   driveCodeState,
   engineCodeState,
   missionCodeState,
   modelFiltersState,
+  trimInfosState,
 } from "@/stores";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useParams } from "react-router-dom";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 
 type FilterContainerProps = {
@@ -12,80 +15,108 @@ type FilterContainerProps = {
 };
 
 export const FilterList = () => {
+  const { carCode } = useParams();
+
   const modelFilters = useRecoilValue(modelFiltersState);
   const { engines, missions, drives } = modelFilters;
-
   const [engineCode, setEngineCode] = useRecoilState(engineCodeState);
   const [missionCode, setMissionCode] = useRecoilState(missionCodeState);
   const [driveCode, setDriveCode] = useRecoilState(driveCodeState);
+  const setTrimInfos = useSetRecoilState(trimInfosState);
 
-  const handleEngineClick = (engineCode: string) => {
+  const handleEngineClick = async (engineCode: string) => {
     setEngineCode(engineCode);
-    if (engineCode === "D") {
-      setMissionCode(missions[0].missionCode);
-    } else if (engineCode === "T") {
-      setMissionCode(missions[1].missionCode);
+    if (carCode !== undefined && carCode === "NX05") {
+      if (engineCode === "D") {
+        setMissionCode(missions[0].missionCode);
+        await updateTrimInfos(engineCode, missions[0].missionCode, driveCode);
+      } else if (engineCode === "T") {
+        setMissionCode(missions[1].missionCode);
+        await updateTrimInfos(engineCode, missions[1].missionCode, driveCode);
+      }
+      return;
     }
+
+    await updateTrimInfos(engineCode, missionCode, driveCode);
   };
 
-  const handleDriveClick = (driveCode: string) => {
+  const handleDriveClick = async (driveCode: string) => {
     setDriveCode(driveCode);
+
+    await updateTrimInfos(engineCode, missionCode, driveCode);
+  };
+
+  const updateTrimInfos = async (
+    engineCode: string,
+    missionCode: string,
+    driveCode: string
+  ) => {
+    if (carCode !== undefined) {
+      const getTrimInfosParam = {
+        carCode: carCode,
+        engineCode: engineCode,
+        missionCode: missionCode,
+        driveCode: driveCode,
+      };
+      const trimInfos = await getTrimInfos(getTrimInfosParam);
+      setTrimInfos(trimInfos);
+    }
   };
 
   return (
     <FilterListDiv>
       <FilterListWrap>
-        {engines.length === 0 ? null : (
+        {engines.length < 2 ? null : (
           <FilterContainer>
             <p>엔진</p>
-            <FilterWrap>
+            <FilterDiv>
               {engines.map((engine) => {
                 return (
-                  <FilterDiv
+                  <FilterWrap
                     key={engine.engineCode}
                     selected={engine.engineCode === engineCode}
                     onClick={() => handleEngineClick(engine.engineCode)}
                   >
                     <p>{engine.engineName}</p>
-                  </FilterDiv>
+                  </FilterWrap>
                 );
               })}
-            </FilterWrap>
+            </FilterDiv>
           </FilterContainer>
         )}
-        {missions.length === 0 ? null : (
+        {missions.length < 2 ? null : (
           <FilterContainer>
             <p>변속기</p>
-            <FilterWrap>
+            <FilterDiv>
               {missions.map((mission) => {
                 return (
-                  <FilterDiv
+                  <FilterWrap
                     key={mission.missionCode}
                     selected={mission.missionCode === missionCode}
                   >
                     <p>{mission.missionName}</p>
-                  </FilterDiv>
+                  </FilterWrap>
                 );
               })}
-            </FilterWrap>
+            </FilterDiv>
           </FilterContainer>
         )}
-        {drives.length === 0 ? null : (
+        {drives.length < 2 ? null : (
           <FilterContainer>
             <p>구동방식</p>
-            <FilterWrap>
+            <FilterDiv>
               {drives.map((drive) => {
                 return (
-                  <FilterDiv
+                  <FilterWrap
                     key={drive.driveCode}
                     selected={drive.driveCode === driveCode}
                     onClick={() => handleDriveClick(drive.driveCode)}
                   >
-                    <p>{drive.driveCode}</p>
-                  </FilterDiv>
+                    <p>{drive.driveName}</p>
+                  </FilterWrap>
                 );
               })}
-            </FilterWrap>
+            </FilterDiv>
           </FilterContainer>
         )}
       </FilterListWrap>
@@ -103,28 +134,27 @@ const FilterListDiv = styled.div`
 
 const FilterListWrap = styled.div`
   width: 100%;
-  margin: 5px 0px;
+  margin: 20px 0px;
   display: flex;
   align-items: center;
   gap: 40px;
 `;
 
 const FilterContainer = styled.div`
-  margin: 10px 0;
   > p {
     margin: 0;
     font-size: 14px;
   }
 `;
 
-const FilterWrap = styled.div`
-  margin: 8px 0;
+const FilterDiv = styled.div`
+  margin: 10px 0;
   display: flex;
   justify-content: center;
   align-items: center;
 `;
 
-const FilterDiv = styled.div<FilterContainerProps>`
+const FilterWrap = styled.div<FilterContainerProps>`
   width: 75px;
   padding: 8px 0;
   display: flex;

@@ -7,11 +7,12 @@ import {
   missionCodeState,
   carInfoState,
   modelFiltersState,
+  trimInfosState,
 } from "@/stores";
-import { getCarInfo } from "@/apis/api";
-import { FilterList } from "./FilterList";
+import { getCarInfo, getTrimInfos } from "@/apis/api";
 import { getModelFilters } from "@/apis/api/getModelFilters";
 import { useEffect } from "react";
+import { FilterList, TrimList } from ".";
 
 export const SelectModelPage = () => {
   const { carCode } = useParams();
@@ -22,6 +23,7 @@ export const SelectModelPage = () => {
   const setEngineCode = useSetRecoilState(engineCodeState);
   const setMissionCode = useSetRecoilState(missionCodeState);
   const setDriveCode = useSetRecoilState(driveCodeState);
+  const setTrimInfos = useSetRecoilState(trimInfosState);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,12 +36,25 @@ export const SelectModelPage = () => {
           });
 
           const modelFilters = await getModelFilters(carCode);
+          const engineCode = modelFilters.engines[0].engineCode;
+          const missionCode = modelFilters.missions[0].missionCode;
+          const driveCode =
+            modelFilters.drives.length > 0
+              ? modelFilters.drives[0].driveCode
+              : "";
           setModelFilters(modelFilters);
-          setEngineCode(modelFilters.engines[0].engineCode);
-          setMissionCode(modelFilters.missions[0].missionCode);
-          if (modelFilters.drives.length > 0) {
-            setDriveCode(modelFilters.drives[0].driveCode);
-          }
+          setEngineCode(engineCode);
+          setMissionCode(missionCode);
+          setDriveCode(driveCode);
+
+          const getTrimInfosParam = {
+            carCode: carCode,
+            engineCode: engineCode,
+            missionCode: missionCode,
+            driveCode: driveCode,
+          };
+          const trimInfos = await getTrimInfos(getTrimInfosParam);
+          setTrimInfos(trimInfos);
         } catch (error) {
           navigate(routerPath.ROOT);
         }
@@ -51,9 +66,7 @@ export const SelectModelPage = () => {
   return (
     <div>
       <FilterList />
-      <h2>차량 모델 선택 페이지</h2>
-      <h3>차량 코드: {carInfo.code}</h3>
-      <h3>차량 이름: {carInfo.name}</h3>
+      <TrimList />
     </div>
   );
 };

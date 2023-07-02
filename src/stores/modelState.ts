@@ -1,4 +1,4 @@
-import { ModelFilters } from "@/apis/api";
+import { ModelFilters, TrimInfo } from "@/apis/api";
 import { atom } from "recoil";
 
 export type ModelInfo = {
@@ -31,9 +31,15 @@ export const missionCodeState = atom<string>({
 });
 
 /** 선택된 구동방식 코드 */
-export const driveCodeState = atom<string | null>({
+export const driveCodeState = atom<string>({
   key: "driveCodeState",
-  default: null,
+  default: "",
+});
+
+/** 트림들 정보 */
+export const trimInfosState = atom<TrimInfo[]>({
+  key: "trimInfosState",
+  default: [],
 });
 
 /** 선택된 모델 정보 */

@@ -1,9 +1,17 @@
+export type GetTrimInfosParam = {
+  carCode: string;
+  engineCode: string;
+  missionCode: string;
+  driveCode: string;
+};
+
 class ApiRouterPath {
   public ROOT = "/";
   public CAR_INFO = "/model/carInfo";
   public CAR_INFOS = "/model/carInfos";
   public MODEL_INFO = "/model/modelInfo";
   public MODEL_FILTERS = "/model/filters";
+  public MODEL_TRIMS = "/model/trims";
 
   public getCarInfoPath(carCode: string): string {
     return `${this.CAR_INFO}/${carCode}`;
@@ -15,6 +23,11 @@ class ApiRouterPath {
 
   public getModelFiltersPath(carCode: string): string {
     return `${this.MODEL_FILTERS}/${carCode}`;
+  }
+
+  public getTrimsPath(modelFilters: GetTrimInfosParam): string {
+    const { carCode, engineCode, missionCode, driveCode } = modelFilters;
+    return `${this.MODEL_TRIMS}?carCode=${carCode}&engineCode=${engineCode}&missionCode=${missionCode}&driveCode=${driveCode}`;
   }
 }
 
