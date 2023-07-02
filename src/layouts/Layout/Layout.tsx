@@ -9,21 +9,21 @@ type LayoutProps = {
 
 export const Layout = ({ children, header }: LayoutProps) => {
   return (
-    <MainDiv>
-      <MainWrap>
+    <LayoutDiv>
+      <LayoutWrap>
         {header}
         {children}
-      </MainWrap>
+      </LayoutWrap>
       <Footer />
-    </MainDiv>
+    </LayoutDiv>
   );
 };
 
-export const MainDiv = styled.div`
+export const LayoutDiv = styled.div`
   position: relative;
   min-height: 100vh;
 `;
 
-export const MainWrap = styled.div`
+export const LayoutWrap = styled.div`
   padding-bottom: 120px;
 `;

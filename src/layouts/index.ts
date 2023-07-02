@@ -3,4 +3,3 @@ export * from "./MainHeader";
 export * from "./SelectModelHeader";
 export * from "./MakingModelHeader";
 export * from "./Footer";
-export * from "./VerticalLine";
