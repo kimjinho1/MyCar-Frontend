@@ -35,7 +35,7 @@ export const FilterList = () => {
   return (
     <FilterListDiv>
       <FilterListWrap>
-        {engines.length === 0 ? null : (
+        {engines.length < 2 ? null : (
           <FilterContainer>
             <p>엔진</p>
             <FilterWrap>
@@ -53,7 +53,7 @@ export const FilterList = () => {
             </FilterWrap>
           </FilterContainer>
         )}
-        {missions.length === 0 ? null : (
+        {missions.length < 2 ? null : (
           <FilterContainer>
             <p>변속기</p>
             <FilterWrap>
@@ -70,7 +70,7 @@ export const FilterList = () => {
             </FilterWrap>
           </FilterContainer>
         )}
-        {drives.length === 0 ? null : (
+        {drives.length < 2 ? null : (
           <FilterContainer>
             <p>구동방식</p>
             <FilterWrap>
