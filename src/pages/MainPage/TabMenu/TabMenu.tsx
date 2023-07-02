@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { carTypesSelector, carTypeCodeState } from "@/stores/carState";
 import { useRecoilState, useRecoilValue } from "recoil";
 
-type CarTypeTextProps = {
+type CarTypeProps = {
   selected: boolean;
 };
 
@@ -55,7 +55,7 @@ const TabMenuWrap = styled.div`
   }
 `;
 
-const CarTypeDiv = styled.div<CarTypeTextProps>`
+const CarTypeDiv = styled.div<CarTypeProps>`
   cursor: pointer;
 
   > p {
