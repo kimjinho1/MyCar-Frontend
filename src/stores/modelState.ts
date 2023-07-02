@@ -1,5 +1,5 @@
+import { ModelFilters } from "@/apis/api";
 import { atom } from "recoil";
-import { Drive, Engine, Mission } from "@/apis/api";
 
 export type ModelInfo = {
   code: string;
@@ -8,6 +8,35 @@ export type ModelInfo = {
   price: number;
 };
 
+/** 모델 필터들 정보 */
+export const modelFiltersState = atom<ModelFilters>({
+  key: "modelFiltersState",
+  default: {
+    engines: [],
+    missions: [],
+    drives: [],
+  },
+});
+
+/** 선택된 엔진 코드 */
+export const engineCodeState = atom<string>({
+  key: "engineCodeState",
+  default: "",
+});
+
+/** 선택된 변속기 코드 */
+export const missionCodeState = atom<string>({
+  key: "missionCodeState",
+  default: "",
+});
+
+/** 선택된 구동방식 코드 */
+export const driveCodeState = atom<string | null>({
+  key: "driveCodeState",
+  default: null,
+});
+
+/** 선택된 모델 정보 */
 export const modelInfoState = atom<ModelInfo>({
   key: "modelInfoState",
   default: {
@@ -16,19 +45,4 @@ export const modelInfoState = atom<ModelInfo>({
     name: "",
     price: 0,
   },
-});
-
-export const engineCodeState = atom<string>({
-  key: "engineCodeState",
-  default: "",
-});
-
-export const missionCodeState = atom<string>({
-  key: "missionCodeState",
-  default: "",
-});
-
-export const driveCodeState = atom<string | null>({
-  key: "driveCodeState",
-  default: null,
 });

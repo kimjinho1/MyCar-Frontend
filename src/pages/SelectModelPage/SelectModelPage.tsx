@@ -6,6 +6,7 @@ import {
   engineCodeState,
   missionCodeState,
   carInfoState,
+  modelFiltersState,
 } from "@/stores";
 import { getCarInfo } from "@/apis/api";
 import { FilterList } from "./FilterList";
@@ -17,6 +18,7 @@ export const SelectModelPage = () => {
   const navigate = useNavigate();
 
   const [carInfo, setCarInfo] = useRecoilState(carInfoState);
+  const setModelFilters = useSetRecoilState(modelFiltersState);
   const setEngineCode = useSetRecoilState(engineCodeState);
   const setMissionCode = useSetRecoilState(missionCodeState);
   const setDriveCode = useSetRecoilState(driveCodeState);
@@ -32,7 +34,7 @@ export const SelectModelPage = () => {
           });
 
           const modelFilters = await getModelFilters(carCode);
-          console.log(modelFilters);
+          setModelFilters(modelFilters);
           setEngineCode(modelFilters.engines[0].engineCode);
           setMissionCode(modelFilters.missions[0].missionCode);
           if (modelFilters.drives.length > 0) {
