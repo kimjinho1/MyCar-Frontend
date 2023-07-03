@@ -24,7 +24,6 @@ export const Logo = ({ carName }: LogoProps) => {
 const LogoDiv = styled.div`
   display: flex;
   flex-direction: row;
-  cursor: pointer;
 
   > img {
     width: 120px;
