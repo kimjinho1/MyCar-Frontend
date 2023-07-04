@@ -76,7 +76,6 @@ export const SelectModelPage = () => {
 
 const SelectModelPageDiv = styled.div`
   width: 100%;
-  /* margin-left: 25px; */
   display: flex;
   flex-direction: column;
   justify-content: center;
