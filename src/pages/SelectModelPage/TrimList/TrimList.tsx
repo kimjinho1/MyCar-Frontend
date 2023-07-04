@@ -43,7 +43,7 @@ export const TrimList = () => {
 };
 
 const TrimListDiv = styled.div`
-  width: 100%;
+  width: 90%;
   margin: 5px 0px;
   display: flex;
   align-items: center;

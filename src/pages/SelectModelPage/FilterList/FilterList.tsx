@@ -123,7 +123,7 @@ export const FilterList = () => {
 };
 
 const FilterListDiv = styled.div`
-  width: 100%;
+  width: 90%;
   margin: 20px 0px;
   display: flex;
   align-items: center;
