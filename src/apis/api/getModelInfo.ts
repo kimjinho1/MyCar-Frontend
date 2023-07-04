@@ -6,6 +6,7 @@ export type ModelInfo = {
   modelCode: string;
   modelName: string;
   modelPrice: number;
+  modelImagePath: string;
   carCode: string;
   carName: string;
   trimCode: string;
