@@ -15,46 +15,34 @@ export const TrimList = () => {
 
   return (
     <TrimListDiv>
-      <TrimListWrap>
-        {trimInfos.map((trimInfo) => {
-          return (
-            <TrimContainer>
-              <TrimInfoDiv>
-                <strong>{trimInfo.trimName}</strong>
-                <p>{trimInfo.modelPrice.toLocaleString()} 원</p>
-              </TrimInfoDiv>
-              <TrimImageDiv>
-                <img
-                  src={
-                    import.meta.env.VITE_BACKEND_URL + trimInfo.modelImagePath
-                  }
-                />
-              </TrimImageDiv>
-              <FilterSummaryDiv>
-                <p>{trimInfo.filterSummary}</p>
-              </FilterSummaryDiv>
-              <MakingModelButton
-                onClick={() => handleMakingModelButtonClick(trimInfo.modelCode)}
-              >
-                내 차 만들기
-              </MakingModelButton>
-            </TrimContainer>
-          );
-        })}
-      </TrimListWrap>
+      {trimInfos.map((trimInfo) => {
+        return (
+          <TrimContainer key={trimInfo.trimCode}>
+            <TrimInfoDiv>
+              <strong>{trimInfo.trimName}</strong>
+              <p>{trimInfo.modelPrice.toLocaleString()} 원</p>
+            </TrimInfoDiv>
+            <TrimImageDiv>
+              <img
+                src={import.meta.env.VITE_BACKEND_URL + trimInfo.modelImagePath}
+              />
+            </TrimImageDiv>
+            <FilterSummaryDiv>
+              <p>{trimInfo.filterSummary}</p>
+            </FilterSummaryDiv>
+            <MakingModelButton
+              onClick={() => handleMakingModelButtonClick(trimInfo.modelCode)}
+            >
+              내 차 만들기
+            </MakingModelButton>
+          </TrimContainer>
+        );
+      })}
     </TrimListDiv>
   );
 };
 
 const TrimListDiv = styled.div`
-  width: 100%;
-  margin-left: 25px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const TrimListWrap = styled.div`
   width: 100%;
   margin: 5px 0px;
   display: flex;

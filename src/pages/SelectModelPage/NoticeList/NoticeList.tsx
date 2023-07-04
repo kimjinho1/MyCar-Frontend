@@ -17,6 +17,7 @@ export const NoticeList = () => {
 };
 
 const NoticeListDiv = styled.div`
+  margin-top: 5px;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -25,8 +26,6 @@ const NoticeListDiv = styled.div`
 
 const NoticeListWrap = styled.div`
   width: 100%;
-  margin-top: 5px;
-  margin-left: 25px;
   display: flex;
   flex-direction: column;
   justify-content: center;
