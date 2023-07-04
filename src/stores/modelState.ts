@@ -6,6 +6,7 @@ export type ModelInfo = {
   fullName: string;
   name: string;
   price: number;
+  imagePath: string;
 };
 
 /** 모델 필터들 정보 */
@@ -50,5 +51,6 @@ export const modelInfoState = atom<ModelInfo>({
     fullName: "",
     name: "",
     price: 0,
+    imagePath: "",
   },
 });

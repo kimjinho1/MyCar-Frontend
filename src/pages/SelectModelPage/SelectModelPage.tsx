@@ -1,5 +1,7 @@
+import styled from "styled-components";
+
 import { useNavigate, useParams } from "react-router-dom";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { routerPath } from "@/routes";
 import {
   driveCodeState,
@@ -18,7 +20,7 @@ export const SelectModelPage = () => {
   const { carCode } = useParams();
   const navigate = useNavigate();
 
-  const [carInfo, setCarInfo] = useRecoilState(carInfoState);
+  const setCarInfo = useSetRecoilState(carInfoState);
   const setModelFilters = useSetRecoilState(modelFiltersState);
   const setEngineCode = useSetRecoilState(engineCodeState);
   const setMissionCode = useSetRecoilState(missionCodeState);
@@ -64,10 +66,18 @@ export const SelectModelPage = () => {
   }, [carCode]);
 
   return (
-    <div>
+    <SelectModelPageDiv>
       <FilterList />
       <TrimList />
       <NoticeList />
-    </div>
+    </SelectModelPageDiv>
   );
 };
+
+const SelectModelPageDiv = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;

@@ -6,7 +6,7 @@ import {
   MakingModelHeader,
   SelectModelHeader,
 } from "@/layouts";
-import { MainPage, SelectModelPage, SelectOptionPage } from "@/pages";
+import { MainPage, SelectModelPage, MakingModelPage } from "@/pages";
 import { routerPath } from ".";
 
 const RedirectComponent: React.FC = () => {
@@ -45,7 +45,7 @@ const Router: React.FC = () => {
           path={routerPath.MAKING_MODEL}
           element={
             <Layout header={<MakingModelHeader />}>
-              <SelectOptionPage />
+              <MakingModelPage />
             </Layout>
           }
         />

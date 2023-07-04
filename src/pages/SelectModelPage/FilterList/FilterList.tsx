@@ -65,75 +65,65 @@ export const FilterList = () => {
 
   return (
     <FilterListDiv>
-      <FilterListWrap>
-        {engines.length < 2 ? null : (
-          <FilterContainer>
-            <p>엔진</p>
-            <FilterDiv>
-              {engines.map((engine) => {
-                return (
-                  <FilterWrap
-                    key={engine.engineCode}
-                    selected={engine.engineCode === engineCode}
-                    onClick={() => handleEngineClick(engine.engineCode)}
-                  >
-                    <p>{engine.engineName}</p>
-                  </FilterWrap>
-                );
-              })}
-            </FilterDiv>
-          </FilterContainer>
-        )}
-        {missions.length < 2 ? null : (
-          <FilterContainer>
-            <p>변속기</p>
-            <FilterDiv>
-              {missions.map((mission) => {
-                return (
-                  <FilterWrap
-                    key={mission.missionCode}
-                    selected={mission.missionCode === missionCode}
-                  >
-                    <p>{mission.missionName}</p>
-                  </FilterWrap>
-                );
-              })}
-            </FilterDiv>
-          </FilterContainer>
-        )}
-        {drives.length < 2 ? null : (
-          <FilterContainer>
-            <p>구동방식</p>
-            <FilterDiv>
-              {drives.map((drive) => {
-                return (
-                  <FilterWrap
-                    key={drive.driveCode}
-                    selected={drive.driveCode === driveCode}
-                    onClick={() => handleDriveClick(drive.driveCode)}
-                  >
-                    <p>{drive.driveName}</p>
-                  </FilterWrap>
-                );
-              })}
-            </FilterDiv>
-          </FilterContainer>
-        )}
-      </FilterListWrap>
+      {engines.length < 2 ? null : (
+        <FilterContainer>
+          <p>엔진</p>
+          <FilterDiv>
+            {engines.map((engine) => {
+              return (
+                <FilterWrap
+                  key={engine.engineCode}
+                  selected={engine.engineCode === engineCode}
+                  onClick={() => handleEngineClick(engine.engineCode)}
+                >
+                  <p>{engine.engineName}</p>
+                </FilterWrap>
+              );
+            })}
+          </FilterDiv>
+        </FilterContainer>
+      )}
+      {missions.length < 2 ? null : (
+        <FilterContainer>
+          <p>변속기</p>
+          <FilterDiv>
+            {missions.map((mission) => {
+              return (
+                <FilterWrap
+                  key={mission.missionCode}
+                  selected={mission.missionCode === missionCode}
+                >
+                  <p>{mission.missionName}</p>
+                </FilterWrap>
+              );
+            })}
+          </FilterDiv>
+        </FilterContainer>
+      )}
+      {drives.length < 2 ? null : (
+        <FilterContainer>
+          <p>구동방식</p>
+          <FilterDiv>
+            {drives.map((drive) => {
+              return (
+                <FilterWrap
+                  key={drive.driveCode}
+                  selected={drive.driveCode === driveCode}
+                  onClick={() => handleDriveClick(drive.driveCode)}
+                >
+                  <p>{drive.driveName}</p>
+                </FilterWrap>
+              );
+            })}
+          </FilterDiv>
+        </FilterContainer>
+      )}
     </FilterListDiv>
   );
 };
 
 const FilterListDiv = styled.div`
-  width: 100%;
-  margin-left: 25px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const FilterListWrap = styled.div`
-  width: 100%;
+  width: 90%;
   margin: 20px 0px;
   display: flex;
   align-items: center;
