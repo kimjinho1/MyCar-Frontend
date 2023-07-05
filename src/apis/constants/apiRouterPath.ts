@@ -15,6 +15,7 @@ class ApiRouterPath {
   public MODEL_TRIMS = "/model/trims";
 
   public INT_COLOR = "/color/int-color";
+  public CHANGE_INT_COLOR = "/color/change-int-color";
 
   public getCarInfoPath(carCode: string): string {
     return `${this.CAR_INFO}/${carCode}`;
@@ -35,6 +36,14 @@ class ApiRouterPath {
 
   public getIntColorInfos(modelCode: string): string {
     return `${this.INT_COLOR}?modelCode=${modelCode}`;
+  }
+
+  public getChangeableCarModelsWithTrim(
+    modelCode: string,
+    intColorCode: string,
+    extColorCode: string
+  ): string {
+    return `${this.CHANGE_INT_COLOR}?modelCode=${modelCode}&intColorCode=${intColorCode}&extColorCode=${extColorCode}`;
   }
 }
 

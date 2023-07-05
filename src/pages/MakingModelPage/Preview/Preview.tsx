@@ -9,14 +9,14 @@ export const Preview = () => {
   return (
     <PreviewDiv>
       <HeadDiv>
-        <h2>{modelInfo.name}</h2>
+        <h2>{`${modelInfo.carName} - ${modelInfo.trimName}`}</h2>
         <HeadPriceDiv>
           <span>총 차량 가격</span>
           <b>{modelInfo.price.toLocaleString()} 원</b>
         </HeadPriceDiv>
       </HeadDiv>
       <ModelInfoDiv>
-        <span>{modelInfo.fullName}</span>
+        <span>{`${modelInfo.fullName}`}</span>
         <button>모델 변경 &nbsp;{">"}</button>
       </ModelInfoDiv>
       {/* <CarImageDiv>

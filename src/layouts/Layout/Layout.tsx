@@ -25,5 +25,5 @@ export const LayoutDiv = styled.div`
 `;
 
 export const LayoutWrap = styled.div`
-  padding-bottom: 120px;
+  padding-bottom: 150px;
 `;

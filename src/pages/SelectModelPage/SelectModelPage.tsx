@@ -11,8 +11,7 @@ import {
   modelFiltersState,
   trimInfosState,
 } from "@/stores";
-import { getCarInfo, getTrimInfos } from "@/apis/api";
-import { getModelFilters } from "@/apis/api/getModelFilters";
+import { getCarInfo, getModelFilters, getTrimInfos } from "@/apis/api";
 import { useEffect } from "react";
 import { FilterList, NoticeList, TrimList } from ".";
 

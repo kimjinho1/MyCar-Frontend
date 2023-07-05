@@ -25,9 +25,6 @@ export const NoticeList = () => {
         <Notice>
           - 본 견적내용은 계약 시 변경될 수 있으며, 법적 구속력은 없습니다.
         </Notice>
-        <Notice>
-          - 본 견적내용은 계약 시 변경될 수 있으며, 법적 구속력은 없습니다.
-        </Notice>
       </NoticeListWrap>
     </NoticeListDiv>
   );
