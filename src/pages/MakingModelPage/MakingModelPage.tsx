@@ -3,11 +3,17 @@ import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { routerPath } from "@/routes";
 import { carInfoState, modelInfoState } from "@/stores";
-import { getIntColorInfos, getModelInfo } from "@/apis/api";
+import { getExtColorInfos, getIntColorInfos, getModelInfo } from "@/apis/api";
 import { IntColor } from "./IntColor";
 import { Preview } from "./Preview";
 import { useSetRecoilState } from "recoil";
-import { selectedIntColorState, intColorInfosState } from "@/stores/colorState";
+import {
+  selectedIntColorState,
+  intColorInfosState,
+  extColorInfosState,
+  selectedExtColorState,
+} from "@/stores/colorState";
+import { ExtColor } from "./ExtColor/ExtColor";
 
 export const MakingModelPage = () => {
   const { modelCode } = useParams();
@@ -17,6 +23,8 @@ export const MakingModelPage = () => {
   const setModelInfo = useSetRecoilState(modelInfoState);
   const setIntColors = useSetRecoilState(intColorInfosState);
   const setSelectedIntColor = useSetRecoilState(selectedIntColorState);
+  const setExtColors = useSetRecoilState(extColorInfosState);
+  const setSelectedExtColor = useSetRecoilState(selectedExtColorState);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -48,9 +56,23 @@ export const MakingModelPage = () => {
               code: selectableIntColorInfo.intColorCode,
               name: selectableIntColorInfo.intColorName,
             });
-          }
 
-          /** 외장색상 정보 */
+            /** 외장색상 정보 */
+            const extColorInfos = await getExtColorInfos(
+              modelCode,
+              selectableIntColorInfo.intColorCode
+            );
+            setExtColors(extColorInfos);
+            const selectableExtColorInfo = extColorInfos.find(
+              (extColorInfo) => extColorInfo.isSelectable
+            );
+            if (selectableExtColorInfo !== undefined) {
+              setSelectedExtColor({
+                code: selectableExtColorInfo.extColorCode,
+                name: selectableExtColorInfo.extColorName,
+              });
+            }
+          }
 
           /** 옵션 정보 */
 
@@ -67,6 +89,7 @@ export const MakingModelPage = () => {
   return (
     <MakingModelPageDiv>
       <Preview />
+      <ExtColor />
       <IntColor />
     </MakingModelPageDiv>
   );
