@@ -1,78 +1,133 @@
 import styled from "styled-components";
-import { selectedIntColorState, intColorInfosState } from "@/stores/colorState";
-import { useRecoilState, useRecoilValue } from "recoil";
+import {
+  selectedIntColorState,
+  intColorInfosState,
+  selectedExtColorState,
+  newIntColorState,
+} from "@/stores/colorState";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import Block from "@/assets/svgs/Block.svg";
 import SelectCheck from "@/assets/svgs/SelectCheck.svg";
-import { IntColorInfo } from "@/apis/api";
+import {
+  ChangeableCarModelsWithTrim,
+  IntColorInfo,
+  getChangeableCarModelsWithTrim,
+} from "@/apis/api";
+import { modelInfoState } from "@/stores";
+import { useState } from "react";
+import { ChangeTrimModal } from "../ChangeTrimModal";
 
 interface IntColorBtnProps {
   imgurl: string;
 }
 
 export const IntColor = () => {
-  const intColorInfos = useRecoilValue(intColorInfosState);
+  const modelInfo = useRecoilValue(modelInfoState);
   const [selectedIntColor, setSelectedIntColor] = useRecoilState(
     selectedIntColorState
   );
+  const setNewIntColor = useSetRecoilState(newIntColorState);
+  const selectedExtColor = useRecoilValue(selectedExtColorState);
+  const intColorInfos = useRecoilValue(intColorInfosState);
+
+  // 모달 관리
+  const [isOpenChangeTrimModal, setIsOpenChangeTrimModal] =
+    useState<boolean>(false);
+  const onClose = () => {
+    setIsOpenChangeTrimModal(false);
+  };
+  const [changeableModelInfo, setChangeableModelInfo] =
+    useState<ChangeableCarModelsWithTrim>();
 
   const handleIntColorBtnClick = (intColorInfo: IntColorInfo) => {
+    const intColorCode = intColorInfo.intColorCode;
+    const intColorName = intColorInfo.intColorName;
+
     if (intColorInfo.isSelectable) {
       setSelectedIntColor({
-        code: intColorInfo.intColorCode,
-        name: intColorInfo.intColorName,
+        code: intColorCode,
+        name: intColorName,
       });
       return;
     }
-    alert("선택할 수 없는 내장색상입니다.");
+
+    const fetchData = async () => {
+      try {
+        const data = await getChangeableCarModelsWithTrim(
+          modelInfo.code,
+          intColorInfo.intColorCode,
+          // selectedExtColor.code
+          "B6S"
+        );
+        setChangeableModelInfo(data);
+        setNewIntColor({
+          code: intColorCode,
+          name: intColorName,
+        });
+        setIsOpenChangeTrimModal(true);
+      } catch (error) {
+        alert(error.response.data.message);
+      }
+    };
+    fetchData();
   };
 
   return (
-    <IntColorDiv>
-      <IntColorTitleDiv>
-        <b>내장색상</b>
-        <span>{selectedIntColor.name}</span>
-      </IntColorTitleDiv>
-      <IntColorGridDiv>
-        {intColorInfos.map((intColorInfo) => {
-          if (!intColorInfo.isSelectable) {
+    <>
+      {changeableModelInfo !== undefined && (
+        <ChangeTrimModal
+          isOpenChangeTrimModal={isOpenChangeTrimModal}
+          newModelInfo={changeableModelInfo}
+          onClose={onClose}
+        />
+      )}
+      <IntColorDiv>
+        <IntColorTitleDiv>
+          <b>내장색상</b>
+          <span>{selectedIntColor.name}</span>
+        </IntColorTitleDiv>
+        <IntColorGridDiv>
+          {intColorInfos.map((intColorInfo) => {
+            if (!intColorInfo.isSelectable) {
+              return (
+                <BlockedIntColorBtn
+                  key={intColorInfo.intColorCode}
+                  onClick={() => handleIntColorBtnClick(intColorInfo)}
+                  imgurl={
+                    import.meta.env.VITE_BACKEND_URL +
+                    intColorInfo.intColorImagePath
+                  }
+                ></BlockedIntColorBtn>
+              );
+            }
+
+            if (intColorInfo.intColorCode === selectedIntColor.code) {
+              return (
+                <SelectedIntColorBtn
+                  key={intColorInfo.intColorCode}
+                  onClick={() => handleIntColorBtnClick(intColorInfo)}
+                  imgurl={
+                    import.meta.env.VITE_BACKEND_URL +
+                    intColorInfo.intColorImagePath
+                  }
+                ></SelectedIntColorBtn>
+              );
+            }
+
             return (
-              <BlockedIntColorBtn
+              <IntColorBtn
                 key={intColorInfo.intColorCode}
                 onClick={() => handleIntColorBtnClick(intColorInfo)}
                 imgurl={
                   import.meta.env.VITE_BACKEND_URL +
                   intColorInfo.intColorImagePath
                 }
-              ></BlockedIntColorBtn>
+              ></IntColorBtn>
             );
-          }
-
-          if (intColorInfo.intColorCode === selectedIntColor.code) {
-            return (
-              <SelectedIntColorBtn
-                key={intColorInfo.intColorCode}
-                onClick={() => handleIntColorBtnClick(intColorInfo)}
-                imgurl={
-                  import.meta.env.VITE_BACKEND_URL +
-                  intColorInfo.intColorImagePath
-                }
-              ></SelectedIntColorBtn>
-            );
-          }
-
-          return (
-            <IntColorBtn
-              key={intColorInfo.intColorCode}
-              onClick={() => handleIntColorBtnClick(intColorInfo)}
-              imgurl={
-                import.meta.env.VITE_BACKEND_URL +
-                intColorInfo.intColorImagePath
-              }
-            ></IntColorBtn>
-          );
-        })}
-      </IntColorGridDiv>
-    </IntColorDiv>
+          })}
+        </IntColorGridDiv>
+      </IntColorDiv>
+    </>
   );
 };
 
@@ -107,11 +162,11 @@ const IntColorTitleDiv = styled.div`
 
 const IntColorGridDiv = styled.div`
   width: 100%;
-  margin-top: 25px;
+  margin-top: 10px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: auto;
-  gap: 1rem;
+  gap: 10px;
 `;
 
 const IntColorBtn = styled.button<IntColorBtnProps>`
@@ -132,7 +187,7 @@ const SelectedIntColorBtn = styled.button<IntColorBtnProps>`
   cursor: pointer;
 
   background-image: url(${SelectCheck}), url(${({ imgurl }) => imgurl});
-  background-size: 20px, 200%;
+  background-size: 18px, 200%;
   background-position: center, right center;
   background-repeat: no-repeat;
 `;
@@ -143,8 +198,10 @@ const BlockedIntColorBtn = styled.button<IntColorBtnProps>`
   border: none;
   cursor: pointer;
 
-  background-image: url(${Block}), url(${({ imgurl }) => imgurl});
-  background-size: 20px, 200%;
-  background-position: center, right center;
+  background-image: url(${Block}),
+    linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url(${({ imgurl }) => imgurl});
+  background-size: 18px, cover, 200%;
+  background-position: center, center, right center;
   background-repeat: no-repeat;
 `;

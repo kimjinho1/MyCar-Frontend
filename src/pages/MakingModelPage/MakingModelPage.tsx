@@ -31,14 +31,14 @@ export const MakingModelPage = () => {
           setModelInfo({
             code: modelData.modelCode,
             fullName: modelData.modelName,
-            name: `${modelData.carName} - ${modelData.trimName}`,
+            carName: modelData.carName,
+            trimName: modelData.trimName,
             price: modelData.modelPrice,
             imagePath: modelData.modelImagePath,
           });
 
           /** 내장색상 정보 */
           const intColorInfos = await getIntColorInfos(modelCode);
-          console.log(intColorInfos);
           setIntColors(intColorInfos);
           const selectableIntColorInfo = intColorInfos.find(
             (intColorInfo) => intColorInfo.isSelectable
@@ -56,6 +56,7 @@ export const MakingModelPage = () => {
 
           /** TUIX 정보 */
         } catch (error) {
+          alert(error.response.data.message);
           navigate(routerPath.ROOT);
         }
       }
