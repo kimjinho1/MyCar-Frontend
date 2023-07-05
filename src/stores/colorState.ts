@@ -1,36 +1,39 @@
 import { IntColorInfo } from "@/apis/api";
 import { atom, selector } from "recoil";
 
-export type SelectedIntColor = {
+export type SelectedColor = {
   code: string;
   name: string;
 };
 
-/** 내장 색상들 정보 */
+/** 내장색상들 정보 */
 export const intColorInfosState = atom<IntColorInfo[]>({
   key: "intColorInfosState",
   default: [],
 });
 
-/** 외장 색상들 정보 */
+/** 외장색상들 정보 */
 export const extColorsState = atom<string[]>({
   key: "extColorsState",
   default: [],
 });
 
-/** 선택된 내장 색상 코드 */
-export const selectedIntColorState = atom<SelectedIntColor>({
+/** 선택된 내장색상 코드 */
+export const selectedIntColorState = atom<SelectedColor>({
   key: "selectedIntColorState",
-  default: {
-    code: "",
-    name: "",
-  },
+  default: { code: "", name: "" },
 });
 
-/** 선택된 외장 색상 코드 */
-export const extColorCodeState = atom<string>({
-  key: "extColorCodeState",
-  default: "",
+/** 선택된 외장색상 코드 */
+export const selectedExtColorState = atom<SelectedColor>({
+  key: "selectedExtColorState",
+  default: { code: "", name: "" },
+});
+
+/** 선택하고 싶은 내장색상 코드 */
+export const newIntColorState = atom<SelectedColor>({
+  key: "newIntColorState",
+  default: { code: "", name: "" },
 });
 
 /** 차량 외부 이미지 번호(1 ~ 60) */

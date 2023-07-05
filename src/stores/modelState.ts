@@ -4,7 +4,8 @@ import { atom } from "recoil";
 export type ModelInfo = {
   code: string;
   fullName: string;
-  name: string;
+  carName: string;
+  trimName: string;
   price: number;
   imagePath: string;
 };
@@ -49,7 +50,8 @@ export const modelInfoState = atom<ModelInfo>({
   default: {
     code: "",
     fullName: "",
-    name: "",
+    carName: "",
+    trimName: "",
     price: 0,
     imagePath: "",
   },
