@@ -4,6 +4,7 @@ import {
   intColorInfosState,
   selectedExtColorState,
   newIntColorState,
+  extColorInfosState,
 } from "@/stores/colorState";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import Block from "@/assets/svgs/Block.svg";
@@ -12,6 +13,7 @@ import {
   ChangeableCarModelsWithTrim,
   IntColorInfo,
   getChangeableCarModelsWithTrim,
+  getExtColorInfos,
 } from "@/apis/api";
 import { modelInfoState } from "@/stores";
 import { useState } from "react";
@@ -26,9 +28,13 @@ export const IntColor = () => {
   const [selectedIntColor, setSelectedIntColor] = useRecoilState(
     selectedIntColorState
   );
-  const setNewIntColor = useSetRecoilState(newIntColorState);
-  const selectedExtColor = useRecoilValue(selectedExtColorState);
   const intColorInfos = useRecoilValue(intColorInfosState);
+  const setNewIntColor = useSetRecoilState(newIntColorState);
+
+  const [selectedExtColor, setSelectedExtColor] = useRecoilState(
+    selectedExtColorState
+  );
+  const setExtColors = useSetRecoilState(extColorInfosState);
 
   // 모달 관리
   const [isOpenChangeTrimModal, setIsOpenChangeTrimModal] =
@@ -48,6 +54,30 @@ export const IntColor = () => {
         code: intColorCode,
         name: intColorName,
       });
+
+      /** 외장색상 정보 */
+      const fetchExtColorInfos = async () => {
+        try {
+          const extColorInfos = await getExtColorInfos(
+            modelInfo.code,
+            intColorInfo.intColorCode
+          );
+          setExtColors(extColorInfos);
+          const selectableExtColorInfo = extColorInfos.find(
+            (extColorInfo) => extColorInfo.isSelectable
+          );
+          console.log(extColorInfos);
+          if (selectableExtColorInfo !== undefined) {
+            setSelectedExtColor({
+              code: selectableExtColorInfo.extColorCode,
+              name: selectableExtColorInfo.extColorName,
+            });
+          }
+        } catch (error) {
+          alert(error.response.data.message);
+        }
+      };
+      fetchExtColorInfos();
       return;
     }
 
@@ -56,8 +86,7 @@ export const IntColor = () => {
         const data = await getChangeableCarModelsWithTrim(
           modelInfo.code,
           intColorInfo.intColorCode,
-          // selectedExtColor.code
-          "B6S"
+          selectedExtColor.code
         );
         setChangeableModelInfo(data);
         setNewIntColor({

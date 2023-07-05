@@ -1,4 +1,5 @@
 import { IntColorInfo } from "@/apis/api";
+import { ExtColorInfo } from "@/apis/api/color/getExtColorInfos";
 import { atom, selector } from "recoil";
 
 export type SelectedColor = {
@@ -13,8 +14,8 @@ export const intColorInfosState = atom<IntColorInfo[]>({
 });
 
 /** 외장색상들 정보 */
-export const extColorsState = atom<string[]>({
-  key: "extColorsState",
+export const extColorInfosState = atom<ExtColorInfo[]>({
+  key: "extColorInfosState",
   default: [],
 });
 
