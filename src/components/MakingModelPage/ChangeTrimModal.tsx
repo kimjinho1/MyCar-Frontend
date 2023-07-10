@@ -1,9 +1,9 @@
 import styled from "styled-components";
-import { ChangeableCarModelsWithTrim } from "@/apis";
+import { ChangeableCarModelsWithTrim } from "@/apis/color";
 import { modelInfoState, newIntColorState } from "@/stores";
 import { useRecoilValue } from "recoil";
 import { useNavigate } from "react-router-dom";
-import { PopUpModal } from "@/common";
+import { PopUpModal } from "@/components/common";
 
 interface ChangeTrimModalProps {
   isOpenChangeTrimModal: boolean;

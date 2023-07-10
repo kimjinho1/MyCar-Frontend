@@ -1,8 +1,7 @@
 import styled from "styled-components";
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { carInfoState, modelInfoState } from "@/stores";
-import { getExtColorInfos, getIntColorInfos, getModelInfo } from "@/apis";
+import { carInfoState, modelInfoState, optionsState } from "@/stores";
 import { useSetRecoilState } from "recoil";
 import {
   selectedIntColorState,
@@ -11,7 +10,15 @@ import {
   selectedExtColorState,
 } from "@/stores/colorState";
 import { MakingModelHeader } from "@/layouts/MakingModelHeader";
-import { Preview, ExtColor, IntColor } from ".";
+import {
+  Preview,
+  ExtColor,
+  IntColor,
+  Option,
+} from "../components/MakingModelPage";
+import { getExtColorInfos, getIntColorInfos } from "@/apis/color";
+import { getOptions } from "@/apis/option";
+import { getModelInfo } from "@/apis/model";
 
 export const MakingModelPage = () => {
   const { modelCode } = useParams();
@@ -19,10 +26,13 @@ export const MakingModelPage = () => {
 
   const setCarInfo = useSetRecoilState(carInfoState);
   const setModelInfo = useSetRecoilState(modelInfoState);
+
   const setIntColors = useSetRecoilState(intColorInfosState);
   const setSelectedIntColor = useSetRecoilState(selectedIntColorState);
   const setExtColors = useSetRecoilState(extColorInfosState);
   const setSelectedExtColor = useSetRecoilState(selectedExtColorState);
+
+  const setOptions = useSetRecoilState(optionsState);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -46,35 +56,32 @@ export const MakingModelPage = () => {
           /** 내장색상 정보 */
           const intColorInfos = await getIntColorInfos(modelCode);
           setIntColors(intColorInfos);
-          const selectableIntColorInfo = intColorInfos.find(
-            (intColorInfo) => intColorInfo.isSelectable
-          );
-          if (selectableIntColorInfo !== undefined) {
-            setSelectedIntColor({
-              code: selectableIntColorInfo.intColorCode,
-              name: selectableIntColorInfo.intColorName,
-            });
+          setSelectedIntColor({
+            code: intColorInfos[0].intColorCode,
+            name: intColorInfos[0].intColorName,
+          });
 
-            /** 외장색상 정보 */
-            const extColorInfos = await getExtColorInfos(
-              modelCode,
-              selectableIntColorInfo.intColorCode
-            );
-            setExtColors(extColorInfos);
-            const selectableExtColorInfo = extColorInfos.find(
-              (extColorInfo) => extColorInfo.isSelectable
-            );
-            if (selectableExtColorInfo !== undefined) {
-              setSelectedExtColor({
-                code: selectableExtColorInfo.extColorCode,
-                name: selectableExtColorInfo.extColorName,
-              });
-            }
-          }
+          /** 외장색상 정보 */
+          const extColorInfos = await getExtColorInfos(
+            modelCode,
+            intColorInfos[0].intColorCode
+          );
+          setExtColors(extColorInfos);
+          setSelectedExtColor({
+            code: extColorInfos[0].extColorCode,
+            name: extColorInfos[0].extColorName,
+          });
 
           /** 옵션 정보 */
-
-          /** TUIX 정보 */
+          const options = await getOptions(modelCode);
+          setOptions(
+            options.map((option) => {
+              return {
+                ...option,
+                isSelected: false,
+              };
+            })
+          );
         } catch (error) {
           alert(error.response.data.message);
           navigate("/");
@@ -90,6 +97,7 @@ export const MakingModelPage = () => {
       <Preview />
       <ExtColor />
       <IntColor />
+      <Option />
     </MakingModelPageDiv>
   );
 };

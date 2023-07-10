@@ -1,3 +1,3 @@
 export * from "./MainPage";
-export * from "./SelectModelPage";
 export * from "./MakingModelPage";
+export * from "./SelectModelPage";

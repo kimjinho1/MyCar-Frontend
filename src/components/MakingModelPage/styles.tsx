@@ -1,13 +1,48 @@
 import styled from "styled-components";
 
-export interface OptionBtnProps {
+export interface ColorBoxDivProps {
   height: string;
   title: string;
   imgurl: string;
+  hover: boolean;
   selected: boolean;
 }
 
-export const OptionBtn = styled.button<OptionBtnProps>`
+export const OptionDiv = styled.div`
+  width: 90%;
+  margin-top: 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  > h2 {
+    margin: 15px 0;
+    align-self: flex-start;
+    font-size: 20px;
+  }
+`;
+
+export const OptionTitleDiv = styled.div`
+  width: 100%;
+  padding-bottom: 12px;
+  border-bottom: grey 0.5px solid;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  > b {
+    font-size: 13px;
+  }
+
+  > span {
+    margin: 0;
+    font-size: 10px;
+    color: #666;
+  }
+`;
+
+export const ColorBoxDiv = styled.div<ColorBoxDivProps>`
   width: 100%;
   height: ${({ height }) => height};
   border: none;
@@ -38,7 +73,7 @@ export const OptionBtn = styled.button<OptionBtnProps>`
   background-repeat: no-repeat;
 `;
 
-export const BlockedOptionBtn = styled.button<OptionBtnProps>`
+export const BlockedColorBoxDiv = styled.button<ColorBoxDivProps>`
   width: 100%;
   height: ${({ height }) => height};
   border: none;

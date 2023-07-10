@@ -6,9 +6,14 @@ import {
   intColorInfosState,
 } from "@/stores/colorState";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { ExtColorInfo, getIntColorInfos } from "@/apis";
-import { BlockedOptionBtn, OptionBtn } from "@/common";
+import { ExtColorInfo, getIntColorInfos } from "@/apis/color";
 import { modelInfoState } from "@/stores";
+import {
+  BlockedColorBoxDiv,
+  OptionDiv,
+  ColorBoxDiv,
+  OptionTitleDiv,
+} from "./styles";
 
 interface ExtColorBtnProps {
   imgurl: string;
@@ -69,16 +74,17 @@ export const ExtColor = () => {
   };
 
   return (
-    <ExtColorDiv>
-      <ExtColorTitleDiv>
+    <OptionDiv>
+      <h2>색상</h2>
+      <OptionTitleDiv>
         <b>외장색상</b>
         <span>{selectedExtColor.name}</span>
-      </ExtColorTitleDiv>
+      </OptionTitleDiv>
       <ExtColorFlexDiv>
         {extColorInfos.map((extColorInfo) => {
           if (extColorInfo.isSelectable) {
             return (
-              <OptionBtn
+              <ColorBoxDiv
                 key={extColorInfo.extColorCode}
                 onClick={() => handleExtColorBtnClick(extColorInfo)}
                 height={"35px"}
@@ -88,12 +94,12 @@ export const ExtColor = () => {
                   extColorInfo.extColorImagePath
                 }
                 selected={extColorInfo.extColorCode === selectedExtColor.code}
-              ></OptionBtn>
+              ></ColorBoxDiv>
             );
           }
 
           return (
-            <BlockedOptionBtn
+            <BlockedColorBoxDiv
               key={extColorInfo.extColorCode}
               onClick={() => handleExtColorBtnClick(extColorInfo)}
               height={"35px"}
@@ -102,57 +108,17 @@ export const ExtColor = () => {
                 import.meta.env.VITE_BACKEND_URL +
                 extColorInfo.extColorImagePath
               }
-            ></BlockedOptionBtn>
+            ></BlockedColorBoxDiv>
           );
         })}
       </ExtColorFlexDiv>
-    </ExtColorDiv>
+    </OptionDiv>
   );
 };
-
-const ExtColorDiv = styled.div`
-  width: 90%;
-  margin-top: 25px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
-
-const ExtColorTitleDiv = styled.div`
-  width: 100%;
-  padding-bottom: 12px;
-  border-bottom: grey 0.5px solid;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  > b {
-    margin: 0;
-    font-size: 13px;
-  }
-
-  > span {
-    margin: 0;
-    font-size: 10px;
-    color: #666;
-  }
-`;
 
 const ExtColorFlexDiv = styled.div`
   width: 100%;
   margin-top: 10px;
   display: flex;
   gap: 10px;
-`;
-
-const ExtColorBtn = styled.button<ExtColorBtnProps>`
-  width: 100%;
-  height: 35px;
-  border: none;
-  cursor: pointer;
-
-  background-image: url(${({ imgurl }) => imgurl});
-  background-size: auto;
-  background-position: center;
 `;

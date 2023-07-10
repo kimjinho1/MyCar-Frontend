@@ -1,4 +1,4 @@
-import { getTrimInfos } from "@/apis";
+import { getTrimInfos } from "@/apis/model";
 import {
   driveCodeState,
   engineCodeState,
