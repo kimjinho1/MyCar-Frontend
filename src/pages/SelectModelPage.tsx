@@ -17,7 +17,7 @@ import {
   TrimList,
 } from "../components/SelectModelPage";
 import { SelectModelHeader } from "@/layouts/SelectModelHeader";
-import { getCarInfo, getModelFilters, getTrimInfos } from "@/apis";
+import { getCarInfo, getModelFilters, getTrimInfos } from "@/apis/model";
 
 export const SelectModelPage = () => {
   const { carCode } = useParams();
