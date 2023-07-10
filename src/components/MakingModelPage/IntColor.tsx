@@ -12,11 +12,16 @@ import {
   IntColorInfo,
   getChangeableCarModelsWithTrim,
   getExtColorInfos,
-} from "@/apis";
+} from "@/apis/color";
 import { modelInfoState } from "@/stores";
 import { useState } from "react";
 import { ChangeTrimModal } from "./ChangeTrimModal";
-import { BlockedOptionBtn, OptionBtn } from "@/components/common";
+import {
+  BlockedColorBoxDiv,
+  OptionDiv,
+  ColorBoxDiv,
+  OptionTitleDiv,
+} from "./styles";
 
 export const IntColor = () => {
   const modelInfo = useRecoilValue(modelInfoState);
@@ -108,16 +113,16 @@ export const IntColor = () => {
           onClose={onClose}
         />
       )}
-      <IntColorDiv>
-        <IntColorTitleDiv>
+      <OptionDiv>
+        <OptionTitleDiv>
           <b>내장색상</b>
           <span>{selectedIntColor.name}</span>
-        </IntColorTitleDiv>
+        </OptionTitleDiv>
         <IntColorGridDiv>
           {intColorInfos.map((intColorInfo) => {
             if (intColorInfo.isSelectable) {
               return (
-                <OptionBtn
+                <ColorBoxDiv
                   key={intColorInfo.intColorCode}
                   onClick={() => handleIntColorBtnClick(intColorInfo)}
                   height={"30px"}
@@ -127,12 +132,12 @@ export const IntColor = () => {
                     intColorInfo.intColorImagePath
                   }
                   selected={intColorInfo.intColorCode === selectedIntColor.code}
-                ></OptionBtn>
+                ></ColorBoxDiv>
               );
             }
 
             return (
-              <BlockedOptionBtn
+              <BlockedColorBoxDiv
                 key={intColorInfo.intColorCode}
                 onClick={() => handleIntColorBtnClick(intColorInfo)}
                 height={"30px"}
@@ -141,43 +146,14 @@ export const IntColor = () => {
                   import.meta.env.VITE_BACKEND_URL +
                   intColorInfo.intColorImagePath
                 }
-              ></BlockedOptionBtn>
+              ></BlockedColorBoxDiv>
             );
           })}
         </IntColorGridDiv>
-      </IntColorDiv>
+      </OptionDiv>
     </>
   );
 };
-
-const IntColorDiv = styled.div`
-  width: 90%;
-  margin-top: 25px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
-
-const IntColorTitleDiv = styled.div`
-  width: 100%;
-  padding-bottom: 12px;
-  border-bottom: grey 0.5px solid;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  > b {
-    margin: 0;
-    font-size: 13px;
-  }
-
-  > span {
-    margin: 0;
-    font-size: 10px;
-    color: #666;
-  }
-`;
 
 const IntColorGridDiv = styled.div`
   width: 100%;
