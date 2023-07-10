@@ -11,7 +11,7 @@ import {
   selectedExtColorState,
 } from "@/stores/colorState";
 import { MakingModelHeader } from "@/layouts/MakingModelHeader";
-import { Preview, ExtColor, IntColor } from ".";
+import { Preview, ExtColor, IntColor } from "../components/MakingModelPage";
 
 export const MakingModelPage = () => {
   const { modelCode } = useParams();

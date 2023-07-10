@@ -3,7 +3,7 @@ import { ChangeableCarModelsWithTrim } from "@/apis";
 import { modelInfoState, newIntColorState } from "@/stores";
 import { useRecoilValue } from "recoil";
 import { useNavigate } from "react-router-dom";
-import { PopUpModal } from "@/common";
+import { PopUpModal } from "@/components/common";
 
 interface ChangeTrimModalProps {
   isOpenChangeTrimModal: boolean;

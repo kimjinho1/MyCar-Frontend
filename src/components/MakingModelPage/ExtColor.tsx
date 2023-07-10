@@ -7,7 +7,7 @@ import {
 } from "@/stores/colorState";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { ExtColorInfo, getIntColorInfos } from "@/apis";
-import { BlockedOptionBtn, OptionBtn } from "@/common";
+import { BlockedOptionBtn, OptionBtn } from "@/components/common";
 import { modelInfoState } from "@/stores";
 
 interface ExtColorBtnProps {

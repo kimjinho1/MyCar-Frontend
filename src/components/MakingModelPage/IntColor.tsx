@@ -15,8 +15,8 @@ import {
 } from "@/apis";
 import { modelInfoState } from "@/stores";
 import { useState } from "react";
-import { ChangeTrimModal } from "../ChangeTrimModal/ChangeTrimModal";
-import { BlockedOptionBtn, OptionBtn } from "@/common";
+import { ChangeTrimModal } from "./ChangeTrimModal";
+import { BlockedOptionBtn, OptionBtn } from "@/components/common";
 
 export const IntColor = () => {
   const modelInfo = useRecoilValue(modelInfoState);

@@ -2,8 +2,8 @@ import styled from "styled-components";
 import { useRecoilValue } from "recoil";
 import { carInfoState } from "@/stores";
 import { useNavigate } from "react-router-dom";
-import { Logo } from "@/common";
-import { VerticalLine } from "@/common/VerticalLine";
+import { Logo } from "@/components/common";
+import { VerticalLine } from "@/components/common/VerticalLine";
 
 export const MakingModelHeader = () => {
   const carInfo = useRecoilValue(carInfoState);

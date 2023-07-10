@@ -1,5 +1,10 @@
 import { useEffect } from "react";
-import { MainTitle, TabMenu, CarList, NoticeList } from ".";
+import {
+  MainTitle,
+  TabMenu,
+  CarList,
+  NoticeList,
+} from "../components/MainPage";
 import { carListState, carTypeCodeState } from "@/stores/carState";
 import { useSetRecoilState } from "recoil";
 import { MainHeader } from "@/layouts/MainHeader";
