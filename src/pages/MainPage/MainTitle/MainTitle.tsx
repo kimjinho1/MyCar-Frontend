@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import CloudSvg from "@/assets/svgs/Cloud.svg";
 
 export const MainTitle = () => {
   return (
@@ -15,7 +14,7 @@ export const MainTitle = () => {
 const MainTitleDiv = styled.div`
   width: 100%;
   height: 200px;
-  background-image: url(${CloudSvg});
+  background-image: url("/Cloud.svg");
   background-size: cover;
 
   display: flex;

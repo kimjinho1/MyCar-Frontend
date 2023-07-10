@@ -1,4 +1,4 @@
-import { CarTypeWithCarInfos } from "@/apis/api";
+import { CarTypeWithCarInfos } from "@/apis";
 import { atom, selector } from "recoil";
 
 type CarInfo = {

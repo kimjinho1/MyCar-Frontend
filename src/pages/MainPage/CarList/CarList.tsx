@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { carListSelector } from "@/stores/carState";
 import { useRecoilValue } from "recoil";
-import { routerPath } from "@/routes";
 import { useNavigate } from "react-router-dom";
 
 export const CarList = () => {
@@ -9,7 +8,7 @@ export const CarList = () => {
   const navigate = useNavigate();
 
   const handleCarInfoClick = (carCode: string) => {
-    navigate(routerPath.getSelectModelPath(carCode));
+    navigate(`/model/${carCode}`);
   };
 
   return (

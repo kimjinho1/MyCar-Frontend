@@ -1,8 +1,9 @@
 import { useEffect } from "react";
 import { MainTitle, TabMenu, CarList, NoticeList } from ".";
-import { getCarInfos } from "@/apis/api";
 import { carListState, carTypeCodeState } from "@/stores/carState";
 import { useSetRecoilState } from "recoil";
+import { MainHeader } from "@/layouts/MainHeader";
+import { getCarInfos } from "@/apis";
 
 export const MainPage = () => {
   const SetselectedCarTypeCode = useSetRecoilState(carTypeCodeState);
@@ -23,6 +24,7 @@ export const MainPage = () => {
 
   return (
     <div>
+      <MainHeader />
       <MainTitle />
       <TabMenu />
       <CarList />

@@ -3,18 +3,23 @@ import {
   selectedIntColorState,
   extColorInfosState,
   selectedExtColorState,
+  intColorInfosState,
 } from "@/stores/colorState";
-import { useRecoilState, useRecoilValue } from "recoil";
-import Block from "@/assets/svgs/Block.svg";
-import SelectCheck from "@/assets/svgs/SelectCheck.svg";
-import { ExtColorInfo } from "@/apis/api";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { ExtColorInfo, getIntColorInfos } from "@/apis";
+import { BlockedOptionBtn, OptionBtn } from "@/common";
+import { modelInfoState } from "@/stores";
 
 interface ExtColorBtnProps {
   imgurl: string;
 }
 
 export const ExtColor = () => {
-  const selectedIntColor = useRecoilValue(selectedIntColorState);
+  const modelInfo = useRecoilValue(modelInfoState);
+  const setIntColors = useSetRecoilState(intColorInfosState);
+  const [selectedIntColor, setSelectedIntColor] = useRecoilState(
+    selectedIntColorState
+  );
   const [selectedExtColor, setSelectedExtColor] = useRecoilState(
     selectedExtColorState
   );
@@ -24,12 +29,43 @@ export const ExtColor = () => {
     const extColorCode = extColorInfo.extColorCode;
     const extColorName = extColorInfo.extColorName;
 
-    if (extColorInfo.isSelectable) {
-      setSelectedExtColor({
-        code: extColorCode,
-        name: extColorName,
-      });
+    if (!extColorInfo.isSelectable) {
+      alert(`${extColorName} 색상은 선택하신 내장색과 함께 제공되지 않는 색상입니다.\n내장색상을 변경해주세요.
+      `);
+      return;
     }
+
+    setSelectedExtColor({
+      code: extColorCode,
+      name: extColorName,
+    });
+
+    /** 내장색상 정보 */
+    const fetchIntColorInfos = async () => {
+      try {
+        const intColorInfos = await getIntColorInfos(
+          modelInfo.code,
+          extColorInfo.extColorCode
+        );
+        setIntColors(intColorInfos);
+
+        const selectableIntColorInfo = intColorInfos.find(
+          (intColorInfo) =>
+            intColorInfo.isSelectable &&
+            intColorInfo.intColorCode === selectedIntColor.code
+        );
+        if (selectableIntColorInfo) {
+          return;
+        }
+        setSelectedIntColor({
+          code: intColorInfos[0].intColorCode,
+          name: intColorInfos[0].intColorName,
+        });
+      } catch (error) {
+        alert(error.response.data.message);
+      }
+    };
+    fetchIntColorInfos();
   };
 
   return (
@@ -40,41 +76,33 @@ export const ExtColor = () => {
       </ExtColorTitleDiv>
       <ExtColorFlexDiv>
         {extColorInfos.map((extColorInfo) => {
-          if (!extColorInfo.isSelectable) {
+          if (extColorInfo.isSelectable) {
             return (
-              <BlockedExtColorBtn
+              <OptionBtn
                 key={extColorInfo.extColorCode}
                 onClick={() => handleExtColorBtnClick(extColorInfo)}
+                height={"35px"}
+                title={extColorInfo.extColorName}
                 imgurl={
                   import.meta.env.VITE_BACKEND_URL +
                   extColorInfo.extColorImagePath
                 }
-              ></BlockedExtColorBtn>
-            );
-          }
-
-          if (extColorInfo.extColorCode === selectedExtColor.code) {
-            return (
-              <SelectedExtColorBtn
-                key={extColorInfo.extColorCode}
-                onClick={() => handleExtColorBtnClick(extColorInfo)}
-                imgurl={
-                  import.meta.env.VITE_BACKEND_URL +
-                  extColorInfo.extColorImagePath
-                }
-              ></SelectedExtColorBtn>
+                selected={extColorInfo.extColorCode === selectedExtColor.code}
+              ></OptionBtn>
             );
           }
 
           return (
-            <ExtColorBtn
+            <BlockedOptionBtn
               key={extColorInfo.extColorCode}
               onClick={() => handleExtColorBtnClick(extColorInfo)}
+              height={"35px"}
+              title={extColorInfo.extColorName}
               imgurl={
                 import.meta.env.VITE_BACKEND_URL +
                 extColorInfo.extColorImagePath
               }
-            ></ExtColorBtn>
+            ></BlockedOptionBtn>
           );
         })}
       </ExtColorFlexDiv>
@@ -127,30 +155,4 @@ const ExtColorBtn = styled.button<ExtColorBtnProps>`
   background-image: url(${({ imgurl }) => imgurl});
   background-size: auto;
   background-position: center;
-`;
-
-const SelectedExtColorBtn = styled.button<ExtColorBtnProps>`
-  width: 100%;
-  height: 35px;
-  border: none;
-  cursor: pointer;
-
-  background-image: url(${SelectCheck}), url(${({ imgurl }) => imgurl});
-  background-size: 18px, auto;
-  background-position: center, center;
-  background-repeat: no-repeat;
-`;
-
-const BlockedExtColorBtn = styled.button<ExtColorBtnProps>`
-  width: 100%;
-  height: 35px;
-  border: none;
-  cursor: pointer;
-
-  background-image: url(${Block}),
-    linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-    url(${({ imgurl }) => imgurl});
-  background-size: 18px, cover, auto;
-  background-position: center, center, center;
-  background-repeat: no-repeat;
 `;
