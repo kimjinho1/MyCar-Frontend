@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 import { useNavigate, useParams } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
-import { routerPath } from "@/routes";
 import {
   driveCodeState,
   engineCodeState,
@@ -11,9 +10,10 @@ import {
   modelFiltersState,
   trimInfosState,
 } from "@/stores";
-import { getCarInfo, getModelFilters, getTrimInfos } from "@/apis/api";
 import { useEffect } from "react";
 import { FilterList, NoticeList, TrimList } from ".";
+import { SelectModelHeader } from "@/layouts/SelectModelHeader";
+import { getCarInfo, getModelFilters, getTrimInfos } from "@/apis";
 
 export const SelectModelPage = () => {
   const { carCode } = useParams();
@@ -57,7 +57,7 @@ export const SelectModelPage = () => {
           const trimInfos = await getTrimInfos(getTrimInfosParam);
           setTrimInfos(trimInfos);
         } catch (error) {
-          navigate(routerPath.ROOT);
+          navigate("/");
         }
       }
     };
@@ -66,6 +66,7 @@ export const SelectModelPage = () => {
 
   return (
     <SelectModelPageDiv>
+      <SelectModelHeader />
       <FilterList />
       <TrimList />
       <NoticeList />

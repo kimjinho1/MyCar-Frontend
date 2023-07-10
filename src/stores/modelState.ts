@@ -1,4 +1,4 @@
-import { ModelFilters, TrimInfo } from "@/apis/api";
+import { ModelFilters, TrimInfo } from "@/apis";
 import { atom } from "recoil";
 
 export type ModelInfo = {

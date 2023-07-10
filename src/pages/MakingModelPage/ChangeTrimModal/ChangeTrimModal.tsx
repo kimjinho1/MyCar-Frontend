@@ -1,10 +1,9 @@
 import styled from "styled-components";
-import { ChangeableCarModelsWithTrim } from "@/apis/api";
-import { PopUpModal } from "@/common/PopUpModal/PopUpModal";
+import { ChangeableCarModelsWithTrim } from "@/apis";
 import { modelInfoState, newIntColorState } from "@/stores";
 import { useRecoilValue } from "recoil";
 import { useNavigate } from "react-router-dom";
-import { routerPath } from "@/routes";
+import { PopUpModal } from "@/common";
 
 interface ChangeTrimModalProps {
   isOpenChangeTrimModal: boolean;
@@ -25,7 +24,7 @@ export const ChangeTrimModal = ({
   const changePrice = newModelInfo.modelPrice - modelInfo.price;
 
   const handleOkClick = () => {
-    navigate(routerPath.getMakingModelPath(newModelInfo.modelCode));
+    navigate(`/model/making/${newModelInfo.modelCode}`);
     onClose();
   };
 

@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { trimInfosState } from "@/stores";
 import { useRecoilValue } from "recoil";
-import { routerPath } from "@/routes";
 
 export const TrimList = () => {
   const navigate = useNavigate();
@@ -10,7 +9,7 @@ export const TrimList = () => {
   const trimInfos = useRecoilValue(trimInfosState);
 
   const handleMakingModelButtonClick = (modelCode: string) => {
-    navigate(routerPath.getMakingModelPath(modelCode));
+    navigate(`/model/making/${modelCode}`);
   };
 
   return (

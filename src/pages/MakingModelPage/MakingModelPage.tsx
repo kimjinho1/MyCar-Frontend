@@ -1,11 +1,8 @@
 import styled from "styled-components";
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { routerPath } from "@/routes";
 import { carInfoState, modelInfoState } from "@/stores";
-import { getExtColorInfos, getIntColorInfos, getModelInfo } from "@/apis/api";
-import { IntColor } from "./IntColor";
-import { Preview } from "./Preview";
+import { getExtColorInfos, getIntColorInfos, getModelInfo } from "@/apis";
 import { useSetRecoilState } from "recoil";
 import {
   selectedIntColorState,
@@ -13,7 +10,8 @@ import {
   extColorInfosState,
   selectedExtColorState,
 } from "@/stores/colorState";
-import { ExtColor } from "./ExtColor/ExtColor";
+import { MakingModelHeader } from "@/layouts/MakingModelHeader";
+import { Preview, ExtColor, IntColor } from ".";
 
 export const MakingModelPage = () => {
   const { modelCode } = useParams();
@@ -79,7 +77,7 @@ export const MakingModelPage = () => {
           /** TUIX 정보 */
         } catch (error) {
           alert(error.response.data.message);
-          navigate(routerPath.ROOT);
+          navigate("/");
         }
       }
     };
@@ -88,6 +86,7 @@ export const MakingModelPage = () => {
 
   return (
     <MakingModelPageDiv>
+      <MakingModelHeader />
       <Preview />
       <ExtColor />
       <IntColor />
