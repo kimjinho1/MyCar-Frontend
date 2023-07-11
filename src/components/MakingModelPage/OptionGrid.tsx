@@ -77,7 +77,6 @@ const OptionGridWrap = styled.div.withConfig({
 
   > img {
     width: 100%;
-    height: 100px;
     object-fit: cover;
   }
 `;
