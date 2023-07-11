@@ -1,73 +1,67 @@
 import styled from "styled-components";
-import {
-  ExtendedOptionInfo,
-  modelInfoState,
-  optionsState,
-  selectedOptionState,
-} from "@/stores";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { categorizedOptionState, modelInfoState } from "@/stores";
+import { useRecoilValue } from "recoil";
 import { OptionDiv, OptionTitleDiv } from "./styles";
-
-export interface OptionBoxDivProps {
-  imgurl: string;
-  selected: boolean;
-}
+import { OptionGrid } from "./OptionGrid";
 
 export const Option = () => {
   const modelInfo = useRecoilValue(modelInfoState);
-  const options = useRecoilValue(optionsState);
-  const setSelectOption = useSetRecoilState(selectedOptionState);
-
-  const handleIntColorBtnClick = (option: ExtendedOptionInfo) => {
-    setSelectOption(option.optionCode);
-  };
+  const categorizedOptions = useRecoilValue(categorizedOptionState);
 
   return (
     <OptionDiv>
       <h2>옵션</h2>
-      <OptionTitleDiv>
-        <b>상세 품목</b>
-      </OptionTitleDiv>
-      <OptionGridDiv>
-        {options.map((option) => {
-          if (option.isSelectable) {
-            return (
-              <OptionBoxDiv
-                key={option.optionCode}
-                onClick={() => handleIntColorBtnClick(option)}
-                imgurl={
-                  import.meta.env.VITE_BACKEND_URL + option.optionImagePath
-                }
-                selected={option.isSelected}
-              ></OptionBoxDiv>
-            );
-          }
-        })}
-      </OptionGridDiv>
+
+      {categorizedOptions["detail"] && (
+        <>
+          <OptionTitleDiv>
+            <b>상세 품목</b>
+          </OptionTitleDiv>
+          <OptionGrid options={categorizedOptions["detail"]} />
+        </>
+      )}
+
+      {categorizedOptions["hga"] && (
+        <>
+          <TuixTitleDiv>
+            <img src={"/Hga.svg"} />
+            <p>
+              다양한 일반 편의, 레저 상품 등으로 차별화 커스터마이징을 원하는
+              고객의 니즈 및 라이프스타일을 지원합니다.
+            </p>
+          </TuixTitleDiv>
+          <OptionGrid options={categorizedOptions["hga"]} />
+        </>
+      )}
+
+      {categorizedOptions["performance"] && (
+        <>
+          <TuixTitleDiv>
+            <img src={"/Performance.svg"} />
+            <p>
+              현대자동차의 모터스포츠 기술력과 노하우, 그리고 N의 유전자가
+              결합되어 지금까지 경험하지 못한 고성능 감성을 제시합니다.
+            </p>
+          </TuixTitleDiv>
+          <OptionGrid options={categorizedOptions["performance"]} />
+        </>
+      )}
     </OptionDiv>
   );
 };
 
-const OptionGridDiv = styled.div`
+export const TuixTitleDiv = styled.div`
   width: 100%;
-  margin-top: 10px;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: auto;
-  gap: 15px;
-`;
+  margin: 10px 0;
 
-export const OptionBoxDiv = styled.div<OptionBoxDivProps>`
-  width: 100%;
-  height: 100px;
-  border: none;
-  cursor: pointer;
+  > img {
+    height: 25px;
+    object-fit: cover;
+    margin-bottom: 10px;
+  }
 
-  background-image: url(${({ selected }) =>
-      selected ? "/SelectCheck.svg" : ""}),
-    url(${({ imgurl }) => imgurl});
-  background-size: ${({ selected }) => (selected ? "18px, 100%" : "100%")};
-  background-position: ${({ selected }) =>
-    selected ? "center, center" : "center"};
-  background-repeat: no-repeat;
+  > p {
+    margin: 0;
+    font-size: 10px;
+  }
 `;
