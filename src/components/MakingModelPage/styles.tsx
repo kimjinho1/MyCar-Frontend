@@ -1,12 +1,5 @@
 import styled from "styled-components";
-
-export interface ColorBoxDivProps {
-  height: string;
-  title: string;
-  imgurl: string;
-  hover: boolean;
-  selected: boolean;
-}
+import shouldForwardProp from "@styled-system/should-forward-prop";
 
 export const OptionDiv = styled.div`
   width: 90%;
@@ -42,63 +35,65 @@ export const OptionTitleDiv = styled.div`
   }
 `;
 
-export const ColorBoxDiv = styled.div<ColorBoxDivProps>`
+export interface OptionImageBoxDivProps {
+  height: string;
+  title: string;
+  imgurl: string;
+  hover: boolean;
+  isBlocked: boolean;
+  isSelected: boolean;
+}
+
+export const OptionImageBoxDiv = styled.div.withConfig({
+  shouldForwardProp: (prop, defaultValidatorFn) =>
+    shouldForwardProp(prop) &&
+    !["hover", "isBlocked", "isSelected"].includes(prop),
+})<OptionImageBoxDivProps>`
   width: 100%;
-  height: ${({ height }) => height};
+  height: ${(props) => props.height};
   border: none;
   cursor: pointer;
 
-  position: relative;
-  &:hover:after {
-    content: "${({ title }) => title}";
-    position: absolute;
-    width: auto;
-    white-space: nowrap;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 25px;
-    background-color: white;
-    font-size: 10px;
-    border: grey 0.5px solid;
-    z-index: 1;
-  }
+  ${(props) =>
+    props.hover &&
+    `
+    position: relative;
+    &:hover:after {
+      content: "${props.title}";
+      position: absolute;
+      width: auto;
+      white-space: nowrap;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 25px;
+      background-color: white;
+      font-size: 10px;
+      border: grey 0.5px solid;
+      z-index: 1;
+    }
+  `}
 
-  background-image: url(${({ selected }) =>
-      selected ? "/SelectCheck.svg" : ""}),
-    url(${({ imgurl }) => imgurl});
-  background-size: ${({ selected }) => (selected ? "18px, 100%" : "100%")};
-  background-position: ${({ selected }) =>
-    selected ? "center, center" : "center"};
+  background-image: url(${(props) => props.imgurl});
+  background-size: 100% 100%;
+  background-position: center;
   background-repeat: no-repeat;
-`;
 
-export const BlockedColorBoxDiv = styled.button<ColorBoxDivProps>`
-  width: 100%;
-  height: ${({ height }) => height};
-  border: none;
-  cursor: pointer;
-
-  position: relative;
-  &:hover:after {
-    content: "${({ title }) => title}";
-    position: absolute;
-    width: auto;
-    white-space: nowrap;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 25px;
-    background-color: white;
-    font-size: 10px;
-    border: grey 0.5px solid;
-    z-index: 1;
-  }
-
-  background-image: url("/Block.svg"),
+  ${(props) =>
+    props.isBlocked &&
+    `
+    background-image: url("/Block.svg"),
     linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-    url(${({ imgurl }) => imgurl});
-  background-size: 18px, cover, 100%;
-  background-position: center, center, center;
-  background-repeat: no-repeat;
+    url(${props.imgurl});
+    background-size: 18px, cover, 100% 100%;
+    background-position: center, center, center;
+  `}
+
+  ${(props) =>
+    props.isSelected &&
+    `
+    background-image: url("/SelectCheck.svg"), url(${props.imgurl});
+    background-size: 18px, 100% 100%;
+    background-position: center, center; 
+  `}
 `;

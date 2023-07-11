@@ -21,8 +21,9 @@ export const optionsState = atom<ExtendedOptionInfo[]>({
   default: [],
 });
 
+/** SET: 옵션 선택 */
 export const selectedOptionState = selector<string>({
-  key: "setSelectedOption",
+  key: "selectedOptionState",
   get: ({ get }) => {
     throw new Error("Cannot get value of selectedOptionState selector");
   },
@@ -34,5 +35,25 @@ export const selectedOptionState = selector<string>({
         : option
     );
     set(optionsState, newOptions);
+  },
+});
+
+/** GET: 옵션 카테코리 별로 분류 */
+export const categorizedOptionState = selector({
+  key: "categorizedOptionState",
+  get: ({ get }) => {
+    const options = get(optionsState);
+    const categorizedOptions = options.reduce<{
+      [key: string]: ExtendedOptionInfo[];
+    }>((acc, option) => {
+      const { optionTypeName } = option;
+      if (!acc[optionTypeName]) {
+        acc[optionTypeName] = [];
+      }
+      acc[optionTypeName].push(option);
+      return acc;
+    }, {});
+
+    return categorizedOptions;
   },
 });
