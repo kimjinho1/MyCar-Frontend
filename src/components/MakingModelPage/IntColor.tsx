@@ -15,13 +15,8 @@ import {
 } from "@/apis/color";
 import { modelInfoState } from "@/stores";
 import { useState } from "react";
-import { ChangeTrimModal } from "./ChangeTrimModal";
-import {
-  BlockedColorBoxDiv,
-  OptionDiv,
-  ColorBoxDiv,
-  OptionTitleDiv,
-} from "./styles";
+import { ChangeTrimModal } from "./modal/ChangeTrimModal";
+import { OptionImageBoxDiv, OptionDiv, OptionTitleDiv } from "./styles";
 
 export const IntColor = () => {
   const modelInfo = useRecoilValue(modelInfoState);
@@ -120,24 +115,8 @@ export const IntColor = () => {
         </OptionTitleDiv>
         <IntColorGridDiv>
           {intColorInfos.map((intColorInfo) => {
-            if (intColorInfo.isSelectable) {
-              return (
-                <ColorBoxDiv
-                  key={intColorInfo.intColorCode}
-                  onClick={() => handleIntColorBtnClick(intColorInfo)}
-                  height={"30px"}
-                  title={intColorInfo.intColorName}
-                  imgurl={
-                    import.meta.env.VITE_BACKEND_URL +
-                    intColorInfo.intColorImagePath
-                  }
-                  selected={intColorInfo.intColorCode === selectedIntColor.code}
-                ></ColorBoxDiv>
-              );
-            }
-
             return (
-              <BlockedColorBoxDiv
+              <OptionImageBoxDiv
                 key={intColorInfo.intColorCode}
                 onClick={() => handleIntColorBtnClick(intColorInfo)}
                 height={"30px"}
@@ -146,7 +125,10 @@ export const IntColor = () => {
                   import.meta.env.VITE_BACKEND_URL +
                   intColorInfo.intColorImagePath
                 }
-              ></BlockedColorBoxDiv>
+                hover={true}
+                isBlocked={!intColorInfo.isSelectable}
+                isSelected={intColorInfo.intColorCode === selectedIntColor.code}
+              />
             );
           })}
         </IntColorGridDiv>

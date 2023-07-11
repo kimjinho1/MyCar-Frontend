@@ -8,16 +8,7 @@ import {
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { ExtColorInfo, getIntColorInfos } from "@/apis/color";
 import { modelInfoState } from "@/stores";
-import {
-  BlockedColorBoxDiv,
-  OptionDiv,
-  ColorBoxDiv,
-  OptionTitleDiv,
-} from "./styles";
-
-interface ExtColorBtnProps {
-  imgurl: string;
-}
+import { OptionImageBoxDiv, OptionDiv, OptionTitleDiv } from "./styles";
 
 export const ExtColor = () => {
   const modelInfo = useRecoilValue(modelInfoState);
@@ -82,24 +73,8 @@ export const ExtColor = () => {
       </OptionTitleDiv>
       <ExtColorFlexDiv>
         {extColorInfos.map((extColorInfo) => {
-          if (extColorInfo.isSelectable) {
-            return (
-              <ColorBoxDiv
-                key={extColorInfo.extColorCode}
-                onClick={() => handleExtColorBtnClick(extColorInfo)}
-                height={"35px"}
-                title={extColorInfo.extColorName}
-                imgurl={
-                  import.meta.env.VITE_BACKEND_URL +
-                  extColorInfo.extColorImagePath
-                }
-                selected={extColorInfo.extColorCode === selectedExtColor.code}
-              ></ColorBoxDiv>
-            );
-          }
-
           return (
-            <BlockedColorBoxDiv
+            <OptionImageBoxDiv
               key={extColorInfo.extColorCode}
               onClick={() => handleExtColorBtnClick(extColorInfo)}
               height={"35px"}
@@ -108,7 +83,10 @@ export const ExtColor = () => {
                 import.meta.env.VITE_BACKEND_URL +
                 extColorInfo.extColorImagePath
               }
-            ></BlockedColorBoxDiv>
+              hover={true}
+              isBlocked={!extColorInfo.isSelectable}
+              isSelected={extColorInfo.extColorCode === selectedExtColor.code}
+            />
           );
         })}
       </ExtColorFlexDiv>
