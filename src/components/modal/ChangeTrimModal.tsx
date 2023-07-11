@@ -1,18 +1,19 @@
 import styled from "styled-components";
 import { ChangeableCarModelsWithTrim } from "@/apis/color";
-import { modelInfoState, newIntColorState } from "@/stores";
+import { modelInfoState } from "@/stores/modelState";
+import { newIntColorState } from "@/stores/colorState";
 import { useRecoilValue } from "recoil";
 import { useNavigate } from "react-router-dom";
 import { PopUpModal } from "@/components/common";
 
 interface ChangeTrimModalProps {
-  isOpenChangeTrimModal: boolean;
+  isOpen: boolean;
   newModelInfo: ChangeableCarModelsWithTrim;
   onClose: () => void;
 }
 
 export const ChangeTrimModal = ({
-  isOpenChangeTrimModal,
+  isOpen,
   newModelInfo,
   onClose,
 }: ChangeTrimModalProps) => {
@@ -30,8 +31,8 @@ export const ChangeTrimModal = ({
 
   return (
     <div>
-      {isOpenChangeTrimModal && (
-        <PopUpModal onClose={onClose}>
+      {isOpen && (
+        <PopUpModal onClose={onClose} widthPercent={80}>
           <HeadText>
             {`${newIntColor.name} 색상은 트림 변경 후 선택 가능합니다.`}
           </HeadText>

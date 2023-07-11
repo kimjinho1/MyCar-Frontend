@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useSetRecoilState } from "recoil";
 import { OptionImageBoxDiv } from "./styles";
-import { ExtendedOptionInfo, selectedOptionState } from "@/stores";
+import { ExtendedOptionInfo, selectedOptionState } from "@/stores/optionState";
 import shouldForwardProp from "@styled-system/should-forward-prop";
 
 interface OptionGridProps {

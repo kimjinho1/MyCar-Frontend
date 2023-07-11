@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { modelInfoState } from "@/stores";
+import { modelInfoState } from "@/stores/modelState";
 import { useRecoilValue } from "recoil";
 
 export const Preview = () => {

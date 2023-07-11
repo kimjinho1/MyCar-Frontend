@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { carInfoState, modelInfoState, optionsState } from "@/stores";
 import { useSetRecoilState } from "recoil";
 import {
   selectedIntColorState,
@@ -9,8 +8,8 @@ import {
   extColorInfosState,
   selectedExtColorState,
 } from "@/stores/colorState";
-import { MakingModelHeader } from "@/layouts/MakingModelHeader";
 import {
+  MakingModelHeader,
   Preview,
   ExtColor,
   IntColor,
@@ -19,6 +18,9 @@ import {
 import { getExtColorInfos, getIntColorInfos } from "@/apis/color";
 import { getOptions } from "@/apis/option";
 import { getModelInfo } from "@/apis/model";
+import { carInfoState } from "@/stores/carState";
+import { modelInfoState } from "@/stores/modelState";
+import { optionsState } from "@/stores/optionState";
 
 export const MakingModelPage = () => {
   const { modelCode } = useParams();

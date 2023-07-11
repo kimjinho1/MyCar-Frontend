@@ -5,7 +5,7 @@ import {
   missionCodeState,
   modelFiltersState,
   trimInfosState,
-} from "@/stores";
+} from "@/stores/modelState";
 import { useParams } from "react-router-dom";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
