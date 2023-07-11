@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
 import { MainPage, SelectModelPage, MakingModelPage } from "@/pages";
-import { Layout } from "@/layouts/Layout";
+import { Layout } from "@/components/common/Layout";
 
 const RedirectComponent: React.FC = () => {
   const navigate = useNavigate();

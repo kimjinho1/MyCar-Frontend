@@ -1,5 +1,6 @@
 import { OptionInfo } from "@/apis/option";
 import { atom, selector } from "recoil";
+import { modelInfoState } from "./modelState";
 
 export type OptionInfo = {
   optionId: number;
@@ -22,8 +23,8 @@ export const optionsState = atom<ExtendedOptionInfo[]>({
 });
 
 /** SET: 옵션 선택 */
-export const selectedOptionState = selector<string>({
-  key: "selectedOptionState",
+export const selectOptionState = selector<string>({
+  key: "selectOptionState",
   get: ({ get }) => {
     throw new Error("Cannot get value of selectedOptionState selector");
   },
@@ -55,5 +56,33 @@ export const categorizedOptionState = selector({
     }, {});
 
     return categorizedOptions;
+  },
+});
+
+/** GET: 선택된 옵션들의 정보*/
+export const selectedOptionState = selector({
+  key: "selectedOptionState",
+  get: ({ get }) => {
+    const options = get(optionsState);
+    const selectedOptions = options.filter((option) => option.isSelected);
+    return selectedOptions;
+  },
+});
+
+/** GET: 총 가격*/
+export const getTotalPriceState = selector({
+  key: "getTotalPriceState",
+  get: ({ get }) => {
+    const modelInfo = get(modelInfoState);
+    const selectedOptions = get(selectedOptionState);
+
+    const modelPrice = modelInfo.price;
+    const optionTotalPrice = selectedOptions.reduce(
+      (sum, option) => sum + option.optionPrice,
+      0
+    );
+    const totalPrice = modelPrice + optionTotalPrice;
+
+    return totalPrice;
   },
 });

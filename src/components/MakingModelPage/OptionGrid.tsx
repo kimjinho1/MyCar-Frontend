@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useSetRecoilState } from "recoil";
 import { OptionImageBoxDiv } from "./styles";
-import { ExtendedOptionInfo, selectedOptionState } from "@/stores";
+import { ExtendedOptionInfo, selectOptionState } from "@/stores/optionState";
 import shouldForwardProp from "@styled-system/should-forward-prop";
 
 interface OptionGridProps {
@@ -13,7 +13,7 @@ export interface OptionGridWrapProps {
 }
 
 export const OptionGrid = ({ options }: OptionGridProps) => {
-  const setSelectOption = useSetRecoilState(selectedOptionState);
+  const setSelectOption = useSetRecoilState(selectOptionState);
 
   const handleIntColorBtnClick = (option: ExtendedOptionInfo) => {
     if (!option.isSelectable) {
@@ -77,7 +77,6 @@ const OptionGridWrap = styled.div.withConfig({
 
   > img {
     width: 100%;
-    height: 100px;
     object-fit: cover;
   }
 `;

@@ -1,3 +1,4 @@
+export * from "./MainHeader";
 export * from "./CarList";
 export * from "./MainTitle";
 export * from "./NoticeList";

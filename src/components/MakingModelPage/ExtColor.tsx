@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { modelInfoState } from "@/stores/modelState";
 import {
   selectedIntColorState,
   extColorInfosState,
@@ -7,7 +8,6 @@ import {
 } from "@/stores/colorState";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { ExtColorInfo, getIntColorInfos } from "@/apis/color";
-import { modelInfoState } from "@/stores";
 import { OptionImageBoxDiv, OptionDiv, OptionTitleDiv } from "./styles";
 
 export const ExtColor = () => {

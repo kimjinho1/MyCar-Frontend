@@ -1,9 +1,11 @@
 import styled from "styled-components";
 import { useRecoilValue } from "recoil";
-import { carInfoState } from "@/stores";
 import { useNavigate } from "react-router-dom";
 import { Logo } from "@/components/common";
 import { VerticalLine } from "@/components/common/VerticalLine";
+import { useState } from "react";
+import { SummaryViewModal } from "../modal";
+import { carInfoState } from "@/stores/carState";
 
 export const MakingModelHeader = () => {
   const carInfo = useRecoilValue(carInfoState);
@@ -11,28 +13,43 @@ export const MakingModelHeader = () => {
   const carName = carInfo.name;
 
   const navigate = useNavigate();
+
   const handleClick = () => {
     navigate(`/model/${carCode}`);
   };
 
+  // 모달 관리
+  const [isOpenModelSummaryModal, setIsOpenModelSummaryModal] =
+    useState<boolean>(false);
+  const onClose = () => {
+    setIsOpenModelSummaryModal(false);
+  };
+
+  const handleOnClick = () => {
+    setIsOpenModelSummaryModal(true);
+  };
+
   return (
-    <MakingModelHeaderDiv>
-      <Logo carName={carName} />
-      <StepWrap>
-        <StepDiv onClick={handleClick}>
-          <p>01&nbsp;&nbsp;모델 선택</p>
-        </StepDiv>
-        <StepDiv>
-          <VerticalLine />
-        </StepDiv>
-        <StepDiv>
-          <strong>02&nbsp;&nbsp;내 차 만들기</strong>
-        </StepDiv>
-        <RightAlignedStepDiv>
-          <p>요약 보기</p>
-        </RightAlignedStepDiv>
-      </StepWrap>
-    </MakingModelHeaderDiv>
+    <>
+      {isOpenModelSummaryModal && <SummaryViewModal onClose={onClose} />}
+      <MakingModelHeaderDiv>
+        <Logo carName={carName} />
+        <StepWrap>
+          <StepDiv onClick={handleClick}>
+            <p>01&nbsp;&nbsp;모델 선택</p>
+          </StepDiv>
+          <StepDiv>
+            <VerticalLine />
+          </StepDiv>
+          <StepDiv>
+            <strong>02&nbsp;&nbsp;내 차 만들기</strong>
+          </StepDiv>
+          <RightAlignedStepDiv onClick={handleOnClick}>
+            <p>요약 보기</p>
+          </RightAlignedStepDiv>
+        </StepWrap>
+      </MakingModelHeaderDiv>
+    </>
   );
 };
 

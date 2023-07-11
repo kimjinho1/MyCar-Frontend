@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { modelInfoState } from "@/stores/modelState";
 import {
   selectedIntColorState,
   intColorInfosState,
@@ -13,9 +14,8 @@ import {
   getChangeableCarModelsWithTrim,
   getExtColorInfos,
 } from "@/apis/color";
-import { modelInfoState } from "@/stores";
 import { useState } from "react";
-import { ChangeTrimModal } from "./modal/ChangeTrimModal";
+import { ChangeTrimModal } from "../modal/ChangeTrimModal";
 import { OptionImageBoxDiv, OptionDiv, OptionTitleDiv } from "./styles";
 
 export const IntColor = () => {
@@ -101,12 +101,8 @@ export const IntColor = () => {
 
   return (
     <>
-      {changeableModelInfo !== undefined && (
-        <ChangeTrimModal
-          isOpenChangeTrimModal={isOpenChangeTrimModal}
-          newModelInfo={changeableModelInfo}
-          onClose={onClose}
-        />
+      {changeableModelInfo !== undefined && isOpenChangeTrimModal && (
+        <ChangeTrimModal newModelInfo={changeableModelInfo} onClose={onClose} />
       )}
       <OptionDiv>
         <OptionTitleDiv>

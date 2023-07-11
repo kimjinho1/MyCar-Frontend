@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { trimInfosState } from "@/stores";
+import { trimInfosState } from "@/stores/modelState";
 import { useRecoilValue } from "recoil";
 
 export const TrimList = () => {

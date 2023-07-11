@@ -1,10 +1,12 @@
 import styled from "styled-components";
 
-import { modelInfoState } from "@/stores";
+import { modelInfoState } from "@/stores/modelState";
 import { useRecoilValue } from "recoil";
+import { getTotalPriceState } from "@/stores/optionState";
 
 export const Preview = () => {
   const modelInfo = useRecoilValue(modelInfoState);
+  const totalPrice = useRecoilValue(getTotalPriceState);
 
   return (
     <PreviewDiv>
@@ -12,7 +14,7 @@ export const Preview = () => {
         <h2>{`${modelInfo.carName} - ${modelInfo.trimName}`}</h2>
         <HeadPriceDiv>
           <span>총 차량 가격</span>
-          <b>{modelInfo.price.toLocaleString()} 원</b>
+          <b>{totalPrice.toLocaleString()} 원</b>
         </HeadPriceDiv>
       </HeadDiv>
       <ModelInfoDiv>

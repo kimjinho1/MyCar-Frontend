@@ -2,21 +2,21 @@ import styled from "styled-components";
 
 import { useNavigate, useParams } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
+import { carInfoState } from "@/stores/carState";
 import {
   driveCodeState,
   engineCodeState,
   missionCodeState,
-  carInfoState,
   modelFiltersState,
   trimInfosState,
-} from "@/stores";
+} from "@/stores/modelState";
 import { useEffect } from "react";
 import {
+  SelectModelHeader,
   FilterList,
   NoticeList,
   TrimList,
 } from "../components/SelectModelPage";
-import { SelectModelHeader } from "@/layouts/SelectModelHeader";
 import { getCarInfo, getModelFilters, getTrimInfos } from "@/apis/model";
 
 export const SelectModelPage = () => {

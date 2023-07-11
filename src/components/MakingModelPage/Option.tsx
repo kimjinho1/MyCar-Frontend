@@ -1,8 +1,9 @@
 import styled from "styled-components";
-import { categorizedOptionState, modelInfoState } from "@/stores";
 import { useRecoilValue } from "recoil";
 import { OptionDiv, OptionTitleDiv } from "./styles";
 import { OptionGrid } from "./OptionGrid";
+import { modelInfoState } from "@/stores/modelState";
+import { categorizedOptionState } from "@/stores/optionState";
 
 export const Option = () => {
   const modelInfo = useRecoilValue(modelInfoState);

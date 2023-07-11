@@ -1,15 +1,28 @@
 import React from "react";
 import styled from "styled-components";
+import shouldForwardProp from "@styled-system/should-forward-prop";
 
 type PopUpModalProps = {
   onClose: () => void;
+  widthPercent: number;
   children: React.ReactNode;
 };
 
-export const PopUpModal = ({ onClose, children }: PopUpModalProps) => {
+type ModalContainerProps = {
+  widthPercent: number;
+};
+
+export const PopUpModal = ({
+  onClose,
+  widthPercent,
+  children,
+}: PopUpModalProps) => {
   return (
     <ModalOutside onClick={onClose}>
-      <ModalContainer onClick={(e: React.MouseEvent) => e.stopPropagation()}>
+      <ModalContainer
+        widthPercent={widthPercent}
+        onClick={(e: React.MouseEvent) => e.stopPropagation()}
+      >
         <XButton onClick={onClose}>&times;</XButton>
         {children}
       </ModalContainer>
@@ -18,7 +31,7 @@ export const PopUpModal = ({ onClose, children }: PopUpModalProps) => {
 };
 
 export const ModalOutside = styled.div`
-  position: absolute;
+  position: fixed;
   top: 0%;
   left: 50%;
   transform: translate(-50%, 0%);
@@ -28,7 +41,10 @@ export const ModalOutside = styled.div`
   z-index: 300;
 `;
 
-export const ModalContainer = styled.div`
+export const ModalContainer = styled.div.withConfig({
+  shouldForwardProp: (prop, defaultValidatorFn) =>
+    shouldForwardProp(prop) && !["widthPercent"].includes(prop),
+})<ModalContainerProps>`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -38,7 +54,7 @@ export const ModalContainer = styled.div`
   box-shadow: 0 3px 4px rgba(0, 0, 0, 0.2);
 
   position: absolute;
-  width: 80%;
+  width: ${(props) => props.widthPercent}%;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
