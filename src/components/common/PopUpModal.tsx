@@ -18,7 +18,7 @@ export const PopUpModal = ({ onClose, children }: PopUpModalProps) => {
 };
 
 export const ModalOutside = styled.div`
-  position: absolute;
+  position: fixed;
   top: 0%;
   left: 50%;
   transform: translate(-50%, 0%);
