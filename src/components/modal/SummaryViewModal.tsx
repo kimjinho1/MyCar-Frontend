@@ -13,11 +13,11 @@ import { selectedOptionState, getTotalPriceState } from "@/stores/optionState";
 import { useRecoilValue } from "recoil";
 import { useNavigate } from "react-router-dom";
 
-interface ModelSummaryModalProps {
+interface SummaryViewModalProps {
   onClose: () => void;
 }
 
-export const ModelSummaryModal = ({ onClose }: ModelSummaryModalProps) => {
+export const SummaryViewModal = ({ onClose }: SummaryViewModalProps) => {
   const navigate = useNavigate();
 
   const modelInfo = useRecoilValue(modelInfoState);

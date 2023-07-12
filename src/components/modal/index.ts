@@ -1,2 +1,2 @@
 export * from "./ChangeTrimModal";
-export * from "./ModelSummaryModal";
+export * from "./SummaryViewModal";

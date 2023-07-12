@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Logo } from "@/components/common";
 import { VerticalLine } from "@/components/common/VerticalLine";
 import { useState } from "react";
-import { ModelSummaryModal } from "../modal";
+import { SummaryViewModal } from "../modal";
 import { carInfoState } from "@/stores/carState";
 
 export const MakingModelHeader = () => {
@@ -31,7 +31,7 @@ export const MakingModelHeader = () => {
 
   return (
     <>
-      {isOpenModelSummaryModal && <ModelSummaryModal onClose={onClose} />}
+      {isOpenModelSummaryModal && <SummaryViewModal onClose={onClose} />}
       <MakingModelHeaderDiv>
         <Logo carName={carName} />
         <StepWrap>
