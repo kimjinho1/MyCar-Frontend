@@ -4,16 +4,14 @@ import { modelInfoState } from "@/stores/modelState";
 import { newIntColorState } from "@/stores/colorState";
 import { useRecoilValue } from "recoil";
 import { useNavigate } from "react-router-dom";
-import { PopUpModal } from "@/components/common";
+import { ModalConfirmButton, PopUpModal } from "@/components/common";
 
 interface ChangeTrimModalProps {
-  isOpen: boolean;
   newModelInfo: ChangeableCarModelsWithTrim;
   onClose: () => void;
 }
 
 export const ChangeTrimModal = ({
-  isOpen,
   newModelInfo,
   onClose,
 }: ChangeTrimModalProps) => {
@@ -24,65 +22,66 @@ export const ChangeTrimModal = ({
 
   const changePrice = newModelInfo.modelPrice - modelInfo.price;
 
-  const handleOkClick = () => {
+  const handleConfirmClick = () => {
     navigate(`/model/making/${newModelInfo.modelCode}`);
     onClose();
   };
 
   return (
-    <div>
-      {isOpen && (
-        <PopUpModal onClose={onClose} widthPercent={80}>
-          <HeadText>
-            {`${newIntColor.name} 색상은 트림 변경 후 선택 가능합니다.`}
-          </HeadText>
-          <ConfirmText>트림을 변경하시겠습니까?</ConfirmText>
-          <TrimInfoContainer>
-            <TrimInfoDiv>
-              <p>현재 트림</p>
-              <TrimInfoWrap>
-                <img
-                  src={import.meta.env.VITE_BACKEND_URL + modelInfo.imagePath}
-                />
-                <TrimInfoTextDiv>
-                  <p>{modelInfo.trimName}</p>
-                  <b>{modelInfo.price.toLocaleString()} 원</b>
-                </TrimInfoTextDiv>
-              </TrimInfoWrap>
-            </TrimInfoDiv>
-            <span>{`>`}</span>
-            <TrimInfoDiv>
-              <p>변경 트림</p>
-              <TrimInfoWrap>
-                <img
-                  src={
-                    import.meta.env.VITE_BACKEND_URL +
-                    newModelInfo.modelImagePath
-                  }
-                />
-                <TrimInfoTextDiv>
-                  <p>{newModelInfo.trimName}</p>
-                  <b>{newModelInfo.modelPrice.toLocaleString()} 원</b>
-                </TrimInfoTextDiv>
-              </TrimInfoWrap>
-            </TrimInfoDiv>
-          </TrimInfoContainer>
-          <PriceInfoDiv>
-            <p>변경 금액</p>
-            <span>
-              {changePrice > 0
-                ? `+${changePrice.toLocaleString()}`
-                : changePrice.toLocaleString()}{" "}
-              원
-            </span>
-          </PriceInfoDiv>
-          <ButtonContainer>
-            <CancelButton onClick={onClose}>취소</CancelButton>
-            <OkButton onClick={() => handleOkClick()}>확인</OkButton>
-          </ButtonContainer>
-        </PopUpModal>
-      )}
-    </div>
+    <PopUpModal onClose={onClose} widthPercent={80}>
+      <HeadText>
+        {`${newIntColor.name} 색상은 트림 변경 후 선택 가능합니다.`}
+      </HeadText>
+      <ConfirmText>트림을 변경하시겠습니까?</ConfirmText>
+      <TrimInfoContainer>
+        <TrimInfoDiv>
+          <p>현재 트림</p>
+          <TrimInfoWrap>
+            <img src={import.meta.env.VITE_BACKEND_URL + modelInfo.imagePath} />
+            <TrimInfoTextDiv>
+              <p>{modelInfo.trimName}</p>
+              <b>{modelInfo.price.toLocaleString()} 원</b>
+            </TrimInfoTextDiv>
+          </TrimInfoWrap>
+        </TrimInfoDiv>
+        <span>{`>`}</span>
+        <TrimInfoDiv>
+          <p>변경 트림</p>
+          <TrimInfoWrap>
+            <img
+              src={
+                import.meta.env.VITE_BACKEND_URL + newModelInfo.modelImagePath
+              }
+            />
+            <TrimInfoTextDiv>
+              <p>{newModelInfo.trimName}</p>
+              <b>{newModelInfo.modelPrice.toLocaleString()} 원</b>
+            </TrimInfoTextDiv>
+          </TrimInfoWrap>
+        </TrimInfoDiv>
+      </TrimInfoContainer>
+      <PriceInfoDiv>
+        <p>변경 금액</p>
+        <b>
+          {changePrice > 0
+            ? `+${changePrice.toLocaleString()}`
+            : changePrice.toLocaleString()}{" "}
+          원
+        </b>
+      </PriceInfoDiv>
+      <ButtonContainer>
+        <ModalConfirmButton widthPx={80} isConfirm={false} onClick={onClose}>
+          취소
+        </ModalConfirmButton>
+        <ModalConfirmButton
+          widthPx={80}
+          isConfirm={true}
+          onClick={handleConfirmClick}
+        >
+          확인
+        </ModalConfirmButton>
+      </ButtonContainer>
+    </PopUpModal>
   );
 };
 
@@ -174,10 +173,8 @@ const PriceInfoDiv = styled.div`
     font-size: 12px;
   }
 
-  > span {
-    margin: 0;
+  > b {
     font-size: 13px;
-    font-weight: bold;
     color: #007fa8;
   }
 `;
@@ -188,24 +185,4 @@ const ButtonContainer = styled.div`
   align-items: center;
   gap: 3px;
   margin: 40px 0;
-`;
-
-export const CancelButton = styled.button`
-  width: 80px;
-  padding: 7px 0;
-  background: #666;
-  font-size: 11px;
-  color: white;
-  border: none;
-  cursor: pointer;
-`;
-
-export const OkButton = styled.button`
-  width: 80px;
-  padding: 7px 0;
-  background: #313c7a;
-  font-size: 11px;
-  color: white;
-  border: none;
-  cursor: pointer;
 `;
