@@ -83,7 +83,7 @@ const OptionGridWrap = styled.div.withConfig({
 
 const OptionInfoDiv = styled.div`
   width: 80%;
-  height: 80px;
+  height: 70px;
   display: flex;
   flex-direction: column;
   padding: 10px 0;
@@ -98,7 +98,7 @@ const OptionInfoDiv = styled.div`
 
   > span {
     align-self: flex-start;
-    font-size: 10px;
+    font-size: 11px;
     color: #666;
   }
 `;
