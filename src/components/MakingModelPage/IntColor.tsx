@@ -101,12 +101,8 @@ export const IntColor = () => {
 
   return (
     <>
-      {changeableModelInfo !== undefined && (
-        <ChangeTrimModal
-          isOpen={isOpenChangeTrimModal}
-          newModelInfo={changeableModelInfo}
-          onClose={onClose}
-        />
+      {changeableModelInfo !== undefined && isOpenChangeTrimModal && (
+        <ChangeTrimModal newModelInfo={changeableModelInfo} onClose={onClose} />
       )}
       <OptionDiv>
         <OptionTitleDiv>

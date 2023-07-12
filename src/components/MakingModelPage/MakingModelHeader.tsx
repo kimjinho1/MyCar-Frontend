@@ -31,7 +31,7 @@ export const MakingModelHeader = () => {
 
   return (
     <>
-      <ModelSummaryModal isOpen={isOpenModelSummaryModal} onClose={onClose} />
+      {isOpenModelSummaryModal && <ModelSummaryModal onClose={onClose} />}
       <MakingModelHeaderDiv>
         <Logo carName={carName} />
         <StepWrap>
@@ -44,7 +44,7 @@ export const MakingModelHeader = () => {
           <StepDiv>
             <strong>02&nbsp;&nbsp;내 차 만들기</strong>
           </StepDiv>
-          <RightAlignedStepDiv onClick={() => handleOnClick()}>
+          <RightAlignedStepDiv onClick={handleOnClick}>
             <p>요약 보기</p>
           </RightAlignedStepDiv>
         </StepWrap>
