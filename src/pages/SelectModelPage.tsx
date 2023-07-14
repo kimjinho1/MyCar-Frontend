@@ -18,6 +18,7 @@ import {
   TrimList,
 } from "../components/SelectModelPage";
 import { getCarInfo, getModelFilters, getTrimInfos } from "@/apis/model";
+import { ROUTE_PATH } from "@/Router";
 
 export const SelectModelPage = () => {
   const { carCode } = useParams();
@@ -61,7 +62,7 @@ export const SelectModelPage = () => {
           const trimInfos = await getTrimInfos(getTrimInfosParam);
           setTrimInfos(trimInfos);
         } catch (error) {
-          navigate("/");
+          navigate(ROUTE_PATH.ROOT);
         }
       }
     };

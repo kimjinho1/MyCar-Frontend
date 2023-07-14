@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { ROUTE_PATH } from "@/Router";
 
 type LogoProps = {
   carName: string;
@@ -8,13 +9,13 @@ type LogoProps = {
 export const Logo = ({ carName }: LogoProps) => {
   const navigate = useNavigate();
   const handleClick = () => {
-    navigate("/");
+    navigate(ROUTE_PATH.ROOT);
   };
 
   return (
     <LogoDiv>
       <img src={"/Logo.svg"} alt="현대 로고" onClick={handleClick} />
-      {carName === "" ? null : <p>{carName}</p>}
+      {carName && <p>{carName}</p>}
     </LogoDiv>
   );
 };

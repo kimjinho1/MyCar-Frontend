@@ -3,11 +3,17 @@ import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
 import { MainPage, SelectModelPage, MakingModelPage } from "@/pages";
 import { Layout } from "@/components/common/Layout";
 
+export const ROUTE_PATH = {
+  ROOT: "/",
+  SELECT_MODEL: (carCode: string) => `/model/${carCode}`,
+  MAKING_MODEL: (modelCode: string) => `/model/making/${modelCode}`,
+};
+
 const RedirectComponent: React.FC = () => {
   const navigate = useNavigate();
 
   React.useEffect(() => {
-    navigate("/");
+    navigate(ROUTE_PATH.ROOT);
   }, [navigate]);
 
   return null;

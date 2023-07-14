@@ -4,8 +4,9 @@ import { useNavigate } from "react-router-dom";
 import { Logo } from "@/components/common";
 import { VerticalLine } from "@/components/common/VerticalLine";
 import { useState } from "react";
-import { SummaryViewModal } from "../modal";
+import { SummaryViewModal } from "../modal/SummaryViewModal";
 import { carInfoState } from "@/stores/carState";
+import { ROUTE_PATH } from "@/Router";
 
 export const MakingModelHeader = () => {
   const carInfo = useRecoilValue(carInfoState);
@@ -15,7 +16,7 @@ export const MakingModelHeader = () => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate(`/model/${carCode}`);
+    navigate(ROUTE_PATH.SELECT_MODEL(carCode));
   };
 
   // 모달 관리

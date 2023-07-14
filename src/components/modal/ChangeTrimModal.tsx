@@ -5,6 +5,7 @@ import { newIntColorState } from "@/stores/colorState";
 import { useRecoilValue } from "recoil";
 import { useNavigate } from "react-router-dom";
 import { ModalConfirmButton, PopUpModal } from "@/components/common";
+import { ROUTE_PATH } from "@/Router";
 
 interface ChangeTrimModalProps {
   newModelInfo: ChangeableCarModelsWithTrim;
@@ -23,7 +24,7 @@ export const ChangeTrimModal = ({
   const changePrice = newModelInfo.modelPrice - modelInfo.price;
 
   const handleConfirmClick = () => {
-    navigate(`/model/making/${newModelInfo.modelCode}`);
+    navigate(ROUTE_PATH.MAKING_MODEL(newModelInfo.modelCode));
     onClose();
   };
 

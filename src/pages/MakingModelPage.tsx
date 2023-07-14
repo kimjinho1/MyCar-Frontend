@@ -21,6 +21,7 @@ import { getModelInfo } from "@/apis/model";
 import { carInfoState } from "@/stores/carState";
 import { modelInfoState } from "@/stores/modelState";
 import { optionsState } from "@/stores/optionState";
+import { ROUTE_PATH } from "@/Router";
 
 export const MakingModelPage = () => {
   const { modelCode } = useParams();
@@ -86,7 +87,7 @@ export const MakingModelPage = () => {
           );
         } catch (error) {
           alert(error.response.data.message);
-          navigate("/");
+          navigate(ROUTE_PATH.ROOT);
         }
       }
     };

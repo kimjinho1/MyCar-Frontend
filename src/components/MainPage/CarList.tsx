@@ -2,13 +2,14 @@ import styled from "styled-components";
 import { carListSelector } from "@/stores/carState";
 import { useRecoilValue } from "recoil";
 import { useNavigate } from "react-router-dom";
+import { ROUTE_PATH } from "@/Router";
 
 export const CarList = () => {
   const carList = useRecoilValue(carListSelector);
   const navigate = useNavigate();
 
   const handleCarInfoClick = (carCode: string) => {
-    navigate(`/model/${carCode}`);
+    navigate(ROUTE_PATH.SELECT_MODEL(carCode));
   };
 
   return (
