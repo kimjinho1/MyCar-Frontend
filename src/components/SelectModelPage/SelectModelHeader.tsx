@@ -6,11 +6,10 @@ import { VerticalLine } from "@/components/common/VerticalLine";
 
 export const SelectModelHeader = () => {
   const carInfo = useRecoilValue(carInfoState);
-  const carName = carInfo.name;
 
   return (
     <SelectModelHeaderDiv>
-      <Logo carName={carName} />
+      <Logo carName={carInfo.name} />
       <StepWrap>
         <StepDiv>
           <strong>01&nbsp;&nbsp;모델 선택</strong>

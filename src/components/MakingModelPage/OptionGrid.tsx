@@ -1,8 +1,9 @@
-import styled from "styled-components";
-import { useSetRecoilState } from "recoil";
-import { OptionImageBoxDiv } from "./styles";
+import { useImageUrl } from "@/hooks/useImageUrl";
 import { ExtendedOptionInfo, selectOptionState } from "@/stores/optionState";
 import shouldForwardProp from "@styled-system/should-forward-prop";
+import { useSetRecoilState } from "recoil";
+import styled from "styled-components";
+import { OptionImageBoxDiv } from "./styles";
 
 interface OptionGridProps {
   options: ExtendedOptionInfo[];
@@ -34,7 +35,7 @@ export const OptionGrid = ({ options }: OptionGridProps) => {
             <OptionImageBoxDiv
               height={"100px"}
               title={option.optionName}
-              imgurl={import.meta.env.VITE_BACKEND_URL + option.optionImagePath}
+              imgurl={useImageUrl(option.optionImagePath)}
               hover={false}
               isBlocked={!option.isSelectable}
               isSelected={option.isSelected}

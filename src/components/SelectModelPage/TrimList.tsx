@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { trimInfosState } from "@/stores/modelState";
 import { useRecoilValue } from "recoil";
 import { ROUTE_PATH } from "@/Router";
+import { useImageUrl } from "@/hooks/useImageUrl";
 
 export const TrimList = () => {
   const navigate = useNavigate();
@@ -23,9 +24,7 @@ export const TrimList = () => {
               <p>{trimInfo.modelPrice.toLocaleString()} 원</p>
             </TrimInfoDiv>
             <TrimImageDiv>
-              <img
-                src={import.meta.env.VITE_BACKEND_URL + trimInfo.modelImagePath}
-              />
+              <img src={useImageUrl(trimInfo.modelImagePath)} />
             </TrimImageDiv>
             <FilterSummaryDiv>
               <p>{trimInfo.filterSummary}</p>

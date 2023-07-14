@@ -1,18 +1,19 @@
 import styled from "styled-components";
 import { carTypesSelector, carTypeCodeState } from "@/stores/carState";
 import { useRecoilState, useRecoilValue } from "recoil";
+import { CarType } from "@/types/model";
 
-type CarTypeProps = {
+type CarTypeDivProps = {
   selected: boolean;
 };
 
 export const TabMenu = () => {
-  const [selectedCarTypeCode, SetselectedCarTypeCode] =
-    useRecoilState(carTypeCodeState);
   const carTypes = useRecoilValue(carTypesSelector);
+  const [selectedCarTypeCode, setSelectedCarTypeCode] =
+    useRecoilState(carTypeCodeState);
 
   const handleCarTypeClick = (carTypeCode: string) => {
-    SetselectedCarTypeCode(carTypeCode);
+    setSelectedCarTypeCode(carTypeCode);
   };
 
   return (
@@ -55,7 +56,7 @@ const TabMenuWrap = styled.div`
   }
 `;
 
-const CarTypeDiv = styled.div<CarTypeProps>`
+const CarTypeDiv = styled.div<CarTypeDivProps>`
   cursor: pointer;
 
   > p {

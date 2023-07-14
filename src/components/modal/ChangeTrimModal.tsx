@@ -1,11 +1,12 @@
 import styled from "styled-components";
-import { ChangeableCarModelsWithTrim } from "@/apis/color";
+import { ChangeableCarModelsWithTrim } from "@/types/color";
 import { modelInfoState } from "@/stores/modelState";
 import { newIntColorState } from "@/stores/colorState";
 import { useRecoilValue } from "recoil";
 import { useNavigate } from "react-router-dom";
 import { ModalConfirmButton, PopUpModal } from "@/components/common";
 import { ROUTE_PATH } from "@/Router";
+import { useImageUrl } from "@/hooks/useImageUrl";
 
 interface ChangeTrimModalProps {
   newModelInfo: ChangeableCarModelsWithTrim;
@@ -38,7 +39,7 @@ export const ChangeTrimModal = ({
         <TrimInfoDiv>
           <p>현재 트림</p>
           <TrimInfoWrap>
-            <img src={import.meta.env.VITE_BACKEND_URL + modelInfo.imagePath} />
+            <img src={useImageUrl(modelInfo.imagePath)} />
             <TrimInfoTextDiv>
               <p>{modelInfo.trimName}</p>
               <b>{modelInfo.price.toLocaleString()} 원</b>
@@ -49,11 +50,7 @@ export const ChangeTrimModal = ({
         <TrimInfoDiv>
           <p>변경 트림</p>
           <TrimInfoWrap>
-            <img
-              src={
-                import.meta.env.VITE_BACKEND_URL + newModelInfo.modelImagePath
-              }
-            />
+            <img src={useImageUrl(newModelInfo.modelImagePath)} />
             <TrimInfoTextDiv>
               <p>{newModelInfo.trimName}</p>
               <b>{newModelInfo.modelPrice.toLocaleString()} 원</b>

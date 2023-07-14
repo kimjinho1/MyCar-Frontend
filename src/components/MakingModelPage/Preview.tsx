@@ -22,7 +22,7 @@ export const Preview = () => {
         <button>모델 변경 &nbsp;{">"}</button>
       </ModelInfoDiv>
       {/* <CarImageDiv>
-        <img src={import.meta.env.VITE_BACKEND_URL + modelInfo.imagePath} />
+        <img src={useImageUrl(modelInfo.imagePath)} />
       </CarImageDiv> */}
     </PreviewDiv>
   );

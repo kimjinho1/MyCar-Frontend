@@ -1,13 +1,8 @@
-import { CarTypeWithCarInfos } from "@/apis/model";
+import { SelectedCarInfo, CarTypeWithCarInfos, CarType } from "@/types/model";
 import { atom, selector } from "recoil";
 
-type CarInfo = {
-  code: string;
-  name: string;
-};
-
 /** 선택된 차량 정보 */
-export const carInfoState = atom<CarInfo>({
+export const carInfoState = atom<SelectedCarInfo>({
   key: "carInfoState",
   default: {
     code: "",
@@ -28,7 +23,7 @@ export const carListState = atom<CarTypeWithCarInfos[]>({
 });
 
 /** GET: 차량 타입 정보들 */
-export const carTypesSelector = selector({
+export const carTypesSelector = selector<CarType[]>({
   key: "carTypesSelector",
   get: ({ get }) => {
     const carList = get(carListState);

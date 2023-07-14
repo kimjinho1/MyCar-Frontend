@@ -1,4 +1,4 @@
-import { IntColorInfo, ExtColorInfo } from "@/apis/color";
+import { ExtColorInfo, IntColorInfo } from "@/types/color";
 import { atom, selector } from "recoil";
 
 export type SelectedColor = {

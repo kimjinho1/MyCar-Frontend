@@ -1,20 +1,6 @@
-import { OptionInfo } from "@/apis/option";
+import { ExtendedOptionInfo } from "@/types/option";
 import { atom, selector } from "recoil";
 import { modelInfoState } from "./modelState";
-
-export type OptionInfo = {
-  optionId: number;
-  optionCode: string;
-  optionName: string;
-  optionPrice: number;
-  optionImagePath: string;
-  optionTypeName: string;
-  isSelectable: boolean;
-};
-
-export type ExtendedOptionInfo = OptionInfo & {
-  isSelected: boolean;
-};
 
 /** 옵션들 정보 */
 export const optionsState = atom<ExtendedOptionInfo[]>({
