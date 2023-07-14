@@ -96,16 +96,27 @@ export const MakingModelPage = () => {
   return (
     <MakingModelPageDiv>
       <MakingModelHeader />
-      <Preview />
-      <ExtColor />
-      <IntColor />
-      <Option />
+      <MakingModelPageWrap>
+        <Preview />
+        <ExtColor />
+        <IntColor />
+        <Option />
+      </MakingModelPageWrap>
     </MakingModelPageDiv>
   );
 };
 
 const MakingModelPageDiv = styled.div`
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const MakingModelPageWrap = styled.div`
+  width: 100%;
+  max-width: 800px;
   display: flex;
   flex-direction: column;
   justify-content: center;
