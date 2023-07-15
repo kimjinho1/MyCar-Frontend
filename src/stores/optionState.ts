@@ -1,11 +1,29 @@
-import { ExtendedOptionInfo } from "@/types/option";
+import { OptionInfo } from "@/types/option";
 import { atom, selector } from "recoil";
 import { modelInfoState } from "./modelState";
 
 /** 옵션들 정보 */
-export const optionsState = atom<ExtendedOptionInfo[]>({
+export const optionsState = atom<Map<string, OptionInfo>>({
   key: "optionsState",
-  default: [],
+  default: new Map(),
+});
+
+/** 선택된 옵션 코드들 */
+export const optionCodesState = atom<Set<string>>({
+  key: "optionCodesState",
+  default: new Set(),
+});
+
+/** TUIX들 정보 */
+export const tuixsState = atom<Map<string, OptionInfo>>({
+  key: "tuixsState",
+  default: new Map(),
+});
+
+/** 선택된 TUIX 코드들 */
+export const tuixCodesState = atom<Set<string>>({
+  key: "tuixCodesState",
+  default: new Set(),
 });
 
 /** SET: 옵션 선택 */
@@ -15,13 +33,14 @@ export const selectOptionState = selector<string>({
     throw new Error("Cannot get value of selectedOptionState selector");
   },
   set: ({ set, get }, optionCode) => {
-    const options = get(optionsState);
-    const newOptions = options.map((option) =>
-      option.optionCode === optionCode
-        ? { ...option, isSelected: !option.isSelected }
-        : option
-    );
-    set(optionsState, newOptions);
+    if (typeof optionCode === "string") {
+      const optionCodes = get(optionCodesState);
+      const newOptionCodes = new Set(optionCodes);
+      newOptionCodes.has(optionCode)
+        ? newOptionCodes.delete(optionCode)
+        : newOptionCodes.add(optionCode);
+      set(optionCodesState, newOptionCodes);
+    }
   },
 });
 
@@ -30,9 +49,10 @@ export const categorizedOptionState = selector({
   key: "categorizedOptionState",
   get: ({ get }) => {
     const options = get(optionsState);
-    const categorizedOptions = options.reduce<{
-      [key: string]: ExtendedOptionInfo[];
-    }>((acc, option) => {
+    const tuixs = get(tuixsState);
+    const categorizedOptions = [...options].concat([...tuixs]).reduce<{
+      [key: string]: OptionInfo[];
+    }>((acc, [optionCode, option]) => {
       const { optionTypeName } = option;
       if (!acc[optionTypeName]) {
         acc[optionTypeName] = [];
@@ -45,17 +65,19 @@ export const categorizedOptionState = selector({
   },
 });
 
-/** GET: 선택된 옵션들의 정보*/
+/** GET: 선택된 옵션들의 정보 */
 export const selectedOptionState = selector({
   key: "selectedOptionState",
   get: ({ get }) => {
     const options = get(optionsState);
-    const selectedOptions = options.filter((option) => option.isSelected);
-    return selectedOptions;
+    const optionCodes = get(optionCodesState);
+    return Array.from(options.values()).filter((option) =>
+      optionCodes.has(option.optionCode)
+    );
   },
 });
 
-/** GET: 총 가격*/
+/** GET: 총 가격 */
 export const getTotalPriceState = selector({
   key: "getTotalPriceState",
   get: ({ get }) => {

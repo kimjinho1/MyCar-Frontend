@@ -1,12 +1,15 @@
 import { useImageUrl } from "@/hooks/useImageUrl";
-import { ExtendedOptionInfo, selectOptionState } from "@/stores/optionState";
+import { optionCodesState, selectOptionState } from "@/stores/optionState";
 import shouldForwardProp from "@styled-system/should-forward-prop";
-import { useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { OptionImageBoxDiv } from "./styles";
+import { OptionInfo, OPTION_TYPE } from "@/types/option";
+import { useParams } from "react-router-dom";
+import { useUpdateOption } from "@/hooks/useUpdateOption";
 
 interface OptionGridProps {
-  options: ExtendedOptionInfo[];
+  options: OptionInfo[];
 }
 
 export interface OptionGridWrapProps {
@@ -14,23 +17,32 @@ export interface OptionGridWrapProps {
 }
 
 export const OptionGrid = ({ options }: OptionGridProps) => {
-  const setSelectOption = useSetRecoilState(selectOptionState);
+  const { modelCode } = useParams();
+  const optionCodes = useRecoilValue(optionCodesState);
+  const updateOption = useUpdateOption();
 
-  const handleIntColorBtnClick = (option: ExtendedOptionInfo) => {
+  const handleOptionClick = (option: OptionInfo) => {
     if (!option.isSelectable) {
       return;
     }
-    setSelectOption(option.optionCode);
+
+    updateOption(modelCode, option.optionCode);
   };
 
   return (
     <OptionGridDiv>
       {options.map((option) => {
+        if (
+          option.optionTypeName !== OPTION_TYPE.DETAIL &&
+          option.isSelectable === false
+        ) {
+          return null;
+        }
         return (
           <OptionGridWrap
             key={option.optionCode}
-            onClick={() => handleIntColorBtnClick(option)}
-            isSelected={option.isSelected}
+            onClick={() => handleOptionClick(option)}
+            isSelected={optionCodes.has(option.optionCode)}
           >
             <OptionImageBoxDiv
               height={"100px"}
@@ -38,7 +50,7 @@ export const OptionGrid = ({ options }: OptionGridProps) => {
               imgurl={useImageUrl(option.optionImagePath)}
               hover={false}
               isBlocked={!option.isSelectable}
-              isSelected={option.isSelected}
+              isSelected={optionCodes.has(option.optionCode)}
             />
             <OptionInfoDiv>
               <p>{option.optionName}</p>

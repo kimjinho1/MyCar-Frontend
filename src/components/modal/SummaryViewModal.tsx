@@ -69,7 +69,7 @@ export const SummaryViewModal = ({ onClose }: SummaryViewModalProps) => {
             <SelectedInfoListDiv>
               {options.map((option) => {
                 return (
-                  <SelectedInfoDiv>
+                  <SelectedInfoDiv key={option.optionCode}>
                     <p>{option.optionName}</p>
                     <b>{option.optionPrice.toLocaleString()} 원</b>
                   </SelectedInfoDiv>

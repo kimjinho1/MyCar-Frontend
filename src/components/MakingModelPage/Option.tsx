@@ -35,18 +35,21 @@ export const Option = () => {
         </>
       )}
 
-      {categorizedOptions["performance"] && (
-        <>
-          <TuixTitleDiv>
-            <img src={"/Performance.svg"} />
-            <p>
-              현대자동차의 모터스포츠 기술력과 노하우, 그리고 N의 유전자가
-              결합되어 지금까지 경험하지 못한 고성능 감성을 제시합니다.
-            </p>
-          </TuixTitleDiv>
-          <OptionGrid options={categorizedOptions["performance"]} />
-        </>
-      )}
+      {categorizedOptions["performance"] &&
+        categorizedOptions["performance"].filter(
+          (option) => option.isSelectable
+        ).length > 0 && (
+          <>
+            <TuixTitleDiv>
+              <img src={"/Performance.svg"} />
+              <p>
+                현대자동차의 모터스포츠 기술력과 노하우, 그리고 N의 유전자가
+                결합되어 지금까지 경험하지 못한 고성능 감성을 제시합니다.
+              </p>
+            </TuixTitleDiv>
+            <OptionGrid options={categorizedOptions["performance"]} />
+          </>
+        )}
     </OptionDiv>
   );
 };

@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import { ChangeableCarModelsWithTrim } from "@/types/color";
 import { modelInfoState } from "@/stores/modelState";
-import { newIntColorState } from "@/stores/colorState";
-import { useRecoilValue } from "recoil";
+import { newIntColorState, selectedIntColorState } from "@/stores/colorState";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
 import { ModalConfirmButton, PopUpModal } from "@/components/common";
 import { ROUTE_PATH } from "@/Router";
@@ -20,11 +20,16 @@ export const ChangeTrimModal = ({
   const navigate = useNavigate();
 
   const modelInfo = useRecoilValue(modelInfoState);
+  const setSelectedIntColor = useSetRecoilState(selectedIntColorState);
   const newIntColor = useRecoilValue(newIntColorState);
 
   const changePrice = newModelInfo.modelPrice - modelInfo.price;
 
   const handleConfirmClick = () => {
+    setSelectedIntColor({
+      code: newIntColor.code,
+      name: newIntColor.name,
+    });
     navigate(ROUTE_PATH.MAKING_MODEL(newModelInfo.modelCode));
     onClose();
   };
