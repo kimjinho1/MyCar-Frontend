@@ -54,6 +54,7 @@ export const ModalContainer = styled.div.withConfig({
   box-shadow: 0 3px 4px rgba(0, 0, 0, 0.2);
 
   position: absolute;
+  max-width: 700px;
   width: ${(props) => props.widthPercent}%;
   top: 50%;
   left: 50%;
