@@ -45,9 +45,8 @@ export const IntColor = () => {
     if (!intColorInfo.isSelectable) {
       fetchChangeableCarModelWithTrim(
         modelInfo.code,
-        intColorCode,
-        intColorName,
-        selectedExtColor.code,
+        { code: intColorCode, name: intColorName },
+        selectedExtColor,
         setIsOpenChangeTrimModal,
         setChangeableModelInfo
       );

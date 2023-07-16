@@ -1,17 +1,21 @@
 import * as React from "react";
 import { getChangeableCarModelsWithTrim } from "@/services/color";
-import { newIntColorState } from "@/stores/colorState";
+import {
+  SelectedColor,
+  newExtColorState,
+  newIntColorState,
+} from "@/stores/colorState";
 import { ChangeableCarModelsWithTrim } from "@/types/color";
 import { useSetRecoilState } from "recoil";
 
 export const useFetchChangeableCarModelWithTrim = () => {
   const setNewIntColor = useSetRecoilState(newIntColorState);
+  const setNewExtColor = useSetRecoilState(newExtColorState);
 
   const fetchChangeableCarModelWithTrim = async (
     modelCode: string,
-    intColorCode: string,
-    intColorName: string,
-    selectedExtColorCode: string,
+    intColor: SelectedColor,
+    extColor: SelectedColor,
     setIsOpenChangeTrimModal: React.Dispatch<React.SetStateAction<boolean>>,
     setChangeableModelInfo: React.Dispatch<
       React.SetStateAction<ChangeableCarModelsWithTrim | undefined>
@@ -20,13 +24,17 @@ export const useFetchChangeableCarModelWithTrim = () => {
     try {
       const data = await getChangeableCarModelsWithTrim(
         modelCode,
-        intColorCode,
-        selectedExtColorCode
+        intColor.code,
+        extColor.code
       );
       setChangeableModelInfo(data);
       setNewIntColor({
-        code: intColorCode,
-        name: intColorName,
+        code: intColor.code,
+        name: intColor.name,
+      });
+      setNewExtColor({
+        code: extColor.code,
+        name: extColor.name,
       });
       setIsOpenChangeTrimModal(true);
     } catch (error) {

@@ -1,5 +1,5 @@
 import { ExtColorInfo, IntColorInfo } from "@/types/color";
-import { atom, selector } from "recoil";
+import { atom } from "recoil";
 
 export type SelectedColor = {
   code: string;
@@ -36,22 +36,8 @@ export const newIntColorState = atom<SelectedColor>({
   default: { code: "", name: "" },
 });
 
-/** 차량 외부 이미지 번호(1 ~ 60) */
-export const carExtPreviewNumState = atom<number>({
-  key: "carExtPreviewNumState",
-  default: 1,
+/** 선택하고 싶은 내장색상 코드 */
+export const newExtColorState = atom<SelectedColor>({
+  key: "newExtColorState",
+  default: { code: "", name: "" },
 });
-
-/** GET: 차량 외부 이미지 경로 */
-// export const carExtPrivewPathSelector = selector({
-//   key: "carExtPrivewPathSelector",
-//   get: ({ get }) => {
-//     const carList = get(carListState);
-//     return carList.map((carInfo) => {
-//       return {
-//         carTypeCode: carInfo.carTypeCode,
-//         carTypeName: carInfo.carTypeName,
-//       };
-//     });
-//   },
-// });
