@@ -7,6 +7,8 @@ import { useNavigate } from "react-router-dom";
 import { ModalConfirmButton, PopUpModal } from "@/components/common";
 import { ROUTE_PATH } from "@/Router";
 import { useImageUrl } from "@/hooks/utils/useImageUrl";
+import { PriceInfo } from "./PriceInfo";
+import { ButtonContainer } from "./styles";
 
 interface ChangeTrimModalProps {
   newModelInfo: ChangeableCarModelsWithTrim;
@@ -63,15 +65,7 @@ export const ChangeTrimModal = ({
           </TrimInfoWrap>
         </TrimInfoDiv>
       </TrimInfoContainer>
-      <PriceInfoDiv>
-        <p>변경 금액</p>
-        <b>
-          {changePrice > 0
-            ? `+${changePrice.toLocaleString()}`
-            : changePrice.toLocaleString()}{" "}
-          원
-        </b>
-      </PriceInfoDiv>
+      <PriceInfo price={changePrice} />
       <ButtonContainer>
         <ModalConfirmButton widthPx={80} isConfirm={false} onClick={onClose}>
           취소
@@ -161,31 +155,4 @@ const TrimInfoTextDiv = styled.div`
     margin: 0;
     font-size: 15px;
   }
-`;
-
-const PriceInfoDiv = styled.div`
-  width: 80%;
-  padding: 0 10px;
-  margin-top: 15px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  > p {
-    margin: 0;
-    font-size: 12px;
-  }
-
-  > b {
-    font-size: 13px;
-    color: #007fa8;
-  }
-`;
-
-const ButtonContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 3px;
-  margin: 40px 0;
 `;
