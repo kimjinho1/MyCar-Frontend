@@ -19,6 +19,15 @@ export const getAddPossibleOptions = async (
   );
 };
 
+export const getAddTogetherOptions = async (
+  modelCode: string,
+  optionCode: string
+): Promise<OptionInfo[]> => {
+  return await apiInstance.get<OptionInfo[]>(
+    `/option/add-together?modelCode=${modelCode}&optionCode=${optionCode}`
+  );
+};
+
 export const getDisableOptions = async (
   modelCode: string,
   optionCode: string

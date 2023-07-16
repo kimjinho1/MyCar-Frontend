@@ -8,7 +8,6 @@ import {
 } from "../components/MakingModelPage";
 import { useFetchCarAndModel } from "@/hooks/useFetchCarAndModel";
 import { useFetchColors } from "@/hooks/useFetchColors";
-import { useFetchOption } from "@/hooks/useFetchOption";
 import { optionCodesState } from "@/stores/optionState";
 import { useResetRecoilState } from "recoil";
 import { useEffect } from "react";
@@ -20,7 +19,6 @@ export const MakingModelPage = () => {
 
   const fetchCarAndModel = useFetchCarAndModel();
   const fetchColors = useFetchColors();
-  useFetchOption();
 
   useEffect(() => {
     if (modelCode !== undefined) {

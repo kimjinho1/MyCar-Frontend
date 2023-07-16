@@ -1,32 +1,29 @@
 import styled from "styled-components";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import {
-  HorizontalLine,
-  ModalConfirmButton,
-  PopUpModal,
-} from "@/components/common";
+import { ModalConfirmButton, PopUpModal } from "@/components/common";
 import { useImageUrl } from "@/hooks/utils/useImageUrl";
 import {
+  tuixsState,
   selectOptionState,
   changedOptionsState,
   optionsState,
-  tuixsState,
 } from "@/stores/optionState";
 import { PriceInfo } from "./PriceInfo";
 import { ButtonContainer } from "./styles";
 
-interface ChangeOptionModalProps {
+interface AddOptionModalProps {
   onClose: () => void;
 }
 
-export const ChangeOptionModal = ({ onClose }: ChangeOptionModalProps) => {
+export const AddOptionModal = ({ onClose }: AddOptionModalProps) => {
   const setOptions = useSetRecoilState(optionsState);
   const setTuixs = useSetRecoilState(tuixsState);
+
   const setSelectOption = useSetRecoilState(selectOptionState);
 
   const changedOptions = useRecoilValue(changedOptionsState);
-  const changePrice = changedOptions.remove.reduce(
-    (sum, option) => sum - option.optionPrice,
+  const changePrice = changedOptions.add.reduce(
+    (sum, option) => sum + option.optionPrice,
     0
   );
 
@@ -37,21 +34,20 @@ export const ChangeOptionModal = ({ onClose }: ChangeOptionModalProps) => {
     if (changedOptions.newTuixs !== null) {
       setTuixs(changedOptions.newTuixs);
     }
-    changedOptions.remove.map((option) => {
+    changedOptions.add.map((option) => {
       setSelectOption(option.optionCode);
     });
-    setSelectOption(changedOptions.optionCode);
     onClose();
   };
 
   return (
     <PopUpModal onClose={onClose} widthPercent={85}>
       <ChangeOptionModalDiv>
-        <p>삭제되는 품목</p>
+        <p>추과되는 품목</p>
         <OptionInfoWrap>
           {changedOptions &&
-            changedOptions.remove.length > 0 &&
-            changedOptions.remove.map((option) => {
+            changedOptions.add.length > 0 &&
+            changedOptions.add.map((option) => {
               return (
                 <OptionInfoDiv key={option.optionCode}>
                   <img src={useImageUrl(option.optionImagePath)} />
@@ -111,17 +107,6 @@ const OptionInfoDiv = styled.div`
   display: flex;
   align-items: center;
   border-bottom: grey 0.5px solid;
-
-  > div:not(:last-child)::after {
-    content: "";
-    width: 1px;
-    height: 50%;
-    background-color: grey;
-    position: absolute;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
-  }
 
   > img {
     width: 12%;

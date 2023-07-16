@@ -63,8 +63,6 @@ export const useUpdateOption = () => {
           ...removedDeleteOption,
         ];
         if (removedOptions.length > 0) {
-          console.log("remove: ", removedOptions);
-          console.log("isTuix:", tuixs.has(optionCode));
           setChangedOptions({
             optionCode: optionCode,
             newOptions: newOptions,

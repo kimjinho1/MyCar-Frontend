@@ -2,14 +2,15 @@ import styled from "styled-components";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { OptionDiv, OptionTitleDiv } from "./styles";
 import { OptionGrid } from "./OptionGrid";
-import { modelInfoState } from "@/stores/modelState";
 import { categorizedOptionState } from "@/stores/optionState";
 import { changeOptionModalState } from "@/stores/modalState";
 import { ChangeOptionModal } from "../modal/ChangeOptionModal";
+import { useFetchOption } from "@/hooks/useFetchOption";
 
 export const Option = () => {
-  const modelInfo = useRecoilValue(modelInfoState);
   const categorizedOptions = useRecoilValue(categorizedOptionState);
+
+  useFetchOption();
 
   const [changeOptionModal, setChangeOptionModal] = useRecoilState(
     changeOptionModalState
