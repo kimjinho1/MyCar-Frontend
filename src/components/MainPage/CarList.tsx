@@ -3,7 +3,7 @@ import { carListSelector } from "@/stores/carState";
 import { useRecoilValue } from "recoil";
 import { useNavigate } from "react-router-dom";
 import { ROUTE_PATH } from "@/Router";
-import { useImageUrl } from "@/hooks/useImageUrl";
+import { useImageUrl } from "@/hooks/utils/useImageUrl";
 
 export const CarList = () => {
   const carList = useRecoilValue(carListSelector);

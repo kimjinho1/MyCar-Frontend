@@ -6,7 +6,7 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
 import { ModalConfirmButton, PopUpModal } from "@/components/common";
 import { ROUTE_PATH } from "@/Router";
-import { useImageUrl } from "@/hooks/useImageUrl";
+import { useImageUrl } from "@/hooks/utils/useImageUrl";
 
 interface ChangeTrimModalProps {
   newModelInfo: ChangeableCarModelsWithTrim;

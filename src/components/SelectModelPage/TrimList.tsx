@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { trimInfosState } from "@/stores/modelState";
 import { useRecoilValue } from "recoil";
 import { ROUTE_PATH } from "@/Router";
-import { useImageUrl } from "@/hooks/useImageUrl";
+import { useImageUrl } from "@/hooks/utils/useImageUrl";
 
 export const TrimList = () => {
   const navigate = useNavigate();
