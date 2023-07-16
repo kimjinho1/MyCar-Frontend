@@ -1,4 +1,4 @@
-import { getTrimInfos } from "@/apis/model";
+import { getTrimInfos } from "@/services/model";
 import {
   driveCodeState,
   engineCodeState,
@@ -65,7 +65,7 @@ export const FilterList = () => {
 
   return (
     <FilterListDiv>
-      {engines.length < 2 ? null : (
+      {engines.length >= 2 && (
         <FilterContainer>
           <p>엔진</p>
           <FilterDiv>
@@ -83,7 +83,7 @@ export const FilterList = () => {
           </FilterDiv>
         </FilterContainer>
       )}
-      {missions.length < 2 ? null : (
+      {missions.length >= 2 && (
         <FilterContainer>
           <p>변속기</p>
           <FilterDiv>
@@ -100,7 +100,7 @@ export const FilterList = () => {
           </FilterDiv>
         </FilterContainer>
       )}
-      {drives.length < 2 ? null : (
+      {drives.length >= 2 && (
         <FilterContainer>
           <p>구동방식</p>
           <FilterDiv>

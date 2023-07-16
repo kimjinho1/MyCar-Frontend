@@ -1,10 +1,14 @@
 import styled from "styled-components";
-import { ChangeableCarModelsWithTrim } from "@/apis/color";
+import { ChangeableCarModelsWithTrim } from "@/types/color";
 import { modelInfoState } from "@/stores/modelState";
-import { newIntColorState } from "@/stores/colorState";
-import { useRecoilValue } from "recoil";
+import { newIntColorState, selectedIntColorState } from "@/stores/colorState";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
 import { ModalConfirmButton, PopUpModal } from "@/components/common";
+import { ROUTE_PATH } from "@/Router";
+import { useImageUrl } from "@/hooks/utils/useImageUrl";
+import { PriceInfo } from "./PriceInfo";
+import { ButtonContainer } from "./styles";
 
 interface ChangeTrimModalProps {
   newModelInfo: ChangeableCarModelsWithTrim;
@@ -18,12 +22,17 @@ export const ChangeTrimModal = ({
   const navigate = useNavigate();
 
   const modelInfo = useRecoilValue(modelInfoState);
+  const setSelectedIntColor = useSetRecoilState(selectedIntColorState);
   const newIntColor = useRecoilValue(newIntColorState);
 
   const changePrice = newModelInfo.modelPrice - modelInfo.price;
 
   const handleConfirmClick = () => {
-    navigate(`/model/making/${newModelInfo.modelCode}`);
+    setSelectedIntColor({
+      code: newIntColor.code,
+      name: newIntColor.name,
+    });
+    navigate(ROUTE_PATH.MAKING_MODEL(newModelInfo.modelCode));
     onClose();
   };
 
@@ -37,7 +46,7 @@ export const ChangeTrimModal = ({
         <TrimInfoDiv>
           <p>현재 트림</p>
           <TrimInfoWrap>
-            <img src={import.meta.env.VITE_BACKEND_URL + modelInfo.imagePath} />
+            <img src={useImageUrl(modelInfo.imagePath)} />
             <TrimInfoTextDiv>
               <p>{modelInfo.trimName}</p>
               <b>{modelInfo.price.toLocaleString()} 원</b>
@@ -48,11 +57,7 @@ export const ChangeTrimModal = ({
         <TrimInfoDiv>
           <p>변경 트림</p>
           <TrimInfoWrap>
-            <img
-              src={
-                import.meta.env.VITE_BACKEND_URL + newModelInfo.modelImagePath
-              }
-            />
+            <img src={useImageUrl(newModelInfo.modelImagePath)} />
             <TrimInfoTextDiv>
               <p>{newModelInfo.trimName}</p>
               <b>{newModelInfo.modelPrice.toLocaleString()} 원</b>
@@ -60,15 +65,7 @@ export const ChangeTrimModal = ({
           </TrimInfoWrap>
         </TrimInfoDiv>
       </TrimInfoContainer>
-      <PriceInfoDiv>
-        <p>변경 금액</p>
-        <b>
-          {changePrice > 0
-            ? `+${changePrice.toLocaleString()}`
-            : changePrice.toLocaleString()}{" "}
-          원
-        </b>
-      </PriceInfoDiv>
+      <PriceInfo price={changePrice} />
       <ButtonContainer>
         <ModalConfirmButton widthPx={80} isConfirm={false} onClick={onClose}>
           취소
@@ -158,31 +155,4 @@ const TrimInfoTextDiv = styled.div`
     margin: 0;
     font-size: 15px;
   }
-`;
-
-const PriceInfoDiv = styled.div`
-  width: 80%;
-  padding: 0 10px;
-  margin-top: 15px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  > p {
-    margin: 0;
-    font-size: 12px;
-  }
-
-  > b {
-    font-size: 13px;
-    color: #007fa8;
-  }
-`;
-
-const ButtonContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 3px;
-  margin: 40px 0;
 `;

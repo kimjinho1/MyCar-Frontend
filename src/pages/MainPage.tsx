@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import {
   MainHeader,
   MainTitle,
@@ -6,26 +5,10 @@ import {
   CarList,
   NoticeList,
 } from "../components/MainPage";
-import { carListState, carTypeCodeState } from "@/stores/carState";
-import { useSetRecoilState } from "recoil";
-import { getCarInfos } from "@/apis/model";
+import { useFetchCarList } from "@/hooks/useFetchCarList";
 
 export const MainPage = () => {
-  const SetselectedCarTypeCode = useSetRecoilState(carTypeCodeState);
-  const setCarInfos = useSetRecoilState(carListState);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await getCarInfos();
-        setCarInfos(data);
-        SetselectedCarTypeCode(data[0].carTypeCode);
-      } catch (error) {
-        alert("백엔드가 시딩이 안된 상태입니다.");
-      }
-    };
-    fetchData();
-  }, []);
+  useFetchCarList();
 
   return (
     <div>

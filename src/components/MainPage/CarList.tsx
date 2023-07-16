@@ -2,13 +2,15 @@ import styled from "styled-components";
 import { carListSelector } from "@/stores/carState";
 import { useRecoilValue } from "recoil";
 import { useNavigate } from "react-router-dom";
+import { ROUTE_PATH } from "@/Router";
+import { useImageUrl } from "@/hooks/utils/useImageUrl";
 
 export const CarList = () => {
   const carList = useRecoilValue(carListSelector);
   const navigate = useNavigate();
 
   const handleCarInfoClick = (carCode: string) => {
-    navigate(`/model/${carCode}`);
+    navigate(ROUTE_PATH.SELECT_MODEL(carCode));
   };
 
   return (
@@ -20,7 +22,7 @@ export const CarList = () => {
               key={car.carCode}
               onClick={() => handleCarInfoClick(car.carCode)}
             >
-              <img src={import.meta.env.VITE_BACKEND_URL + car.carImagePath} />
+              <img src={useImageUrl(car.carImagePath)} />
               <strong>{car.carName}</strong>
               <p>{(car.carLowPrice / 10000).toLocaleString()}만원 ~</p>
             </CarInfoDiv>

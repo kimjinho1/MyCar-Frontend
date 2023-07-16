@@ -1,22 +1,17 @@
-import styled from "styled-components";
-import { modelInfoState } from "@/stores/modelState";
+import { ChangeableCarModelsWithTrim, IntColorInfo } from "@/types/color";
 import {
-  selectedIntColorState,
   intColorInfosState,
   selectedExtColorState,
-  newIntColorState,
-  extColorInfosState,
+  selectedIntColorState,
 } from "@/stores/colorState";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import {
-  ChangeableCarModelsWithTrim,
-  IntColorInfo,
-  getChangeableCarModelsWithTrim,
-  getExtColorInfos,
-} from "@/apis/color";
+import { modelInfoState } from "@/stores/modelState";
 import { useState } from "react";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import styled from "styled-components";
 import { ChangeTrimModal } from "../modal/ChangeTrimModal";
-import { OptionImageBoxDiv, OptionDiv, OptionTitleDiv } from "./styles";
+import { OptionDiv, OptionImageBoxDiv, OptionTitleDiv } from "./styles";
+import { useUpdateExtColor } from "@/hooks/useUpdateExtColor";
+import { useFetchChangeableCarModelWithTrim } from "@/hooks/modal/useFetchChangeableCarModelWithTrim";
 
 export const IntColor = () => {
   const modelInfo = useRecoilValue(modelInfoState);
@@ -24,12 +19,10 @@ export const IntColor = () => {
     selectedIntColorState
   );
   const intColorInfos = useRecoilValue(intColorInfosState);
-  const setNewIntColor = useSetRecoilState(newIntColorState);
+  const selectedExtColor = useRecoilValue(selectedExtColorState);
 
-  const [selectedExtColor, setSelectedExtColor] = useRecoilState(
-    selectedExtColorState
-  );
-  const setExtColors = useSetRecoilState(extColorInfosState);
+  const updateExtColor = useUpdateExtColor();
+  const fetchChangeableCarModelWithTrim = useFetchChangeableCarModelWithTrim();
 
   // 모달 관리
   const [isOpenChangeTrimModal, setIsOpenChangeTrimModal] =
@@ -44,59 +37,30 @@ export const IntColor = () => {
     const intColorCode = intColorInfo.intColorCode;
     const intColorName = intColorInfo.intColorName;
 
-    if (!intColorInfo.isSelectable) {
-      const fetchData = async () => {
-        try {
-          const data = await getChangeableCarModelsWithTrim(
-            modelInfo.code,
-            intColorInfo.intColorCode,
-            selectedExtColor.code
-          );
-          setChangeableModelInfo(data);
-          setNewIntColor({
-            code: intColorCode,
-            name: intColorName,
-          });
-          setIsOpenChangeTrimModal(true);
-        } catch (error) {
-          alert(error.response.data.message);
-        }
-      };
-      fetchData();
+    if (intColorInfo.intColorCode === selectedIntColor.code) {
       return;
     }
 
+    /** 트림 변경 모달 정보 세팅 */
+    if (!intColorInfo.isSelectable) {
+      fetchChangeableCarModelWithTrim(
+        modelInfo.code,
+        { code: intColorCode, name: intColorName },
+        selectedExtColor,
+        setIsOpenChangeTrimModal,
+        setChangeableModelInfo
+      );
+      return;
+    }
+
+    /** 내장색상 업데이트 */
     setSelectedIntColor({
       code: intColorCode,
       name: intColorName,
     });
 
-    /** 외장색상 정보 */
-    const fetchExtColorInfos = async () => {
-      try {
-        const extColorInfos = await getExtColorInfos(
-          modelInfo.code,
-          intColorInfo.intColorCode
-        );
-        setExtColors(extColorInfos);
-
-        const selectableExtColorInfo = extColorInfos.find(
-          (extColorInfo) =>
-            extColorInfo.isSelectable &&
-            extColorInfo.extColorCode === selectedExtColor.code
-        );
-        if (selectableExtColorInfo) {
-          return;
-        }
-        setSelectedExtColor({
-          code: extColorInfos[0].extColorCode,
-          name: extColorInfos[0].extColorName,
-        });
-      } catch (error) {
-        alert(error.response.data.message);
-      }
-    };
-    fetchExtColorInfos();
+    /** 외장색상 업데이트 */
+    updateExtColor(modelInfo.code, intColorCode);
   };
 
   return (

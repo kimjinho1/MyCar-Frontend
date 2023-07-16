@@ -2,6 +2,8 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { trimInfosState } from "@/stores/modelState";
 import { useRecoilValue } from "recoil";
+import { ROUTE_PATH } from "@/Router";
+import { useImageUrl } from "@/hooks/utils/useImageUrl";
 
 export const TrimList = () => {
   const navigate = useNavigate();
@@ -9,7 +11,7 @@ export const TrimList = () => {
   const trimInfos = useRecoilValue(trimInfosState);
 
   const handleMakingModelButtonClick = (modelCode: string) => {
-    navigate(`/model/making/${modelCode}`);
+    navigate(ROUTE_PATH.MAKING_MODEL(modelCode));
   };
 
   return (
@@ -22,9 +24,7 @@ export const TrimList = () => {
               <p>{trimInfo.modelPrice.toLocaleString()} 원</p>
             </TrimInfoDiv>
             <TrimImageDiv>
-              <img
-                src={import.meta.env.VITE_BACKEND_URL + trimInfo.modelImagePath}
-              />
+              <img src={useImageUrl(trimInfo.modelImagePath)} />
             </TrimImageDiv>
             <FilterSummaryDiv>
               <p>{trimInfo.filterSummary}</p>

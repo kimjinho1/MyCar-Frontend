@@ -1,25 +1,17 @@
+import { useUpdateIntColor } from "@/hooks/useUpdateIntColor";
+import { extColorInfosState, selectedExtColorState } from "@/stores/colorState";
+import { ExtColorInfo } from "@/types/color";
+import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
-import { modelInfoState } from "@/stores/modelState";
-import {
-  selectedIntColorState,
-  extColorInfosState,
-  selectedExtColorState,
-  intColorInfosState,
-} from "@/stores/colorState";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { ExtColorInfo, getIntColorInfos } from "@/apis/color";
-import { OptionImageBoxDiv, OptionDiv, OptionTitleDiv } from "./styles";
+import { OptionDiv, OptionImageBoxDiv, OptionTitleDiv } from "./styles";
 
 export const ExtColor = () => {
-  const modelInfo = useRecoilValue(modelInfoState);
-  const setIntColors = useSetRecoilState(intColorInfosState);
-  const [selectedIntColor, setSelectedIntColor] = useRecoilState(
-    selectedIntColorState
-  );
   const [selectedExtColor, setSelectedExtColor] = useRecoilState(
     selectedExtColorState
   );
   const extColorInfos = useRecoilValue(extColorInfosState);
+
+  const updateIntColor = useUpdateIntColor();
 
   const handleExtColorBtnClick = (extColorInfo: ExtColorInfo) => {
     const extColorCode = extColorInfo.extColorCode;
@@ -36,32 +28,8 @@ export const ExtColor = () => {
       name: extColorName,
     });
 
-    /** 내장색상 정보 */
-    const fetchIntColorInfos = async () => {
-      try {
-        const intColorInfos = await getIntColorInfos(
-          modelInfo.code,
-          extColorInfo.extColorCode
-        );
-        setIntColors(intColorInfos);
-
-        const selectableIntColorInfo = intColorInfos.find(
-          (intColorInfo) =>
-            intColorInfo.isSelectable &&
-            intColorInfo.intColorCode === selectedIntColor.code
-        );
-        if (selectableIntColorInfo) {
-          return;
-        }
-        setSelectedIntColor({
-          code: intColorInfos[0].intColorCode,
-          name: intColorInfos[0].intColorName,
-        });
-      } catch (error) {
-        alert(error.response.data.message);
-      }
-    };
-    fetchIntColorInfos();
+    /** 내장색상 업데이트 */
+    updateIntColor(extColorInfo);
   };
 
   return (
