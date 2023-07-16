@@ -37,6 +37,10 @@ export const IntColor = () => {
     const intColorCode = intColorInfo.intColorCode;
     const intColorName = intColorInfo.intColorName;
 
+    if (intColorInfo.intColorCode === selectedIntColor.code) {
+      return;
+    }
+
     /** 트림 변경 모달 정보 세팅 */
     if (!intColorInfo.isSelectable) {
       fetchChangeableCarModelWithTrim(

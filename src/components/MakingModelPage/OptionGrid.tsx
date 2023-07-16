@@ -1,4 +1,4 @@
-import { useImageUrl } from "@/hooks/useImageUrl";
+import { useImageUrl } from "@/hooks/utils/useImageUrl";
 import { optionCodesState, selectOptionState } from "@/stores/optionState";
 import shouldForwardProp from "@styled-system/should-forward-prop";
 import { useRecoilValue, useSetRecoilState } from "recoil";
@@ -7,6 +7,7 @@ import { OptionImageBoxDiv } from "./styles";
 import { OptionInfo, OPTION_TYPE } from "@/types/option";
 import { useParams } from "react-router-dom";
 import { useUpdateOption } from "@/hooks/useUpdateOption";
+import { useState } from "react";
 
 interface OptionGridProps {
   options: OptionInfo[];
@@ -17,49 +18,65 @@ export interface OptionGridWrapProps {
 }
 
 export const OptionGrid = ({ options }: OptionGridProps) => {
-  const { modelCode } = useParams();
   const optionCodes = useRecoilValue(optionCodesState);
   const updateOption = useUpdateOption();
 
+  // 모달 관리
+  const [isOpenChangedOptions, setIsOpenChangedOptionsModal] =
+    useState<boolean>(false);
+  const onClose = () => {
+    setIsOpenChangedOptionsModal(false);
+  };
+
   const handleOptionClick = (option: OptionInfo) => {
+    const isPressed = !optionCodes.has(option.optionCode);
+    /**
+     * 종속성이 있는 옵션들을 선택 취소하려는 경우 못하게 막음
+     * EX) 세이지그린 인테리어 컬러
+     */
+    if (isPressed === false && option.isDeselectable) {
+      return;
+    }
+    /** 선택 불가능한 옵션 */
     if (!option.isSelectable) {
       return;
     }
 
-    updateOption(modelCode, option.optionCode);
+    updateOption(option.optionCode, isPressed);
+    // const isRemovalPending = updateOption(option.optionCode, isPressed);
+    // if (isRemovalPending) {
+    //   setIsOpenChangedOptionsModal(true);
+    // }
   };
 
   return (
-    <OptionGridDiv>
-      {options.map((option) => {
-        if (
-          option.optionTypeName !== OPTION_TYPE.DETAIL &&
-          option.isSelectable === false
-        ) {
-          return null;
-        }
-        return (
-          <OptionGridWrap
-            key={option.optionCode}
-            onClick={() => handleOptionClick(option)}
-            isSelected={optionCodes.has(option.optionCode)}
-          >
-            <OptionImageBoxDiv
-              height={"100px"}
-              title={option.optionName}
-              imgurl={useImageUrl(option.optionImagePath)}
-              hover={false}
-              isBlocked={!option.isSelectable}
+    <>
+      {isOpenChangedOptions && null}
+      <OptionGridDiv>
+        {options.map((option) => {
+          return (
+            <OptionGridWrap
+              key={option.optionCode}
+              onClick={() => handleOptionClick(option)}
               isSelected={optionCodes.has(option.optionCode)}
-            />
-            <OptionInfoDiv>
-              <p>{option.optionName}</p>
-              <span>{option.optionPrice.toLocaleString()} 원</span>
-            </OptionInfoDiv>
-          </OptionGridWrap>
-        );
-      })}
-    </OptionGridDiv>
+            >
+              <OptionImageBoxDiv
+                height={"100px"}
+                title={option.optionName}
+                imgurl={useImageUrl(option.optionImagePath)}
+                hover={false}
+                isBlocked={!option.isSelectable}
+                isSelected={optionCodes.has(option.optionCode)}
+              />
+              <OptionInfoDiv>
+                <p>{option.optionName}</p>
+                <span>{option.optionPrice.toLocaleString()} 원</span>
+              </OptionInfoDiv>
+            </OptionGridWrap>
+          );
+        })}
+      </OptionGridDiv>
+    </>
   );
 };
 

@@ -4,6 +4,8 @@ export enum OPTION_TYPE {
   PERFORMANCE = "performance",
 }
 
+export type OptionMap = Map<string, OptionInfo>;
+
 export type OptionInfo = {
   optionId: number;
   optionCode: string;
@@ -12,4 +14,10 @@ export type OptionInfo = {
   optionImagePath: string;
   optionTypeName: string;
   isSelectable: boolean;
+  isDeselectable?: boolean;
+};
+
+export type ChangedOptionInfo = {
+  add: OptionInfo[];
+  remove: OptionInfo[];
 };

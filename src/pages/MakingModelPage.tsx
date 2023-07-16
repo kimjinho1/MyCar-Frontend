@@ -9,11 +9,26 @@ import {
 import { useFetchCarAndModel } from "@/hooks/useFetchCarAndModel";
 import { useFetchColors } from "@/hooks/useFetchColors";
 import { useFetchOption } from "@/hooks/useFetchOption";
+import { optionCodesState } from "@/stores/optionState";
+import { useResetRecoilState } from "recoil";
+import { useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 export const MakingModelPage = () => {
-  useFetchCarAndModel();
-  useFetchColors();
+  const { modelCode } = useParams();
+  const resetOptionCodes = useResetRecoilState(optionCodesState);
+
+  const fetchCarAndModel = useFetchCarAndModel();
+  const fetchColors = useFetchColors();
   useFetchOption();
+
+  useEffect(() => {
+    if (modelCode !== undefined) {
+      resetOptionCodes();
+      fetchCarAndModel(modelCode);
+      fetchColors(modelCode);
+    }
+  }, [modelCode]);
 
   return (
     <MakingModelPageDiv>

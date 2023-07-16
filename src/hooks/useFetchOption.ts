@@ -1,44 +1,51 @@
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useResetRecoilState, useSetRecoilState } from "recoil";
-import { getOptions } from "@/services/option";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { getAutoChoiceOptions, getOptions } from "@/services/option";
 import {
-  tuixCodesState,
   optionCodesState,
   optionsState,
   tuixsState,
 } from "@/stores/optionState";
 import { ROUTE_PATH } from "@/Router";
-import { OPTION_TYPE } from "@/types/option";
+import { OPTION_TYPE, OptionInfo, OptionMap } from "@/types/option";
+import { selectedIntColorState } from "@/stores/colorState";
 
 export const useFetchOption = () => {
   const { modelCode } = useParams();
   const navigate = useNavigate();
 
-  const optionMap = new Map();
-  const tuixMap = new Map();
+  const intColor = useRecoilValue(selectedIntColorState);
   const setOptions = useSetRecoilState(optionsState);
-  const resetOptionCodes = useResetRecoilState(optionCodesState);
   const setTuixs = useSetRecoilState(tuixsState);
-  const resetTuixCodes = useResetRecoilState(tuixCodesState);
+  const [optionCodes, setOptionCodes] = useRecoilState(optionCodesState);
 
   useEffect(() => {
     const fetchData = async () => {
-      if (modelCode !== undefined) {
+      if (
+        modelCode !== undefined &&
+        intColor !== undefined &&
+        intColor.code !== ""
+      ) {
         try {
+          const newOptions = new Map();
+          const newTuixs = new Map();
+          const newOptionCodes = new Set(optionCodes);
+
           /** 옵션 정보 */
-          const options = await getOptions(modelCode);
-          options.map((option) => {
-            if (option.optionTypeName === OPTION_TYPE.DETAIL) {
-              optionMap.set(option.optionCode, option);
-              return;
-            }
-            tuixMap.set(option.optionCode, option);
-          });
-          setOptions(optionMap);
-          setTuixs(tuixMap);
-          resetOptionCodes();
-          resetTuixCodes();
+          const options = await getOptions(modelCode, intColor.code);
+          InitOptions(newOptions, newTuixs, newOptionCodes, options);
+
+          /** 내장색상 때문에 자동으로 선택되어야 하는 옵션 정보 */
+          const autoChoiceOptions = await getAutoChoiceOptions(
+            modelCode,
+            intColor.code
+          );
+          choiceOptions(newOptions, newOptionCodes, autoChoiceOptions);
+
+          setOptions(newOptions);
+          setTuixs(newTuixs);
+          setOptionCodes(newOptionCodes);
         } catch (error) {
           alert(error.response.data.message);
           navigate(ROUTE_PATH.ROOT);
@@ -46,5 +53,40 @@ export const useFetchOption = () => {
       }
     };
     fetchData();
-  }, [modelCode]);
+  }, [modelCode, intColor]);
+};
+
+/**
+ * UTILS
+ */
+const InitOptions = (
+  newOptions: OptionMap,
+  newTuixs: OptionMap,
+  newOptionCodes: Set<string>,
+  options: OptionInfo[]
+) => {
+  options.map((option) => {
+    if (option.optionTypeName === OPTION_TYPE.DETAIL) {
+      if (!option.isSelectable) {
+        newOptionCodes.delete(option.optionCode);
+      }
+      newOptions.set(option.optionCode, option);
+      return;
+    }
+    newTuixs.set(option.optionCode, option);
+  });
+};
+
+const choiceOptions = (
+  newOptions: OptionMap,
+  newOptionCodes: Set<string>,
+  autoChoiceOptions: OptionInfo[]
+) => {
+  autoChoiceOptions.map((option) => {
+    newOptions.set(option.optionCode, {
+      ...option,
+      isDeselectable: true,
+    });
+    newOptionCodes.add(option.optionCode);
+  });
 };

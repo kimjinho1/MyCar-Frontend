@@ -1,4 +1,4 @@
-import { OptionInfo } from "@/types/option";
+import { ChangedOptionInfo, OptionInfo } from "@/types/option";
 import { atom, selector } from "recoil";
 import { modelInfoState } from "./modelState";
 
@@ -20,10 +20,10 @@ export const tuixsState = atom<Map<string, OptionInfo>>({
   default: new Map(),
 });
 
-/** 선택된 TUIX 코드들 */
-export const tuixCodesState = atom<Set<string>>({
-  key: "tuixCodesState",
-  default: new Set(),
+/** 옵션 선택 시 선택, 선택해제 되는 옵션들 정보 */
+export const changedOptionsState = atom<ChangedOptionInfo>({
+  key: "changedOptionsState",
+  default: { add: [], remove: [] },
 });
 
 /** SET: 옵션 선택 */
@@ -70,10 +70,11 @@ export const selectedOptionState = selector({
   key: "selectedOptionState",
   get: ({ get }) => {
     const options = get(optionsState);
+    const tuixs = get(tuixsState);
     const optionCodes = get(optionCodesState);
-    return Array.from(options.values()).filter((option) =>
-      optionCodes.has(option.optionCode)
-    );
+    return Array.from(options.values())
+      .concat(Array.from(tuixs.values()))
+      .filter((option) => optionCodes.has(option.optionCode));
   },
 });
 
