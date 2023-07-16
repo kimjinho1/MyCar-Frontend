@@ -1,4 +1,4 @@
-import { ChangedOptionInfo, OptionInfo } from "@/types/option";
+import { ChangedOptionInfo, OptionInfo, OptionMap } from "@/types/option";
 import { atom, selector } from "recoil";
 import { modelInfoState } from "./modelState";
 
@@ -23,7 +23,13 @@ export const tuixsState = atom<Map<string, OptionInfo>>({
 /** 옵션 선택 시 선택, 선택해제 되는 옵션들 정보 */
 export const changedOptionsState = atom<ChangedOptionInfo>({
   key: "changedOptionsState",
-  default: { add: [], remove: [] },
+  default: {
+    optionCode: "",
+    newOptions: new Map(),
+    newTuixs: new Map(),
+    add: [],
+    remove: [],
+  },
 });
 
 /** SET: 옵션 선택 */

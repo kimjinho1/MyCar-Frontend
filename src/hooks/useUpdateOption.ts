@@ -13,6 +13,7 @@ import {
   tuixsState,
 } from "@/stores/optionState";
 import { OPTION_TYPE, OptionMap, OptionInfo } from "@/types/option";
+import { changeOptionModalState } from "@/stores/modalState";
 
 export const useUpdateOption = () => {
   const { modelCode } = useParams();
@@ -21,13 +22,12 @@ export const useUpdateOption = () => {
   const [tuixs, setTuixs] = useRecoilState(tuixsState);
   const setSelectOption = useSetRecoilState(selectOptionState);
 
-  const [changedOptions, setChangedOptions] =
-    useRecoilState(changedOptionsState);
+  const setChangedOptions = useSetRecoilState(changedOptionsState);
+  const setChangeOptionModal = useSetRecoilState(changeOptionModalState);
 
   const updateOption = async (optionCode: string, isPressed: boolean) => {
     if (modelCode !== undefined) {
       try {
-        setSelectOption(optionCode);
         const newOptions = new Map(options);
         const newTuixs = new Map(tuixs);
 
@@ -36,6 +36,7 @@ export const useUpdateOption = () => {
           newOptions,
           newTuixs,
           addOption,
+          optionCodes,
           isPressed
         );
 
@@ -44,6 +45,7 @@ export const useUpdateOption = () => {
           newOptions,
           newTuixs,
           disableOption,
+          optionCodes,
           isPressed
         );
 
@@ -51,11 +53,9 @@ export const useUpdateOption = () => {
         const removedDeleteOption = updateDeleteOption(
           newTuixs,
           deleteOption,
+          optionCodes,
           isPressed
         );
-
-        setOptions(newOptions);
-        setTuixs(newTuixs);
 
         const removedOptions = [
           ...removedAddOption,
@@ -63,11 +63,22 @@ export const useUpdateOption = () => {
           ...removedDeleteOption,
         ];
         if (removedOptions.length > 0) {
+          console.log("remove: ", removedOptions);
+          console.log("isTuix:", tuixs.has(optionCode));
           setChangedOptions({
+            optionCode: optionCode,
+            newOptions: newOptions,
+            newTuixs: newTuixs,
             add: [],
             remove: removedOptions,
           });
+          setChangeOptionModal(true);
+          return;
         }
+
+        setOptions(newOptions);
+        setTuixs(newTuixs);
+        setSelectOption(optionCode);
       } catch (error) {
         alert(error.response.data.message);
       }
@@ -95,6 +106,7 @@ const updateAddOption = (
   newOptions: OptionMap,
   newTuixs: OptionMap,
   addOption: OptionInfo[],
+  optionCodes: Set<string>,
   isPressed: boolean
 ): OptionInfo[] => {
   const removedOptions: OptionInfo[] = [];
@@ -108,7 +120,9 @@ const updateAddOption = (
       return;
     }
 
-    removedOptions.push(option);
+    if (optionCodes.has(option.optionCode)) {
+      removedOptions.push(option);
+    }
     if (option.optionTypeName === OPTION_TYPE.DETAIL) {
       return updateOptionMap(newOptions, option, false);
     }
@@ -117,43 +131,46 @@ const updateAddOption = (
   return removedOptions;
 };
 
-const updateOptions = (
-  newOptions: OptionMap,
-  addOption: OptionInfo[],
-  isPressed: boolean,
-  state: boolean
-) => {
-  addOption.map((option) => {
-    newOptions.set(option.optionCode, {
-      ...option,
-      isSelectable: isPressed ? state : !state,
-    });
-  });
-};
+// const updateOptions = (
+//   newOptions: OptionMap,
+//   addOption: OptionInfo[],
+//   isPressed: boolean,
+//   state: boolean
+// ) => {
+//   addOption.map((option) => {
+//     newOptions.set(option.optionCode, {
+//       ...option,
+//       isSelectable: isPressed ? state : !state,
+//     });
+//   });
+// };
 
-const updateTuixs = (
-  newTuixs: OptionMap,
-  addOption: OptionInfo[],
-  isPressed: boolean
-) => {
-  addOption.map((option) => {
-    isPressed
-      ? newTuixs.set(option.optionCode, option)
-      : newTuixs.delete(option.optionCode);
-  });
-};
+// const updateTuixs = (
+//   newTuixs: OptionMap,
+//   addOption: OptionInfo[],
+//   isPressed: boolean
+// ) => {
+//   addOption.map((option) => {
+//     isPressed
+//       ? newTuixs.set(option.optionCode, option)
+//       : newTuixs.delete(option.optionCode);
+//   });
+// };
 
 const updateDisableOption = (
   newOptions: OptionMap,
   newTuixs: OptionMap,
   disableOption: OptionInfo[],
+  optionCodes: Set<string>,
   isPressed: boolean
 ): OptionInfo[] => {
   const removedOptions: OptionInfo[] = [];
 
   disableOption.map((option) => {
     if (isPressed) {
-      removedOptions.push(option);
+      if (optionCodes.has(option.optionCode)) {
+        removedOptions.push(option);
+      }
       if (option.optionTypeName === OPTION_TYPE.DETAIL) {
         return updateOptionMap(newOptions, option, false);
       }
@@ -171,13 +188,16 @@ const updateDisableOption = (
 const updateDeleteOption = (
   newTuixs: OptionMap,
   deleteOption: OptionInfo[],
+  optionCodes: Set<string>,
   isPressed: boolean
 ): OptionInfo[] => {
   const removedOptions: OptionInfo[] = [];
 
   deleteOption.map((option) => {
     if (isPressed) {
-      removedOptions.push(option);
+      if (optionCodes.has(option.optionCode)) {
+        removedOptions.push(option);
+      }
       newTuixs.delete(option.optionCode);
       return;
     }

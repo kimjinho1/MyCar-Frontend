@@ -18,6 +18,9 @@ export type OptionInfo = {
 };
 
 export type ChangedOptionInfo = {
+  optionCode: string;
+  newOptions: OptionMap;
+  newTuixs: OptionMap;
   add: OptionInfo[];
   remove: OptionInfo[];
 };
