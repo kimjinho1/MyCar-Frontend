@@ -17,10 +17,13 @@ export type OptionInfo = {
   isDeselectable?: boolean;
 };
 
+export type ChangeOptions = {
+  add: OptionInfo[];
+  remove: OptionInfo[];
+};
+
 export type ChangedOptionInfo = {
   optionCode: string;
   newOptions: OptionMap;
   newTuixs: OptionMap;
-  add: OptionInfo[];
-  remove: OptionInfo[];
-};
+} & ChangeOptions;

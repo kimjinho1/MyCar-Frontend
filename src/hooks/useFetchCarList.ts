@@ -1,9 +1,12 @@
 import { getCarInfos } from "@/services/model";
 import { carListState, carTypeCodeState } from "@/stores/carState";
+import { setErrorModalInfoState } from "@/stores/modalState";
 import { useEffect } from "react";
 import { useSetRecoilState } from "recoil";
 
 export const useFetchCarList = () => {
+  const setErrorModalInfo = useSetRecoilState(setErrorModalInfoState);
+
   const setCarInfos = useSetRecoilState(carListState);
   const setSelectedCarTypeCode = useSetRecoilState(carTypeCodeState);
 
@@ -14,7 +17,10 @@ export const useFetchCarList = () => {
         setCarInfos(data);
         setSelectedCarTypeCode(data[0].carTypeCode);
       } catch (error) {
-        alert("백엔드가 시딩이 안된 상태입니다.");
+        setErrorModalInfo({
+          messages: error.response.data.message,
+          isRedirect: true,
+        });
       }
     };
     fetchData();

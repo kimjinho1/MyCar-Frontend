@@ -12,6 +12,7 @@ export const ModalConfirmButton = styled.button.withConfig({
     !["hover", "isBlocked", "isSelected"].includes(prop),
 })<ModalButtonProps>`
   width: ${({ widthPx }) => widthPx}px;
+  margin-top: 5px;
   padding: 7px 0;
   background: ${({ isConfirm }) => (isConfirm ? "#313c7a" : "#666")};
   font-size: 11px;

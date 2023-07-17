@@ -13,9 +13,14 @@ import {
   tuixsState,
 } from "@/stores/optionState";
 import { OPTION_TYPE, OptionMap, OptionInfo } from "@/types/option";
-import { changeOptionModalState } from "@/stores/modalState";
+import {
+  changeOptionModalState,
+  setErrorModalInfoState,
+} from "@/stores/modalState";
 
 export const useUpdateOption = () => {
+  const setErrorModalInfo = useSetRecoilState(setErrorModalInfoState);
+
   const { modelCode } = useParams();
   const [options, setOptions] = useRecoilState(optionsState);
   const optionCodes = useRecoilValue(optionCodesState);
@@ -28,6 +33,7 @@ export const useUpdateOption = () => {
   const updateOption = async (optionCode: string, isPressed: boolean) => {
     if (modelCode !== undefined) {
       try {
+        console.log("useUpdateOpton");
         const newOptions = new Map(options);
         const newTuixs = new Map(tuixs);
 
@@ -63,8 +69,6 @@ export const useUpdateOption = () => {
           ...removedDeleteOption,
         ];
         if (removedOptions.length > 0) {
-          console.log("remove: ", removedOptions);
-          console.log("isTuix:", tuixs.has(optionCode));
           setChangedOptions({
             optionCode: optionCode,
             newOptions: newOptions,
@@ -80,7 +84,10 @@ export const useUpdateOption = () => {
         setTuixs(newTuixs);
         setSelectOption(optionCode);
       } catch (error) {
-        alert(error.response.data.message);
+        setErrorModalInfo({
+          messages: error.response.data.message,
+          isRedirect: true,
+        });
       }
     }
   };

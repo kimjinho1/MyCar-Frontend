@@ -1,13 +1,11 @@
-import { useEffect } from "react";
 import { modelInfoState } from "@/stores/modelState";
-import { ROUTE_PATH } from "@/Router";
 import { getModelInfo } from "@/services/model";
-import { useNavigate, useParams } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 import { carInfoState } from "@/stores/carState";
+import { setErrorModalInfoState } from "@/stores/modalState";
 
 export const useFetchCarAndModel = () => {
-  const navigate = useNavigate();
+  const setErrorModalInfo = useSetRecoilState(setErrorModalInfoState);
 
   const setCarInfo = useSetRecoilState(carInfoState);
   const setModelInfo = useSetRecoilState(modelInfoState);
@@ -30,8 +28,10 @@ export const useFetchCarAndModel = () => {
         imagePath: modelData.modelImagePath,
       });
     } catch (error) {
-      alert(error.response.data.message);
-      navigate(ROUTE_PATH.ROOT);
+      setErrorModalInfo({
+        messages: error.response.data.message,
+        isRedirect: true,
+      });
     }
   };
   return fetchCarAndModel;

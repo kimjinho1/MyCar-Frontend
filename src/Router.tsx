@@ -2,6 +2,9 @@ import React from "react";
 import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
 import { MainPage, SelectModelPage, MakingModelPage } from "@/pages";
 import { Layout } from "@/components/common/Layout";
+import { errorModalState } from "./stores/modalState";
+import { useRecoilValue } from "recoil";
+import { ErrorModal } from "./components/modal/ErrorModal";
 
 export const ROUTE_PATH = {
   ROOT: "/",
@@ -20,8 +23,12 @@ const RedirectComponent: React.FC = () => {
 };
 
 const Router: React.FC = () => {
+  const errorModalInfo = useRecoilValue(errorModalState);
   return (
     <BrowserRouter>
+      {errorModalInfo && errorModalInfo.isOpen && errorModalInfo.messages && (
+        <ErrorModal />
+      )}
       <Routes>
         <Route
           path={"/"}

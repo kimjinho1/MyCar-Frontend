@@ -1,8 +1,11 @@
 import { extColorInfosState, selectedExtColorState } from "@/stores/colorState";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { getExtColorInfos } from "@/services/color";
+import { setErrorModalInfoState } from "@/stores/modalState";
 
 export const useUpdateExtColor = () => {
+  const setErrorModalInfo = useSetRecoilState(setErrorModalInfoState);
+
   const [selectedExtColor, setSelectedExtColor] = useRecoilState(
     selectedExtColorState
   );
@@ -29,7 +32,10 @@ export const useUpdateExtColor = () => {
         name: extColorInfos[0].extColorName,
       });
     } catch (error) {
-      alert(error.response.data.message);
+      setErrorModalInfo({
+        messages: error.response.data.message,
+        isRedirect: true,
+      });
     }
   };
 

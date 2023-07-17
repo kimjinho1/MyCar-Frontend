@@ -44,22 +44,22 @@ export const ChangeOptionModal = ({ onClose }: ChangeOptionModalProps) => {
     <PopUpModal onClose={onClose} widthPercent={85}>
       <ChangeOptionModalDiv>
         <p>삭제되는 품목</p>
-        <HorizontalLine />
-        {changedOptions &&
-          changedOptions.remove &&
-          changedOptions.remove.map((option) => {
-            return (
-              <OptionInfoDiv key={option.optionCode}>
-                <img src={useImageUrl(option.optionImagePath)} />
-                <IconImgDiv>
-                  <img src={"/X.svg"} />
-                </IconImgDiv>
-                <p>{option.optionName}</p>
-                <b>{option.optionPrice.toLocaleString()} 원</b>
-              </OptionInfoDiv>
-            );
-          })}
-        <HorizontalLine />
+        <OptionInfoWrap>
+          {changedOptions &&
+            changedOptions.remove.length > 0 &&
+            changedOptions.remove.map((option) => {
+              return (
+                <OptionInfoDiv key={option.optionCode}>
+                  <img src={useImageUrl(option.optionImagePath)} />
+                  <IconImgDiv>
+                    <img src={"/X.svg"} />
+                  </IconImgDiv>
+                  <p>{option.optionName}</p>
+                  <b>{option.optionPrice.toLocaleString()} 원</b>
+                </OptionInfoDiv>
+              );
+            })}
+        </OptionInfoWrap>
       </ChangeOptionModalDiv>
       <PriceInfo price={changePrice} />
       <ButtonContainer>
@@ -95,11 +95,18 @@ const ChangeOptionModalDiv = styled.div`
   }
 `;
 
+const OptionInfoWrap = styled.div`
+  width: 100%;
+  border-bottom: grey 1px solid;
+  border-top: grey 1.5px solid;
+`;
+
 const OptionInfoDiv = styled.div`
   width: 100%;
-  margin: 15px 0;
+  padding: 15px 0;
   display: flex;
   align-items: center;
+  border-bottom: grey 0.5px solid;
 
   > img {
     width: 12%;

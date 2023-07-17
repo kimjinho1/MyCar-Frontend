@@ -1,13 +1,15 @@
 import { useImageUrl } from "@/hooks/utils/useImageUrl";
-import { optionCodesState, selectOptionState } from "@/stores/optionState";
+import { optionCodesState } from "@/stores/optionState";
 import shouldForwardProp from "@styled-system/should-forward-prop";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { OptionImageBoxDiv } from "./styles";
-import { OptionInfo, OPTION_TYPE } from "@/types/option";
-import { useParams } from "react-router-dom";
+import { OptionInfo } from "@/types/option";
 import { useUpdateOption } from "@/hooks/useUpdateOption";
 import { useState } from "react";
+import { useFetchChangeOption } from "@/hooks/modal/useFetchAddOption";
+import { modelInfoState } from "@/stores/modelState";
+import { AddOptionModal } from "../modal/AddOptionModal";
 
 interface OptionGridProps {
   options: OptionInfo[];
@@ -18,40 +20,42 @@ export interface OptionGridWrapProps {
 }
 
 export const OptionGrid = ({ options }: OptionGridProps) => {
+  const modelInfo = useRecoilValue(modelInfoState);
   const optionCodes = useRecoilValue(optionCodesState);
   const updateOption = useUpdateOption();
 
+  const fetchChangeOption = useFetchChangeOption();
+
   // 모달 관리
-  const [isOpenChangedOptions, setIsOpenChangedOptionsModal] =
+  const [isOpenChangeOptionModal, setIsOpenChangeOptionModal] =
     useState<boolean>(false);
   const onClose = () => {
-    setIsOpenChangedOptionsModal(false);
+    setIsOpenChangeOptionModal(false);
   };
 
   const handleOptionClick = (option: OptionInfo) => {
     const isPressed = !optionCodes.has(option.optionCode);
     /**
      * 종속성이 있는 옵션들을 선택 취소하려는 경우 못하게 막음
-     * EX) 세이지그린 인테리어 컬러
+     * EX) 세이지그린 인테리어 컬러, 인테리어디자인2
      */
     if (isPressed === false && option.isDeselectable) {
       return;
     }
     /** 선택 불가능한 옵션 */
     if (!option.isSelectable) {
+      fetchChangeOption(modelInfo.code, option, setIsOpenChangeOptionModal);
       return;
     }
 
     updateOption(option.optionCode, isPressed);
-    // const isRemovalPending = updateOption(option.optionCode, isPressed);
-    // if (isRemovalPending) {
-    //   setIsOpenChangedOptionsModal(true);
-    // }
   };
 
   return (
     <>
-      {isOpenChangedOptions && null}
+      {isOpenChangeOptionModal && modelInfo && modelInfo.code && (
+        <AddOptionModal modelCode={modelInfo.code} onClose={onClose} />
+      )}
       <OptionGridDiv>
         {options.map((option) => {
           return (

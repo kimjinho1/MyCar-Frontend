@@ -1,4 +1,4 @@
-import { OptionInfo } from "@/types/option";
+import { ChangeOptions, OptionInfo } from "@/types/option";
 import { apiInstance } from "./instance";
 
 export const getOptions = async (
@@ -43,5 +43,24 @@ export const getAutoChoiceOptions = async (
 ): Promise<OptionInfo[]> => {
   return await apiInstance.get<OptionInfo[]>(
     `/option/auto-choice?modelCode=${modelCode}&intColorCode=${intColorCode}`
+  );
+};
+
+export const getChangeOptions = async (
+  modelCode: string,
+  optionCode: string,
+  beforeOptionCode: string
+): Promise<ChangeOptions> => {
+  return await apiInstance.get<ChangeOptions>(
+    `/option/change?modelCode=${modelCode}&optionCode=${optionCode}&beforeOptionCode=${beforeOptionCode}`
+  );
+};
+
+export const getTuixs = async (
+  modelCode: string,
+  beforeOptionCode: string
+): Promise<OptionInfo[]> => {
+  return await apiInstance.get<OptionInfo[]>(
+    `/option/tuix?modelCode=${modelCode}&beforeOptionCode=${beforeOptionCode}`
   );
 };
