@@ -2,52 +2,83 @@ import * as React from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import {
   changedOptionsState,
+  optionCodesState,
   optionsState,
   tuixsState,
 } from "@/stores/optionState";
-import { getAddTogetherOptions } from "@/services/option";
-import { OptionInfo } from "@/types/option";
+import { getChangeOptions } from "@/services/option";
+import { OPTION_TYPE, OptionInfo } from "@/types/option";
+import { setErrorModalInfoState } from "@/stores/modalState";
 
-export const useFetchAddOption = () => {
+export const useFetchChangeOption = () => {
+  const setErrorModalInfo = useSetRecoilState(setErrorModalInfoState);
+
   const options = useRecoilValue(optionsState);
   const tuixs = useRecoilValue(tuixsState);
+  const optionCodes = useRecoilValue(optionCodesState);
 
   const setChangedOptions = useSetRecoilState(changedOptionsState);
 
-  const fetchAddOption = async (
+  const fetchChangeOption = async (
     modelCode: string,
     option: OptionInfo,
-    setIsOpenAddOptionModal: React.Dispatch<React.SetStateAction<boolean>>
+    setIsOpenChangeOptionModal: React.Dispatch<React.SetStateAction<boolean>>
   ) => {
+    console.log("changeOption");
     try {
       const newOptions = new Map(options);
       const newTuixs = new Map(tuixs);
 
-      const addTogetherOptions = await getAddTogetherOptions(
+      const changeOptions = await getChangeOptions(
         modelCode,
-        option.optionCode
+        option.optionCode,
+        Array.from(optionCodes).join(",")
       );
-      if (addTogetherOptions.length < 1) {
+      if (changeOptions.add.length < 1 && changeOptions.remove.length < 1) {
         return;
       }
 
-      newOptions.set(option.optionCode, {
-        ...option,
-        isSelectable: true,
+      option.optionTypeName === OPTION_TYPE.DETAIL
+        ? newOptions.set(option.optionCode, {
+            ...option,
+            isSelectable: true,
+          })
+        : newTuixs.set(option.optionCode, {
+            ...option,
+            isSelectable: true,
+          });
+
+      changeOptions.remove.map((option) => {
+        option.optionTypeName === OPTION_TYPE.DETAIL
+          ? newOptions.set(option.optionCode, {
+              ...option,
+              isSelectable: false,
+            })
+          : newTuixs.set(option.optionCode, {
+              ...option,
+              isSelectable: false,
+            });
       });
+      console.log("changeOptions", changeOptions);
+      console.log("newOptions", newOptions);
+      console.log("newTuixs", newTuixs);
+
       setChangedOptions({
         optionCode: option.optionCode,
         newOptions: newOptions,
         newTuixs: newTuixs,
-        add: [...addTogetherOptions, option],
-        remove: [],
+        add: [...changeOptions.add, option],
+        remove: [...changeOptions.remove],
       });
 
-      setIsOpenAddOptionModal(true);
+      setIsOpenChangeOptionModal(true);
     } catch (error) {
-      alert(error.response.data.message);
+      setErrorModalInfo({
+        messages: error.response.data.message,
+        isRedirect: true,
+      });
     }
   };
 
-  return fetchAddOption;
+  return fetchChangeOption;
 };

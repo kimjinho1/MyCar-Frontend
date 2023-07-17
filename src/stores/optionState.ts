@@ -25,8 +25,8 @@ export const changedOptionsState = atom<ChangedOptionInfo>({
   key: "changedOptionsState",
   default: {
     optionCode: "",
-    newOptions: null,
-    newTuixs: null,
+    newOptions: new Map(),
+    newTuixs: new Map(),
     add: [],
     remove: [],
   },

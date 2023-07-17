@@ -7,7 +7,7 @@ import { OptionImageBoxDiv } from "./styles";
 import { OptionInfo } from "@/types/option";
 import { useUpdateOption } from "@/hooks/useUpdateOption";
 import { useState } from "react";
-import { useFetchAddOption } from "@/hooks/modal/useFetchAddOption";
+import { useFetchChangeOption } from "@/hooks/modal/useFetchAddOption";
 import { modelInfoState } from "@/stores/modelState";
 import { AddOptionModal } from "../modal/AddOptionModal";
 
@@ -24,13 +24,13 @@ export const OptionGrid = ({ options }: OptionGridProps) => {
   const optionCodes = useRecoilValue(optionCodesState);
   const updateOption = useUpdateOption();
 
-  const fetchAddOption = useFetchAddOption();
+  const fetchChangeOption = useFetchChangeOption();
 
   // 모달 관리
-  const [isOpenAddOptionModal, setIsOpenAddOptionModal] =
+  const [isOpenChangeOptionModal, setIsOpenChangeOptionModal] =
     useState<boolean>(false);
   const onClose = () => {
-    setIsOpenAddOptionModal(false);
+    setIsOpenChangeOptionModal(false);
   };
 
   const handleOptionClick = (option: OptionInfo) => {
@@ -44,7 +44,7 @@ export const OptionGrid = ({ options }: OptionGridProps) => {
     }
     /** 선택 불가능한 옵션 */
     if (!option.isSelectable) {
-      fetchAddOption(modelInfo.code, option, setIsOpenAddOptionModal);
+      fetchChangeOption(modelInfo.code, option, setIsOpenChangeOptionModal);
       return;
     }
 
@@ -53,7 +53,9 @@ export const OptionGrid = ({ options }: OptionGridProps) => {
 
   return (
     <>
-      {isOpenAddOptionModal && <AddOptionModal onClose={onClose} />}
+      {isOpenChangeOptionModal && modelInfo && modelInfo.code && (
+        <AddOptionModal modelCode={modelInfo.code} onClose={onClose} />
+      )}
       <OptionGridDiv>
         {options.map((option) => {
           return (

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { ModalConfirmButton, PopUpModal } from "@/components/common";
 import { useImageUrl } from "@/hooks/utils/useImageUrl";
 import {
@@ -7,59 +7,95 @@ import {
   selectOptionState,
   changedOptionsState,
   optionsState,
+  optionCodesState,
 } from "@/stores/optionState";
 import { PriceInfo } from "./PriceInfo";
 import { ButtonContainer } from "./styles";
+import { getTuixs } from "@/services/option";
+import { useUpdateTuix } from "@/hooks/useUpdateTuix";
+import { useParams } from "react-router-dom";
 
 interface AddOptionModalProps {
+  modelCode: string;
   onClose: () => void;
 }
 
-export const AddOptionModal = ({ onClose }: AddOptionModalProps) => {
+export const AddOptionModal = ({ modelCode, onClose }: AddOptionModalProps) => {
   const setOptions = useSetRecoilState(optionsState);
   const setTuixs = useSetRecoilState(tuixsState);
-
   const setSelectOption = useSetRecoilState(selectOptionState);
+  const [optionCodes, setOptionCodes] = useRecoilState(optionCodesState);
+  const newOptionCodes = new Set(optionCodes);
+
+  const updateTuix = useUpdateTuix();
 
   const changedOptions = useRecoilValue(changedOptionsState);
-  const changePrice = changedOptions.add.reduce(
-    (sum, option) => sum + option.optionPrice,
-    0
-  );
+  const changePrice =
+    changedOptions.add.reduce((sum, option) => sum + option.optionPrice, 0) +
+    changedOptions.remove.reduce((sum, option) => sum - option.optionPrice, 0);
 
   const handleConfirmClick = () => {
-    if (changedOptions.newOptions !== null) {
-      setOptions(changedOptions.newOptions);
-    }
-    if (changedOptions.newTuixs !== null) {
-      setTuixs(changedOptions.newTuixs);
-    }
+    setOptions(changedOptions.newOptions);
+    setTuixs(changedOptions.newTuixs);
     changedOptions.add.map((option) => {
-      setSelectOption(option.optionCode);
+      newOptionCodes.add(option.optionCode);
     });
+    changedOptions.remove.map((option) => {
+      newOptionCodes.delete(option.optionCode);
+    });
+    setOptionCodes(newOptionCodes);
+
+    updateTuix(
+      modelCode,
+      changedOptions.newOptions,
+      changedOptions.newTuixs,
+      newOptionCodes
+    );
+
     onClose();
   };
 
   return (
     <PopUpModal onClose={onClose} widthPercent={85}>
       <ChangeOptionModalDiv>
-        <p>추과되는 품목</p>
-        <OptionInfoWrap>
-          {changedOptions &&
-            changedOptions.add.length > 0 &&
-            changedOptions.add.map((option) => {
-              return (
-                <OptionInfoDiv key={option.optionCode}>
-                  <img src={useImageUrl(option.optionImagePath)} />
-                  <IconImgDiv>
-                    <img src={"/X.svg"} />
-                  </IconImgDiv>
-                  <p>{option.optionName}</p>
-                  <b>{option.optionPrice.toLocaleString()} 원</b>
-                </OptionInfoDiv>
-              );
-            })}
-        </OptionInfoWrap>
+        {changedOptions && changedOptions.add.length > 0 && (
+          <>
+            <p>추과되는 품목</p>
+            <OptionInfoWrap>
+              {changedOptions.add.map((option) => {
+                return (
+                  <OptionInfoDiv key={option.optionCode}>
+                    <img src={useImageUrl(option.optionImagePath)} />
+                    <IconImgDiv>
+                      <img src={"/SelectCheck.svg"} />
+                    </IconImgDiv>
+                    <p>{option.optionName}</p>
+                    <b>{option.optionPrice.toLocaleString()} 원</b>
+                  </OptionInfoDiv>
+                );
+              })}
+            </OptionInfoWrap>
+          </>
+        )}
+        {changedOptions && changedOptions.remove.length > 0 && (
+          <>
+            <p>삭제되는 품목</p>
+            <OptionInfoWrap>
+              {changedOptions.remove.map((option) => {
+                return (
+                  <OptionInfoDiv key={option.optionCode}>
+                    <img src={useImageUrl(option.optionImagePath)} />
+                    <IconImgDiv>
+                      <img src={"/X.svg"} />
+                    </IconImgDiv>
+                    <p>{option.optionName}</p>
+                    <b>{option.optionPrice.toLocaleString()} 원</b>
+                  </OptionInfoDiv>
+                );
+              })}
+            </OptionInfoWrap>
+          </>
+        )}
       </ChangeOptionModalDiv>
       <PriceInfo price={changePrice} />
       <ButtonContainer>
@@ -89,7 +125,7 @@ const ChangeOptionModalDiv = styled.div`
   > p {
     align-self: flex-start;
     margin: 0;
-    margin-bottom: 20px;
+    margin: 15px 0;
     font-size: 12px;
     font-weight: bold;
   }

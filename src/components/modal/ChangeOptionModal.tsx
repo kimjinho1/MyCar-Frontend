@@ -31,12 +31,8 @@ export const ChangeOptionModal = ({ onClose }: ChangeOptionModalProps) => {
   );
 
   const handleConfirmClick = () => {
-    if (changedOptions.newOptions !== null) {
-      setOptions(changedOptions.newOptions);
-    }
-    if (changedOptions.newTuixs !== null) {
-      setTuixs(changedOptions.newTuixs);
-    }
+    setOptions(changedOptions.newOptions);
+    setTuixs(changedOptions.newTuixs);
     changedOptions.remove.map((option) => {
       setSelectOption(option.optionCode);
     });
@@ -111,17 +107,6 @@ const OptionInfoDiv = styled.div`
   display: flex;
   align-items: center;
   border-bottom: grey 0.5px solid;
-
-  > div:not(:last-child)::after {
-    content: "";
-    width: 1px;
-    height: 50%;
-    background-color: grey;
-    position: absolute;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
-  }
 
   > img {
     width: 12%;

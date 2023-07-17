@@ -16,7 +16,6 @@ import { useParams } from "react-router-dom";
 export const MakingModelPage = () => {
   const { modelCode } = useParams();
   const resetOptionCodes = useResetRecoilState(optionCodesState);
-
   const fetchCarAndModel = useFetchCarAndModel();
   const fetchColors = useFetchColors();
 
@@ -26,6 +25,10 @@ export const MakingModelPage = () => {
       fetchCarAndModel(modelCode);
       fetchColors(modelCode);
     }
+
+    return () => {
+      resetOptionCodes();
+    };
   }, [modelCode]);
 
   return (

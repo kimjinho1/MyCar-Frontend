@@ -6,11 +6,16 @@ import { categorizedOptionState } from "@/stores/optionState";
 import { changeOptionModalState } from "@/stores/modalState";
 import { ChangeOptionModal } from "../modal/ChangeOptionModal";
 import { useFetchOption } from "@/hooks/useFetchOption";
+import { useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { selectedIntColorState } from "@/stores/colorState";
 
 export const Option = () => {
+  const { modelCode } = useParams();
+  const intColor = useRecoilValue(selectedIntColorState);
   const categorizedOptions = useRecoilValue(categorizedOptionState);
 
-  useFetchOption();
+  const fetchOption = useFetchOption();
 
   const [changeOptionModal, setChangeOptionModal] = useRecoilState(
     changeOptionModalState
@@ -18,6 +23,16 @@ export const Option = () => {
   const onClose = () => {
     setChangeOptionModal(false);
   };
+
+  useEffect(() => {
+    if (
+      modelCode !== undefined &&
+      intColor !== undefined &&
+      intColor.code !== ""
+    ) {
+      fetchOption(modelCode, intColor.code);
+    }
+  }, [modelCode, intColor]);
 
   return (
     <>
