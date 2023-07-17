@@ -1,11 +1,14 @@
 import { useUpdateIntColor } from "@/hooks/useUpdateIntColor";
 import { extColorInfosState, selectedExtColorState } from "@/stores/colorState";
 import { ExtColorInfo } from "@/types/color";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { OptionDiv, OptionImageBoxDiv, OptionTitleDiv } from "./styles";
+import { setErrorModalInfoState } from "@/stores/modalState";
 
 export const ExtColor = () => {
+  const setErrorModalInfo = useSetRecoilState(setErrorModalInfoState);
+
   const [selectedExtColor, setSelectedExtColor] = useRecoilState(
     selectedExtColorState
   );
@@ -18,8 +21,10 @@ export const ExtColor = () => {
     const extColorName = extColorInfo.extColorName;
 
     if (!extColorInfo.isSelectable) {
-      alert(`${extColorName} 색상은 선택하신 내장색과 함께 제공되지 않는 색상입니다.\n내장색상을 변경해주세요.
-      `);
+      setErrorModalInfo({
+        messages: `${extColorName} 색상은 선택하신 내장색과 함께 제공되지 않는 색상입니다.\n내장색상을 변경해주세요.`,
+        isRedirect: false,
+      });
       return;
     }
 

@@ -3,8 +3,11 @@ import { selectedIntColorState, intColorInfosState } from "@/stores/colorState";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { getIntColorInfos } from "@/services/color";
 import { ExtColorInfo } from "@/types/color";
+import { setErrorModalInfoState } from "@/stores/modalState";
 
 export const useUpdateIntColor = () => {
+  const setErrorModalInfo = useSetRecoilState(setErrorModalInfoState);
+
   const modelInfo = useRecoilValue(modelInfoState);
   const setIntColors = useSetRecoilState(intColorInfosState);
   const [selectedIntColor, setSelectedIntColor] = useRecoilState(
@@ -32,7 +35,10 @@ export const useUpdateIntColor = () => {
         name: intColorInfos[0].intColorName,
       });
     } catch (error) {
-      alert(error.response.data.message);
+      setErrorModalInfo({
+        messages: error.response.data.message,
+        isRedirect: true,
+      });
     }
   };
 

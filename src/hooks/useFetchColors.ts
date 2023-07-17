@@ -9,10 +9,10 @@ import {
   newExtColorState,
 } from "@/stores/colorState";
 import { getExtColorInfos, getIntColorInfos } from "@/services/color";
-import { ROUTE_PATH } from "@/Router";
+import { setErrorModalInfoState } from "@/stores/modalState";
 
 export const useFetchColors = () => {
-  const navigate = useNavigate();
+  const setErrorModalInfo = useSetRecoilState(setErrorModalInfoState);
 
   const setIntColors = useSetRecoilState(intColorInfosState);
   const setSelectedIntColor = useSetRecoilState(selectedIntColorState);
@@ -69,8 +69,10 @@ export const useFetchColors = () => {
       resetNewIntColor();
       resetNewExtColor();
     } catch (error) {
-      alert(error.response.data.message);
-      navigate(ROUTE_PATH.ROOT);
+      setErrorModalInfo({
+        messages: error.response.data.message,
+        isRedirect: true,
+      });
     }
   };
   return fetchColors;

@@ -7,8 +7,11 @@ import {
 } from "@/stores/colorState";
 import { ChangeableCarModelsWithTrim } from "@/types/color";
 import { useSetRecoilState } from "recoil";
+import { setErrorModalInfoState } from "@/stores/modalState";
 
 export const useFetchChangeableCarModelWithTrim = () => {
+  const setErrorModalInfo = useSetRecoilState(setErrorModalInfoState);
+
   const setNewIntColor = useSetRecoilState(newIntColorState);
   const setNewExtColor = useSetRecoilState(newExtColorState);
 
@@ -38,7 +41,10 @@ export const useFetchChangeableCarModelWithTrim = () => {
       });
       setIsOpenChangeTrimModal(true);
     } catch (error) {
-      alert(error.response.data.message);
+      setErrorModalInfo({
+        messages: error.response.data.message,
+        isRedirect: false,
+      });
     }
   };
 
