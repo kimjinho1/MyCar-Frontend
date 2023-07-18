@@ -3,7 +3,7 @@
 [현대닷컴 견적내기 사이트](https://www.hyundai.com/kr/ko/e) 를 모방한 내차만들기 웹사이트 개발
 
 ## 백엔드 기술 스택
-typescript, react, recoil
+typescript, react, recoil, styled-components
 
 ## 실행 방법
 1. git clone 후 프론트엔드 폴더 루트(Makefile 있는 위치)에서 터미널에 "make" 실행  
