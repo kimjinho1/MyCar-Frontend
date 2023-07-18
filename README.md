@@ -6,8 +6,8 @@
 typescript, react, recoil
 
 ## 실행 방법
-1. 프론트엔드 폴더 루트(Makefile 있는 위치)에서 터미널에 "make" 실행
-Makefile 안에 아래 명령들이 있습니다.
-EX)
-make -> 개발용 서버 실행
-make build -> 배포용 서버 실행(아직 에러 수정중)
+1. 프론트엔드 폴더 루트(Makefile 있는 위치)에서 터미널에 "make" 실행  
+Makefile 안에 아래 명령들이 있습니다.  
+EX)  
+make -> 개발용 서버 실행  
+make build -> 배포용 서버 실행(아직 에러 수정중)  
