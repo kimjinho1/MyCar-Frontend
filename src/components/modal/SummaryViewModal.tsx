@@ -28,7 +28,7 @@ export const SummaryViewModal = ({ onClose }: SummaryViewModalProps) => {
   const totalPrice = useRecoilValue(getTotalPriceState);
 
   const handleConfirmClick = () => {
-    navigate(ROUTE_PATH.ROOT);
+    navigate(ROUTE_PATH.ESTIMATION);
     onClose();
   };
 

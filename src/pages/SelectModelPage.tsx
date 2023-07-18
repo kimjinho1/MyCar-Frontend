@@ -1,4 +1,3 @@
-import styled from "styled-components";
 import {
   SelectModelHeader,
   FilterList,
@@ -7,25 +6,20 @@ import {
 } from "../components/SelectModelPage";
 import { useFetchCar } from "@/hooks/useFetchCar";
 import { useFetchModelFilterAndTrim } from "@/hooks/useFetchModelFilterAndTrim";
+import { PageDiv, PageWrap } from "@/components/common/styles";
 
 export const SelectModelPage = () => {
   useFetchCar();
   useFetchModelFilterAndTrim();
 
   return (
-    <SelectModelPageDiv>
+    <PageDiv>
       <SelectModelHeader />
-      <FilterList />
-      <TrimList />
-      <NoticeList />
-    </SelectModelPageDiv>
+      <PageWrap>
+        <FilterList />
+        <TrimList />
+        <NoticeList />
+      </PageWrap>
+    </PageDiv>
   );
 };
-
-const SelectModelPageDiv = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
