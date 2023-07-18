@@ -1,6 +1,6 @@
 all:
 	pnpm i
-	pnpm run
+	pnpm run dev
 
 build:
 	pnpm run build
