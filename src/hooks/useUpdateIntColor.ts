@@ -34,7 +34,7 @@ export const useUpdateIntColor = () => {
         code: intColorInfos[0].intColorCode,
         name: intColorInfos[0].intColorName,
       });
-    } catch (error) {
+    } catch (error: any) {
       setErrorModalInfo({
         messages: error.response.data.message,
         isRedirect: true,

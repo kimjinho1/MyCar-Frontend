@@ -4,26 +4,22 @@ import { ModalConfirmButton, PopUpModal } from "@/components/common";
 import { useImageUrl } from "@/hooks/utils/useImageUrl";
 import {
   tuixsState,
-  selectOptionState,
   changedOptionsState,
   optionsState,
   optionCodesState,
 } from "@/stores/optionState";
 import { PriceInfo } from "./PriceInfo";
 import { ButtonContainer } from "./styles";
-import { getTuixs } from "@/services/option";
 import { useUpdateTuix } from "@/hooks/useUpdateTuix";
-import { useParams } from "react-router-dom";
 
-interface AddOptionModalProps {
+interface AddDelOptionModalProps {
   modelCode: string;
   onClose: () => void;
 }
 
-export const AddOptionModal = ({ modelCode, onClose }: AddOptionModalProps) => {
+export const AddDelOptionModal = ({ modelCode, onClose }: AddDelOptionModalProps) => {
   const setOptions = useSetRecoilState(optionsState);
   const setTuixs = useSetRecoilState(tuixsState);
-  const setSelectOption = useSetRecoilState(selectOptionState);
   const [optionCodes, setOptionCodes] = useRecoilState(optionCodesState);
   const newOptionCodes = new Set(optionCodes);
 
@@ -57,7 +53,7 @@ export const AddOptionModal = ({ modelCode, onClose }: AddOptionModalProps) => {
 
   return (
     <PopUpModal onClose={onClose} widthPercent={85}>
-      <ChangeOptionModalDiv>
+      <AddDelOptionModalDiv>
         {changedOptions && changedOptions.add.length > 0 && (
           <>
             <p>추과되는 품목</p>
@@ -96,14 +92,14 @@ export const AddOptionModal = ({ modelCode, onClose }: AddOptionModalProps) => {
             </OptionInfoWrap>
           </>
         )}
-      </ChangeOptionModalDiv>
+      </AddDelOptionModalDiv>
       <PriceInfo price={changePrice} />
       <ButtonContainer>
-        <ModalConfirmButton widthPx={80} isConfirm={false} onClick={onClose}>
+        <ModalConfirmButton widthPx={"80"} isConfirm={false} onClick={onClose}>
           취소
         </ModalConfirmButton>
         <ModalConfirmButton
-          widthPx={80}
+          widthPx={"80"}
           isConfirm={true}
           onClick={handleConfirmClick}
         >
@@ -114,7 +110,7 @@ export const AddOptionModal = ({ modelCode, onClose }: AddOptionModalProps) => {
   );
 };
 
-const ChangeOptionModalDiv = styled.div`
+const AddDelOptionModalDiv = styled.div`
   width: 80%;
   margin-top: 40px;
   display: flex;

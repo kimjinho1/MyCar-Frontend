@@ -82,12 +82,3 @@ const ModelInfoDiv = styled.div`
     cursor: pointer;
   }
 `;
-
-const CarImageDiv = styled.div`
-  width: 100%;
-
-  > img {
-    width: 100%;
-    object-fit: cover;
-  }
-`;

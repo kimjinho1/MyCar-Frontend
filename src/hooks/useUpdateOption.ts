@@ -83,7 +83,7 @@ export const useUpdateOption = () => {
         setOptions(newOptions);
         setTuixs(newTuixs);
         setSelectOption(optionCode);
-      } catch (error) {
+      } catch (error: any) {
         setErrorModalInfo({
           messages: error.response.data.message,
           isRedirect: true,

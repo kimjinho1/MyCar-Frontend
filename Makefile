@@ -1,4 +1,5 @@
 all:
+	pnpm i
 	pnpm run dev
 
 build:

@@ -45,7 +45,7 @@ export interface OptionImageBoxDivProps {
 }
 
 export const OptionImageBoxDiv = styled.div.withConfig({
-  shouldForwardProp: (prop, defaultValidatorFn) =>
+  shouldForwardProp: (prop) =>
     shouldForwardProp(prop) &&
     !["hover", "isBlocked", "isSelected"].includes(prop),
 })<OptionImageBoxDivProps>`

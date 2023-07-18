@@ -59,9 +59,6 @@ export const useFetchChangeOption = () => {
               isSelectable: false,
             });
       });
-      console.log("changeOptions", changeOptions);
-      console.log("newOptions", newOptions);
-      console.log("newTuixs", newTuixs);
 
       setChangedOptions({
         optionCode: option.optionCode,
@@ -72,7 +69,7 @@ export const useFetchChangeOption = () => {
       });
 
       setIsOpenChangeOptionModal(true);
-    } catch (error) {
+    } catch (error: any) {
       setErrorModalInfo({
         messages: error.response.data.message,
         isRedirect: true,

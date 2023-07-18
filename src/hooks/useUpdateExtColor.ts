@@ -31,7 +31,7 @@ export const useUpdateExtColor = () => {
         code: extColorInfos[0].extColorCode,
         name: extColorInfos[0].extColorName,
       });
-    } catch (error) {
+    } catch (error: any) {
       setErrorModalInfo({
         messages: error.response.data.message,
         isRedirect: true,

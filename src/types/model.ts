@@ -8,6 +8,7 @@ export type CarInfo = {
   carCode: string;
   carName: string;
   carImagePath: string;
+  carLowPrice: number;
   carTypeId: string;
 };
 

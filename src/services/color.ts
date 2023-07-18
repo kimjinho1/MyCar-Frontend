@@ -10,27 +10,30 @@ export const getChangeableCarModelsWithTrim = async (
   intColorCode: string,
   extColorCode: string
 ): Promise<ChangeableCarModelsWithTrim> => {
-  return await apiInstance.get<ChangeableCarModelsWithTrim>(
+  const data = await apiInstance.get<ChangeableCarModelsWithTrim>(
     `/color/change-int-color?modelCode=${modelCode}&intColorCode=${intColorCode}&extColorCode=${extColorCode}`
   );
+  return data.data
 };
 
 export const getExtColorInfos = async (
   modelCode: string,
   intColorCode: string
 ): Promise<ExtColorInfo[]> => {
-  return await apiInstance.get<ExtColorInfo[]>(
+  const data = await apiInstance.get<ExtColorInfo[]>(
     `/color/ext-color?modelCode=${modelCode}&intColorCode=${intColorCode}`
   );
+  return data.data
 };
 
 export const getIntColorInfos = async (
   modelCode: string,
-  extColorCode: string
+  extColorCode?: string
 ): Promise<IntColorInfo[]> => {
-  return await apiInstance.get<IntColorInfo[]>(
+  const data = await apiInstance.get<IntColorInfo[]>(
     `/color/int-color?modelCode=${modelCode}&extColorCode=${
       extColorCode !== undefined ? extColorCode : ""
     }`
   );
+  return data.data
 };

@@ -67,11 +67,11 @@ export const ChangeTrimModal = ({
       </TrimInfoContainer>
       <PriceInfo price={changePrice} />
       <ButtonContainer>
-        <ModalConfirmButton widthPx={80} isConfirm={false} onClick={onClose}>
+        <ModalConfirmButton widthPx={"80"} isConfirm={false} onClick={onClose}>
           취소
         </ModalConfirmButton>
         <ModalConfirmButton
-          widthPx={80}
+          widthPx={"80"}
           isConfirm={true}
           onClick={handleConfirmClick}
         >

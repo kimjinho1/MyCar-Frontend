@@ -1,4 +1,4 @@
-import { ChangedOptionInfo, OptionInfo, OptionMap } from "@/types/option";
+import { ChangedOptionInfo, OptionInfo } from "@/types/option";
 import { atom, selector } from "recoil";
 import { modelInfoState } from "./modelState";
 
@@ -35,7 +35,7 @@ export const changedOptionsState = atom<ChangedOptionInfo>({
 /** SET: 옵션 선택 */
 export const selectOptionState = selector<string>({
   key: "selectOptionState",
-  get: ({ get }) => {
+  get: ({}) => {
     throw new Error("Cannot get value of selectedOptionState selector");
   },
   set: ({ set, get }, optionCode) => {
@@ -58,7 +58,7 @@ export const categorizedOptionState = selector({
     const tuixs = get(tuixsState);
     const categorizedOptions = [...options].concat([...tuixs]).reduce<{
       [key: string]: OptionInfo[];
-    }>((acc, [optionCode, option]) => {
+    }>((acc, [, option]) => {
       const { optionTypeName } = option;
       if (!acc[optionTypeName]) {
         acc[optionTypeName] = [];

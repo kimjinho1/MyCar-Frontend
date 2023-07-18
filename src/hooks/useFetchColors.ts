@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import { useRecoilValue, useResetRecoilState, useSetRecoilState } from "recoil";
 import {
   selectedIntColorState,
@@ -68,7 +67,7 @@ export const useFetchColors = () => {
 
       resetNewIntColor();
       resetNewExtColor();
-    } catch (error) {
+    } catch (error: any) {
       setErrorModalInfo({
         messages: error.response.data.message,
         isRedirect: true,

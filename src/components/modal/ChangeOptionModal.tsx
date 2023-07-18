@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import {
-  HorizontalLine,
   ModalConfirmButton,
   PopUpModal,
 } from "@/components/common";
@@ -63,11 +62,11 @@ export const ChangeOptionModal = ({ onClose }: ChangeOptionModalProps) => {
       </ChangeOptionModalDiv>
       <PriceInfo price={changePrice} />
       <ButtonContainer>
-        <ModalConfirmButton widthPx={80} isConfirm={false} onClick={onClose}>
+        <ModalConfirmButton widthPx={"80"} isConfirm={false} onClick={onClose}>
           취소
         </ModalConfirmButton>
         <ModalConfirmButton
-          widthPx={80}
+          widthPx={"80"}
           isConfirm={true}
           onClick={handleConfirmClick}
         >

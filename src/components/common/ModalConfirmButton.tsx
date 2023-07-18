@@ -2,14 +2,14 @@ import styled from "styled-components";
 import shouldForwardProp from "@styled-system/should-forward-prop";
 
 interface ModalButtonProps {
-  isConfirm: boolean;
   widthPx: string;
+  isConfirm: boolean;
 }
 
 export const ModalConfirmButton = styled.button.withConfig({
   shouldForwardProp: (prop) =>
     shouldForwardProp(prop) &&
-    !["hover", "isBlocked", "isSelected"].includes(prop),
+    !["isConfirm"].includes(prop),
 })<ModalButtonProps>`
   width: ${({ widthPx }) => widthPx}px;
   margin-top: 5px;

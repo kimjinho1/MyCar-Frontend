@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import shouldForwardProp from "@styled-system/should-forward-prop";
 
@@ -42,7 +41,7 @@ export const ModalOutside = styled.div`
 `;
 
 export const ModalContainer = styled.div.withConfig({
-  shouldForwardProp: (prop, defaultValidatorFn) =>
+  shouldForwardProp: (prop) =>
     shouldForwardProp(prop) && !["widthPercent"].includes(prop),
 })<ModalContainerProps>`
   display: flex;
