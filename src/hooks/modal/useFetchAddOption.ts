@@ -59,9 +59,6 @@ export const useFetchChangeOption = () => {
               isSelectable: false,
             });
       });
-      console.log("changeOptions", changeOptions);
-      console.log("newOptions", newOptions);
-      console.log("newTuixs", newTuixs);
 
       setChangedOptions({
         optionCode: option.optionCode,

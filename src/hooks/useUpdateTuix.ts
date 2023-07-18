@@ -32,10 +32,7 @@ export const useUpdateTuix = () => {
       );
       const beforeTuixCode = tuixOptionCodes.join(",");
 
-      console.log("beforeOptionCode", beforeOptionCode);
       const newTuixList = await getTuixs(modelCode, beforeOptionCode, beforeTuixCode);
-      console.log("optionCodes", optionCodes);
-      console.log("newTuixList", newTuixList);
 
       newTuixList.map((newTuix) => {
         newTuixs.set(newTuix.optionCode, newTuix);
