@@ -1,4 +1,3 @@
-import styled from "styled-components";
 import {
   ExtColor,
   IntColor,
@@ -12,6 +11,7 @@ import { optionCodesState } from "@/stores/optionState";
 import { useResetRecoilState } from "recoil";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { PageDiv, PageWrap } from "@/components/common/styles";
 
 export const MakingModelPage = () => {
   const { modelCode } = useParams();
@@ -32,31 +32,14 @@ export const MakingModelPage = () => {
   }, [modelCode]);
 
   return (
-    <MakingModelPageDiv>
+    <PageDiv>
       <MakingModelHeader />
-      <MakingModelPageWrap>
+      <PageWrap>
         <Preview />
         <ExtColor />
         <IntColor />
         <Option />
-      </MakingModelPageWrap>
-    </MakingModelPageDiv>
+      </PageWrap>
+    </PageDiv>
   );
 };
-
-const MakingModelPageDiv = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
-
-const MakingModelPageWrap = styled.div`
-  width: 100%;
-  max-width: 800px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;

@@ -1,3 +1,4 @@
+import { PageDiv } from "@/components/common/styles";
 import {
   MainHeader,
   MainTitle,
@@ -11,12 +12,12 @@ export const MainPage = () => {
   useFetchCarList();
 
   return (
-    <div>
+    <PageDiv>
       <MainHeader />
       <MainTitle />
       <TabMenu />
       <CarList />
       <NoticeList />
-    </div>
+    </PageDiv>
   );
 };

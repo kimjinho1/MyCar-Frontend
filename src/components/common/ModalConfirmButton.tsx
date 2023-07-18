@@ -7,7 +7,7 @@ interface ModalButtonProps {
 }
 
 export const ModalConfirmButton = styled.button.withConfig({
-  shouldForwardProp: (prop, defaultValidatorFn) =>
+  shouldForwardProp: (prop) =>
     shouldForwardProp(prop) &&
     !["hover", "isBlocked", "isSelected"].includes(prop),
 })<ModalButtonProps>`
