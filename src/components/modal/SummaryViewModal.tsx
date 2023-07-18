@@ -47,7 +47,7 @@ export const SummaryViewModal = ({ onClose }: SummaryViewModalProps) => {
               </SelectedInfoDiv>
             </SelectedInfoListDiv>
           </SummaryViewDiv>
-          <HorizontalLine />
+          <HorizontalLine height={0.3} />
 
           <SummaryViewDiv>
             <p>색상</p>
@@ -62,7 +62,7 @@ export const SummaryViewModal = ({ onClose }: SummaryViewModalProps) => {
               </SelectedInfoDiv>
             </SelectedInfoListDiv>
           </SummaryViewDiv>
-          <HorizontalLine />
+          <HorizontalLine height={0.3} />
 
           <SummaryViewDiv>
             <p>옵션</p>

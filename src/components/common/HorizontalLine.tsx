@@ -1,7 +1,11 @@
 import styled from "styled-components";
 
-export const HorizontalLine = styled.div`
+type HorizontalLineProps = {
+  height: number;
+};
+
+export const HorizontalLine = styled.div<HorizontalLineProps>`
   width: 100%;
-  height: 0.3px;
+  height: ${(props) => props.height}px;
   background-color: grey;
 `;
