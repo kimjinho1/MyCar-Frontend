@@ -10,3 +10,5 @@ typescript, react, recoil
 Makefile 안에 아래 명령들이 있습니다.  
 EX)  
 make -> 개발용 서버 실행  
+
+2. http://localhost:5173 접속
