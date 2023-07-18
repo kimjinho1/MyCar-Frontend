@@ -5,11 +5,13 @@ import { Layout } from "@/components/common/Layout";
 import { errorModalState } from "./stores/modalState";
 import { useRecoilValue } from "recoil";
 import { ErrorModal } from "./components/modal/ErrorModal";
+import { EstimationPage } from "./pages/EstimationPage";
 
 export const ROUTE_PATH = {
   ROOT: "/",
   SELECT_MODEL: (carCode: string) => `/model/${carCode}`,
   MAKING_MODEL: (modelCode: string) => `/model/making/${modelCode}`,
+  ESTIMATION: "/estimation",
 };
 
 const RedirectComponent: React.FC = () => {
@@ -61,7 +63,7 @@ const Router: React.FC = () => {
           path={"/estimation"}
           element={
             <Layout>
-              <MainPage />
+              <EstimationPage />
             </Layout>
           }
         />
