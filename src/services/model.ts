@@ -9,28 +9,33 @@ import {
 import { apiInstance } from "./instance";
 
 export const getCarInfo = async (carCode: string): Promise<CarInfo> => {
-  return await apiInstance.get<CarInfo>(`/model/carInfo/${carCode}`);
+  const data = await apiInstance.get<CarInfo>(`/model/carInfo/${carCode}`);
+  return data.data
 };
 
 export const getCarInfos = async (): Promise<CarTypeWithCarInfos[]> => {
-  return await apiInstance.get<CarTypeWithCarInfos[]>("/model/carInfos");
+  const data = await apiInstance.get<CarTypeWithCarInfos[]>("/model/carInfos");
+  return data.data
 };
 
 export const getModelFilters = async (
   carCode: string
 ): Promise<ModelFilters> => {
-  return await apiInstance.get<ModelFilters>(`/model/filters/${carCode}`);
+  const data = await apiInstance.get<ModelFilters>(`/model/filters/${carCode}`);
+  return data.data
 };
 
 export const getModelInfo = async (modelCode: string): Promise<ModelInfo> => {
-  return await apiInstance.get<ModelInfo>(`/model/modelInfo/${modelCode}`);
+  const data = await apiInstance.get<ModelInfo>(`/model/modelInfo/${modelCode}`);
+  return data.data
 };
 
 export const getTrimInfos = async (
   modelFilters: GetTrimInfosParam
 ): Promise<TrimInfo[]> => {
   const { carCode, engineCode, missionCode, driveCode } = modelFilters;
-  return await apiInstance.get<TrimInfo[]>(
+  const data = await apiInstance.get<TrimInfo[]>(
     `/model/trims?carCode=${carCode}&engineCode=${engineCode}&missionCode=${missionCode}&driveCode=${driveCode}`
   );
+  return data.data
 };

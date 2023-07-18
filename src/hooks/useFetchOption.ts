@@ -7,6 +7,7 @@ import {
 } from "@/stores/optionState";
 import { OPTION_TYPE, OptionInfo, OptionMap } from "@/types/option";
 import { setErrorModalInfoState } from "@/stores/modalState";
+import { useUpdateTuix } from "./useUpdateTuix";
 
 export const useFetchOption = () => {
   const setErrorModalInfo = useSetRecoilState(setErrorModalInfoState);
@@ -14,6 +15,8 @@ export const useFetchOption = () => {
   const setOptions = useSetRecoilState(optionsState);
   const setTuixs = useSetRecoilState(tuixsState);
   const [optionCodes, setOptionCodes] = useRecoilState(optionCodesState);
+
+  const updateTuix = useUpdateTuix();
 
   const fetchOption = async (modelCode: string, intColorCode: string) => {
     try {
@@ -40,9 +43,14 @@ export const useFetchOption = () => {
       });
 
       setOptions(newOptions);
-      setTuixs(newTuixs);
+      updateTuix(
+        modelCode,
+        newOptions,
+        newTuixs,
+        newOptionCodes
+      );
       setOptionCodes(newOptionCodes);
-    } catch (error) {
+    } catch (error: any) {
       setErrorModalInfo({
         messages: error.response.data.message,
         isRedirect: true,
@@ -52,6 +60,7 @@ export const useFetchOption = () => {
 
   return fetchOption;
 };
+
 
 /**
  * UTILS

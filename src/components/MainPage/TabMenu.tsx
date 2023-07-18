@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { carTypesSelector, carTypeCodeState } from "@/stores/carState";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { CarType } from "@/types/model";
 
 type CarTypeDivProps = {
   selected: boolean;

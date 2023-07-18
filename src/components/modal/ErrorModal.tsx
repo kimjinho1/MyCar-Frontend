@@ -1,14 +1,8 @@
 import styled from "styled-components";
 import {
-  HorizontalLine,
   ModalConfirmButton,
   PopUpModal,
 } from "@/components/common";
-import {
-  selectedExtColorState,
-  selectedIntColorState,
-} from "@/stores/colorState";
-import { modelInfoState } from "@/stores/modelState";
 import { useRecoilValue, useResetRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
 import { ROUTE_PATH } from "@/Router";
@@ -36,7 +30,7 @@ export const ErrorModal = () => {
         {errorModalInfo.messages.map((message) => (
           <p key={message}>{message}</p>
         ))}
-        <ModalConfirmButton widthPx={100} isConfirm={true} onClick={onClose}>
+        <ModalConfirmButton widthPx={"100"} isConfirm={true} onClick={onClose}>
           확인
         </ModalConfirmButton>
       </ErrorModalDiv>

@@ -72,7 +72,7 @@ export const useFetchChangeOption = () => {
       });
 
       setIsOpenChangeOptionModal(true);
-    } catch (error) {
+    } catch (error: any) {
       setErrorModalInfo({
         messages: error.response.data.message,
         isRedirect: true,

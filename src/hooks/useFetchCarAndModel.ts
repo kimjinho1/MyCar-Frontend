@@ -27,7 +27,7 @@ export const useFetchCarAndModel = () => {
         price: modelData.modelPrice,
         imagePath: modelData.modelImagePath,
       });
-    } catch (error) {
+    } catch (error: any) {
       setErrorModalInfo({
         messages: error.response.data.message,
         isRedirect: true,

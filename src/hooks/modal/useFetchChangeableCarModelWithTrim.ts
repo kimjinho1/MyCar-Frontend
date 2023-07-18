@@ -40,7 +40,7 @@ export const useFetchChangeableCarModelWithTrim = () => {
         name: extColor.name,
       });
       setIsOpenChangeTrimModal(true);
-    } catch (error) {
+    } catch (error: any) {
       setErrorModalInfo({
         messages: error.response.data.message,
         isRedirect: false,

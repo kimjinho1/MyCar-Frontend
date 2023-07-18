@@ -6,7 +6,7 @@ import {
 } from "@/stores/colorState";
 import { modelInfoState } from "@/stores/modelState";
 import { useState } from "react";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue} from "recoil";
 import styled from "styled-components";
 import { ChangeTrimModal } from "../modal/ChangeTrimModal";
 import { OptionDiv, OptionImageBoxDiv, OptionTitleDiv } from "./styles";

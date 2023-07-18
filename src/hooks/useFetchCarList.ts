@@ -16,7 +16,7 @@ export const useFetchCarList = () => {
         const data = await getCarInfos();
         setCarInfos(data);
         setSelectedCarTypeCode(data[0].carTypeCode);
-      } catch (error) {
+      } catch (error: any) {
         setErrorModalInfo({
           messages: error.response.data.message,
           isRedirect: true,

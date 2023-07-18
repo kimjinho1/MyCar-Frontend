@@ -85,7 +85,7 @@ export const SummaryViewModal = ({ onClose }: SummaryViewModalProps) => {
         </TotalPriceDiv>
 
         <ModalConfirmButton
-          widthPx={100}
+          widthPx={"100"}
           isConfirm={true}
           onClick={handleConfirmClick}
         >

@@ -11,6 +11,5 @@ const axiosApi = (url: string, headers: { [key: string]: string } = {}) => {
 
 export const apiInstance = axiosApi(import.meta.env.VITE_BACKEND_URL);
 apiInstance.interceptors.response.use((response) => {
-  const res = response.data.data;
-  return res;
+  return response.data;
 });

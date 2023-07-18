@@ -26,8 +26,14 @@ export const useUpdateTuix = () => {
         options.has(optionCode)
       );
       const beforeOptionCode = detailOptionCodes.join(",");
+
+      const tuixOptionCodes = Array.from(optionCodes).filter((optionCode) =>
+        tuixs.has(optionCode)
+      );
+      const beforeTuixCode = tuixOptionCodes.join(",");
+
       console.log("beforeOptionCode", beforeOptionCode);
-      const newTuixList = await getTuixs(modelCode, beforeOptionCode);
+      const newTuixList = await getTuixs(modelCode, beforeOptionCode, beforeTuixCode);
       console.log("optionCodes", optionCodes);
       console.log("newTuixList", newTuixList);
 
@@ -44,7 +50,7 @@ export const useUpdateTuix = () => {
 
       setTuixs(newTuixs);
       setOptionCodes(newOptionCodes);
-    } catch (error) {
+    } catch (error: any) {
       setErrorModalInfo({
         messages: error.response.data.message,
         isRedirect: true,

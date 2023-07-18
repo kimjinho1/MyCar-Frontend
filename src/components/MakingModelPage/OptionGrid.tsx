@@ -9,7 +9,7 @@ import { useUpdateOption } from "@/hooks/useUpdateOption";
 import { useState } from "react";
 import { useFetchChangeOption } from "@/hooks/modal/useFetchAddOption";
 import { modelInfoState } from "@/stores/modelState";
-import { AddOptionModal } from "../modal/AddOptionModal";
+import { AddDelOptionModal } from "../modal/AddDelOptionModal";
 
 interface OptionGridProps {
   options: OptionInfo[];
@@ -27,10 +27,10 @@ export const OptionGrid = ({ options }: OptionGridProps) => {
   const fetchChangeOption = useFetchChangeOption();
 
   // 모달 관리
-  const [isOpenChangeOptionModal, setIsOpenChangeOptionModal] =
+  const [isOpenAddDelOptionModal, setIsOpenAddDelOptionModal] =
     useState<boolean>(false);
   const onClose = () => {
-    setIsOpenChangeOptionModal(false);
+    setIsOpenAddDelOptionModal(false);
   };
 
   const handleOptionClick = (option: OptionInfo) => {
@@ -44,7 +44,7 @@ export const OptionGrid = ({ options }: OptionGridProps) => {
     }
     /** 선택 불가능한 옵션 */
     if (!option.isSelectable) {
-      fetchChangeOption(modelInfo.code, option, setIsOpenChangeOptionModal);
+      fetchChangeOption(modelInfo.code, option, setIsOpenAddDelOptionModal);
       return;
     }
 
@@ -53,8 +53,8 @@ export const OptionGrid = ({ options }: OptionGridProps) => {
 
   return (
     <>
-      {isOpenChangeOptionModal && modelInfo && modelInfo.code && (
-        <AddOptionModal modelCode={modelInfo.code} onClose={onClose} />
+      {isOpenAddDelOptionModal && modelInfo && modelInfo.code && (
+        <AddDelOptionModal modelCode={modelInfo.code} onClose={onClose} />
       )}
       <OptionGridDiv>
         {options.map((option) => {
@@ -94,7 +94,7 @@ const OptionGridDiv = styled.div`
 `;
 
 const OptionGridWrap = styled.div.withConfig({
-  shouldForwardProp: (prop, defaultValidatorFn) =>
+  shouldForwardProp: (prop) =>
     shouldForwardProp(prop) && !["isSelected"].includes(prop),
 })<OptionGridWrapProps>`
   width: 100%;

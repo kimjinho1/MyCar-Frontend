@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 import {
   driveCodeState,
@@ -8,12 +8,12 @@ import {
   trimInfosState,
 } from "@/stores/modelState";
 import { getModelFilters, getTrimInfos } from "@/services/model";
-import { ROUTE_PATH } from "@/Router";
 import { useEffect } from "react";
+import { setErrorModalInfoState } from "@/stores/modalState";
 
 export const useFetchModelFilterAndTrim = () => {
+  const setErrorModalInfo = useSetRecoilState(setErrorModalInfoState);
   const { carCode } = useParams();
-  const navigate = useNavigate();
 
   const setModelFilters = useSetRecoilState(modelFiltersState);
   const setEngineCode = useSetRecoilState(engineCodeState);
@@ -45,8 +45,11 @@ export const useFetchModelFilterAndTrim = () => {
           };
           const trimInfos = await getTrimInfos(getTrimInfosParam);
           setTrimInfos(trimInfos);
-        } catch (error) {
-          navigate(ROUTE_PATH.ROOT);
+        } catch (error: any) {
+      setErrorModalInfo({
+        messages: error.response.data.message,
+        isRedirect: true,
+      });
         }
       }
     };
