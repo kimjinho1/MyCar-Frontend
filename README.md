@@ -1,6 +1,6 @@
 # 현대오토에버x이노베이션 아카데미 채용연계 프로그램
 ## 과제 소개
-[현대닷컴 견적내기 사이트](https://www.hyundai.com/kr/ko/e)https://www.hyundai.com/kr/ko/e를 모방한 내차만들기 웹사이트 개발
+[현대닷컴 견적내기 사이트](https://www.hyundai.com/kr/ko/e)https://www.hyundai.com/kr/ko/e 를 모방한 내차만들기 웹사이트 개발
 
 ## 백엔드 기술 스택
 typescript, react, recoil
