@@ -45,7 +45,6 @@ const StepDiv = styled.div`
   }
 
   > p {
-    margin: 0;
     font-size: 14px;
   }
 `;

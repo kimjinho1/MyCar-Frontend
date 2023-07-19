@@ -75,7 +75,6 @@ const StepDiv = styled.div`
   }
 
   > p {
-    margin: 0;
     font-size: 14px;
     cursor: pointer;
   }
@@ -88,7 +87,6 @@ const RightAlignedStepDiv = styled.div`
   cursor: pointer;
 
   > p {
-    margin: 0;
     font-size: 14px;
   }
 `;

@@ -88,7 +88,6 @@ const FilterSummaryDiv = styled.div`
   width: 70%;
 
   > p {
-    margin: 0;
     font-size: 12px;
     color: #666;
   }

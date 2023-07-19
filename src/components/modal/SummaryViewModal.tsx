@@ -13,9 +13,9 @@ import { selectedOptionState, getTotalPriceState } from "@/stores/optionState";
 import { useRecoilValue } from "recoil";
 import { useFetchEstimation } from "@/hooks/useFetchEstimation";
 
-interface SummaryViewModalProps {
+type SummaryViewModalProps = {
   onClose: () => void;
-}
+};
 
 export const SummaryViewModal = ({ onClose }: SummaryViewModalProps) => {
   const modelInfo = useRecoilValue(modelInfoState);

@@ -11,13 +11,13 @@ import { useFetchChangeOption } from "@/hooks/modal/useFetchAddOption";
 import { modelInfoState } from "@/stores/modelState";
 import { AddDelOptionModal } from "../modal/AddDelOptionModal";
 
-interface OptionGridProps {
+type OptionGridProps = {
   options: OptionInfo[];
-}
+};
 
-export interface OptionGridWrapProps {
+export type OptionGridWrapProps = {
   isSelected: boolean;
-}
+};
 
 export const OptionGrid = ({ options }: OptionGridProps) => {
   const modelInfo = useRecoilValue(modelInfoState);

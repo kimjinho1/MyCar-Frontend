@@ -59,7 +59,6 @@ const CarTypeDiv = styled.div<CarTypeDivProps>`
   cursor: pointer;
 
   > p {
-    margin: 0;
     font-size: 14px;
     color: ${({ selected }) => (selected ? "#4d92e7" : "grey")};
   }

@@ -29,20 +29,19 @@ export const OptionTitleDiv = styled.div`
   }
 
   > span {
-    margin: 0;
     font-size: 10px;
     color: #666;
   }
 `;
 
-export interface OptionImageBoxDivProps {
+export type OptionImageBoxDivProps = {
   height: string;
   title: string;
   imgurl: string;
   hover: boolean;
   isBlocked: boolean;
   isSelected: boolean;
-}
+};
 
 export const OptionImageBoxDiv = styled.div.withConfig({
   shouldForwardProp: (prop) =>
