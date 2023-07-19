@@ -19,6 +19,7 @@ export const ExtColor = () => {
   const handleExtColorBtnClick = (extColorInfo: ExtColorInfo) => {
     const extColorCode = extColorInfo.extColorCode;
     const extColorName = extColorInfo.extColorName;
+    const extColorImagePath = extColorInfo.extColorImagePath;
 
     if (!extColorInfo.isSelectable) {
       setErrorModalInfo({
@@ -31,6 +32,7 @@ export const ExtColor = () => {
     setSelectedExtColor({
       code: extColorCode,
       name: extColorName,
+      imagePath: extColorImagePath,
     });
 
     /** 내장색상 업데이트 */

@@ -30,6 +30,7 @@ export const useUpdateExtColor = () => {
       setSelectedExtColor({
         code: extColorInfos[0].extColorCode,
         name: extColorInfos[0].extColorName,
+        imagePath: extColorInfos[0].extColorImagePath,
       });
     } catch (error: any) {
       setErrorModalInfo({

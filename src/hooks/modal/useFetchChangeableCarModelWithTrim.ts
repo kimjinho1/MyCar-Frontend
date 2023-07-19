@@ -34,10 +34,12 @@ export const useFetchChangeableCarModelWithTrim = () => {
       setNewIntColor({
         code: intColor.code,
         name: intColor.name,
+        imagePath: intColor.imagePath,
       });
       setNewExtColor({
         code: extColor.code,
         name: extColor.name,
+        imagePath: extColor.imagePath,
       });
       setIsOpenChangeTrimModal(true);
     } catch (error: any) {

@@ -31,6 +31,7 @@ export const ChangeTrimModal = ({
     setSelectedIntColor({
       code: newIntColor.code,
       name: newIntColor.name,
+      imagePath: newIntColor.imagePath,
     });
     navigate(ROUTE_PATH.MAKING_MODEL(newModelInfo.modelCode));
     onClose();
