@@ -5,7 +5,7 @@ import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { OptionImageBoxDiv } from "./styles";
 import { OptionInfo } from "@/types/option";
-import { useUpdateOption } from "@/hooks/useUpdateOption";
+import { useUpdateOption } from "@/hooks/modal/useUpdateOption";
 import { useState } from "react";
 import { useFetchChangeOption } from "@/hooks/modal/useFetchAddOption";
 import { modelInfoState } from "@/stores/modelState";

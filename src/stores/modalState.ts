@@ -25,7 +25,7 @@ export const errorModalState = atom<errorModalProps>({
 /** SET: 옵션 선택 */
 export const setErrorModalInfoState = selector({
   key: "setErrorModalInfoState",
-  get: ({}) => {
+  get: () => {
     throw new Error("Cannot get value of setErrorModalInfo selector");
   },
   set: (

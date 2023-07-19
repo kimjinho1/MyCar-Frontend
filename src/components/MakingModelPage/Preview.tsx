@@ -19,7 +19,7 @@ export const Preview = () => {
       </HeadDiv>
       <ModelInfoDiv>
         <span>{`${modelInfo.fullName}`}</span>
-        <button>모델 변경 &nbsp;{">"}</button>
+        {/* <button>모델 변경 &nbsp;{">"}</button> */}
       </ModelInfoDiv>
       {/* <CarImageDiv>
         <img src={useImageUrl(modelInfo.imagePath)} />

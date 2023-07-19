@@ -35,7 +35,7 @@ export const changedOptionsState = atom<ChangedOptionInfo>({
 /** SET: 옵션 선택 */
 export const selectOptionState = selector<string>({
   key: "selectOptionState",
-  get: ({}) => {
+  get: () => {
     throw new Error("Cannot get value of selectedOptionState selector");
   },
   set: ({ set, get }, optionCode) => {
