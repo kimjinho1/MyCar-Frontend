@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { ModalConfirmButton, PopUpModal } from "@/components/common";
-import { useImageUrl } from "@/hooks/utils/useImageUrl";
 import {
   tuixsState,
   changedOptionsState,
@@ -11,11 +10,12 @@ import {
 import { PriceInfo } from "./PriceInfo";
 import { ButtonContainer } from "./styles";
 import { useUpdateTuix } from "@/hooks/useUpdateTuix";
+import { AddDelOptionInfo } from "./AddDellOptionInfo";
 
-interface AddDelOptionModalProps {
+type AddDelOptionModalProps = {
   modelCode: string;
   onClose: () => void;
-}
+};
 
 export const AddDelOptionModal = ({
   modelCode,
@@ -58,42 +58,10 @@ export const AddDelOptionModal = ({
     <PopUpModal onClose={onClose} widthPercent={85}>
       <AddDelOptionModalDiv>
         {changedOptions && changedOptions.add.length > 0 && (
-          <>
-            <p>추과되는 품목</p>
-            <OptionInfoWrap>
-              {changedOptions.add.map((option) => {
-                return (
-                  <OptionInfoDiv key={option.optionCode}>
-                    <img src={useImageUrl(option.optionImagePath)} />
-                    <IconImgDiv>
-                      <img src={"/SelectCheck.svg"} />
-                    </IconImgDiv>
-                    <p>{option.optionName}</p>
-                    <b>{option.optionPrice.toLocaleString()} 원</b>
-                  </OptionInfoDiv>
-                );
-              })}
-            </OptionInfoWrap>
-          </>
+          <AddDelOptionInfo isAdd={true} options={changedOptions.add} />
         )}
         {changedOptions && changedOptions.remove.length > 0 && (
-          <>
-            <p>삭제되는 품목</p>
-            <OptionInfoWrap>
-              {changedOptions.remove.map((option) => {
-                return (
-                  <OptionInfoDiv key={option.optionCode}>
-                    <img src={useImageUrl(option.optionImagePath)} />
-                    <IconImgDiv>
-                      <img src={"/X.svg"} />
-                    </IconImgDiv>
-                    <p>{option.optionName}</p>
-                    <b>{option.optionPrice.toLocaleString()} 원</b>
-                  </OptionInfoDiv>
-                );
-              })}
-            </OptionInfoWrap>
-          </>
+          <AddDelOptionInfo isAdd={false} options={changedOptions.remove} />
         )}
       </AddDelOptionModalDiv>
       <PriceInfo price={changePrice} />
@@ -113,7 +81,7 @@ export const AddDelOptionModal = ({
   );
 };
 
-const AddDelOptionModalDiv = styled.div`
+export const AddDelOptionModalDiv = styled.div`
   width: 80%;
   margin-top: 40px;
   display: flex;
@@ -127,50 +95,5 @@ const AddDelOptionModalDiv = styled.div`
     margin: 15px 0;
     font-size: 12px;
     font-weight: bold;
-  }
-`;
-
-const OptionInfoWrap = styled.div`
-  width: 100%;
-  border-bottom: grey 1px solid;
-  border-top: grey 1.5px solid;
-`;
-
-const OptionInfoDiv = styled.div`
-  width: 100%;
-  padding: 15px 0;
-  display: flex;
-  align-items: center;
-  border-bottom: grey 0.5px solid;
-
-  > img {
-    width: 12%;
-    min-width: 50px;
-    max-height: 40px;
-    object-fit: cover;
-  }
-
-  > p {
-    margin: 0;
-    padding-left: 5px;
-    width: 60%;
-    font-size: 12px;
-    font-weight: bolder;
-  }
-
-  > b {
-    margin-left: auto;
-    font-size: 12px;
-    white-space: nowrap;
-  }
-`;
-
-const IconImgDiv = styled.div`
-  width: 15px;
-  transform: translate(-32%, -100%);
-
-  > img {
-    width: 100%;
-    object-fit: cover;
   }
 `;
