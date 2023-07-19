@@ -136,7 +136,7 @@ export const EstimationPage = () => {
 
               {hgaOptions.length > 0 && (
                 <>
-                  <HorizontalLine height={0.5} />
+                  {detailOptions.length > 0 && <HorizontalLine height={0.5} />}
                   <OptionList
                     typeName={"H Genuine Accessories"}
                     options={hgaOptions}
