@@ -279,7 +279,7 @@ const SelectedColorInfoDiv = styled.div`
     margin-left: 15px;
     margin-right: 40px;
     color: grey;
-    font-size: 16px;
+    font-size: 15px;
   }
 `;
 
