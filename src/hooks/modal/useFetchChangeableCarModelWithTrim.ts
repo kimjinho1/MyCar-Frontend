@@ -51,7 +51,6 @@ export const useFetchChangeableCarModelWithTrim = () => {
         newOptionCodes.delete(removeOptionCode);
       });
       setNewOptionCodes(newOptionCodes);
-      console.log("setNewOptionCodes", newOptionCodes);
       setIsOpenChangeTrimModal(true);
     } catch (error: any) {
       setErrorModalInfo({
