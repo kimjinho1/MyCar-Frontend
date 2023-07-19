@@ -132,7 +132,6 @@ const FilterListDiv = styled.div`
 
 const FilterContainer = styled.div`
   > p {
-    margin: 0;
     font-size: 14px;
   }
 `;
@@ -156,7 +155,6 @@ const FilterWrap = styled.div<FilterContainerProps>`
   cursor: pointer;
 
   > p {
-    margin: 0;
     font-size: 10px;
     color: ${({ selected }) => (selected ? "white" : "#606266")};
   }

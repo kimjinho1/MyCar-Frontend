@@ -49,7 +49,6 @@ const CarListWrap = styled.div`
 
 const CarInfoDiv = styled.div`
   width: 200px;
-  margin: 0;
   display: flex;
   flex-direction: column;
   justify-content: center;

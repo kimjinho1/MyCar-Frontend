@@ -136,7 +136,7 @@ export const EstimationPage = () => {
 
               {hgaOptions.length > 0 && (
                 <>
-                  <HorizontalLine height={0.5} />
+                  {detailOptions.length > 0 && <HorizontalLine height={0.5} />}
                   <OptionList
                     typeName={"H Genuine Accessories"}
                     options={hgaOptions}
@@ -279,7 +279,7 @@ const SelectedColorInfoDiv = styled.div`
     margin-left: 15px;
     margin-right: 40px;
     color: grey;
-    font-size: 16px;
+    font-size: 15px;
   }
 `;
 

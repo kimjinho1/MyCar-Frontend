@@ -12,6 +12,7 @@ import { ChangeTrimModal } from "../modal/ChangeTrimModal";
 import { OptionDiv, OptionImageBoxDiv, OptionTitleDiv } from "./styles";
 import { useUpdateExtColor } from "@/hooks/useUpdateExtColor";
 import { useFetchChangeableCarModelWithTrim } from "@/hooks/modal/useFetchChangeableCarModelWithTrim";
+import { optionCodesState } from "@/stores/optionState";
 
 export const IntColor = () => {
   const modelInfo = useRecoilValue(modelInfoState);
@@ -20,6 +21,7 @@ export const IntColor = () => {
   );
   const intColorInfos = useRecoilValue(intColorInfosState);
   const selectedExtColor = useRecoilValue(selectedExtColorState);
+  const optionCodes = useRecoilValue(optionCodesState);
 
   const updateExtColor = useUpdateExtColor();
   const fetchChangeableCarModelWithTrim = useFetchChangeableCarModelWithTrim();
@@ -52,6 +54,7 @@ export const IntColor = () => {
           imagePath: intColorImagePath,
         },
         selectedExtColor,
+        optionCodes,
         setIsOpenChangeTrimModal,
         setChangeableModelInfo
       );

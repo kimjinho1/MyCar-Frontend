@@ -1,8 +1,12 @@
+import { OptionInfo } from "./option";
+
 export type ChangeableCarModelsWithTrim = {
   modelCode: string;
   modelPrice: number;
   modelImagePath: string;
   trimName: string;
+  addOptions: OptionInfo[];
+  removeOptionCodes: string[];
 };
 
 export type ExtColorInfo = {

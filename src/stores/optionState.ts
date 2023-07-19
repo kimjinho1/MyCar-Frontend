@@ -8,16 +8,22 @@ export const optionsState = atom<Map<string, OptionInfo>>({
   default: new Map(),
 });
 
+/** TUIX들 정보 */
+export const tuixsState = atom<Map<string, OptionInfo>>({
+  key: "tuixsState",
+  default: new Map(),
+});
+
 /** 선택된 옵션 코드들 */
 export const optionCodesState = atom<Set<string>>({
   key: "optionCodesState",
   default: new Set(),
 });
 
-/** TUIX들 정보 */
-export const tuixsState = atom<Map<string, OptionInfo>>({
-  key: "tuixsState",
-  default: new Map(),
+/** 선택된 옵션 코드들 */
+export const newOptionCodesState = atom<Set<string>>({
+  key: "newOptionCodesState",
+  default: new Set(),
 });
 
 /** 옵션 선택 시 선택, 선택해제 되는 옵션들 정보 */
@@ -35,7 +41,7 @@ export const changedOptionsState = atom<ChangedOptionInfo>({
 /** SET: 옵션 선택 */
 export const selectOptionState = selector<string>({
   key: "selectOptionState",
-  get: ({}) => {
+  get: () => {
     throw new Error("Cannot get value of selectedOptionState selector");
   },
   set: ({ set, get }, optionCode) => {

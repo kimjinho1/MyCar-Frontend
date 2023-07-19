@@ -93,7 +93,6 @@ export const TuixTitleDiv = styled.div`
   }
 
   > p {
-    margin: 0;
     font-size: 10px;
   }
 `;

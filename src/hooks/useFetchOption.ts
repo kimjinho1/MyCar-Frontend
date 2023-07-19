@@ -1,6 +1,15 @@
-import { useRecoilState, useSetRecoilState } from "recoil";
+import {
+  useRecoilState,
+  useRecoilValue,
+  useResetRecoilState,
+  useSetRecoilState,
+} from "recoil";
 import { getAutoChoiceOptions, getOptions } from "@/services/option";
-import { optionCodesState, optionsState } from "@/stores/optionState";
+import {
+  newOptionCodesState,
+  optionCodesState,
+  optionsState,
+} from "@/stores/optionState";
 import { OPTION_TYPE, OptionInfo, OptionMap } from "@/types/option";
 import { setErrorModalInfoState } from "@/stores/modalState";
 import { useUpdateTuix } from "./useUpdateTuix";
@@ -10,6 +19,8 @@ export const useFetchOption = () => {
 
   const setOptions = useSetRecoilState(optionsState);
   const [optionCodes, setOptionCodes] = useRecoilState(optionCodesState);
+  const savedOptionCodes = useRecoilValue(newOptionCodesState);
+  const resetNewOptionCodes = useResetRecoilState(newOptionCodesState);
 
   const updateTuix = useUpdateTuix();
 
@@ -17,7 +28,10 @@ export const useFetchOption = () => {
     try {
       const newOptions = new Map<string, OptionInfo>();
       const newTuixs = new Map<string, OptionInfo>();
-      const newOptionCodes = new Set<string>(optionCodes);
+      const newOptionCodes =
+        savedOptionCodes && savedOptionCodes.size > 0
+          ? new Set<string>(savedOptionCodes)
+          : new Set<string>(optionCodes);
 
       /** 옵션 정보 */
       const options = await getOptions(modelCode, intColorCode);
@@ -39,6 +53,7 @@ export const useFetchOption = () => {
       setOptions(newOptions);
       updateTuix(modelCode, newOptions, newTuixs, newOptionCodes);
       setOptionCodes(newOptionCodes);
+      resetNewOptionCodes();
     } catch (error: any) {
       setErrorModalInfo({
         messages: error.response.data.message,

@@ -1,19 +1,26 @@
 import styled from "styled-components";
 import { ChangeableCarModelsWithTrim } from "@/types/color";
 import { modelInfoState } from "@/stores/modelState";
-import { newIntColorState, selectedIntColorState } from "@/stores/colorState";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import {
+  newExtColorState,
+  newIntColorState,
+  selectedIntColorState,
+} from "@/stores/colorState";
+import { useRecoilValue, useResetRecoilState, useSetRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
 import { ModalConfirmButton, PopUpModal } from "@/components/common";
 import { ROUTE_PATH } from "@/Router";
 import { useImageUrl } from "@/hooks/utils/useImageUrl";
 import { PriceInfo } from "./PriceInfo";
 import { ButtonContainer } from "./styles";
+import { newOptionCodesState, selectedOptionState } from "@/stores/optionState";
+import { AddDelOptionModalDiv } from "./AddDelOptionModal";
+import { AddDelOptionInfo } from "./AddDellOptionInfo";
 
-interface ChangeTrimModalProps {
+type ChangeTrimModalProps = {
   newModelInfo: ChangeableCarModelsWithTrim;
   onClose: () => void;
-}
+};
 
 export const ChangeTrimModal = ({
   newModelInfo,
@@ -25,7 +32,28 @@ export const ChangeTrimModal = ({
   const setSelectedIntColor = useSetRecoilState(selectedIntColorState);
   const newIntColor = useRecoilValue(newIntColorState);
 
-  const changePrice = newModelInfo.modelPrice - modelInfo.price;
+  const resetNewIntColor = useResetRecoilState(newIntColorState);
+  const resetNewExtColor = useResetRecoilState(newExtColorState);
+  const resetNewOptionCodes = useResetRecoilState(newOptionCodesState);
+
+  const selectedOptions = useRecoilValue(selectedOptionState);
+  const { addOptions, removeOptionCodes, ...newModel } = newModelInfo;
+  const removeOptions = selectedOptions.filter((option) =>
+    removeOptionCodes.includes(option.optionCode)
+  );
+
+  const changePrice =
+    newModelInfo.modelPrice -
+    modelInfo.price +
+    addOptions.reduce((sum, option) => sum + option.optionPrice, 0) -
+    removeOptions.reduce((sum, option) => sum + option.optionPrice, 0);
+
+  const handleCancelClick = () => {
+    resetNewIntColor();
+    resetNewExtColor();
+    resetNewOptionCodes();
+    onClose();
+  };
 
   const handleConfirmClick = () => {
     setSelectedIntColor({
@@ -38,7 +66,7 @@ export const ChangeTrimModal = ({
   };
 
   return (
-    <PopUpModal onClose={onClose} widthPercent={80}>
+    <PopUpModal onClose={handleCancelClick} widthPercent={80}>
       <HeadText>
         {`${newIntColor.name} 색상은 트림 변경 후 선택 가능합니다.`}
       </HeadText>
@@ -66,9 +94,24 @@ export const ChangeTrimModal = ({
           </TrimInfoWrap>
         </TrimInfoDiv>
       </TrimInfoContainer>
+
+      <AddDelOptionModalDiv>
+        {addOptions && addOptions.length > 0 && (
+          <AddDelOptionInfo isAdd={true} options={addOptions} />
+        )}
+        {removeOptions && removeOptions.length > 0 && (
+          <AddDelOptionInfo isAdd={false} options={removeOptions} />
+        )}
+      </AddDelOptionModalDiv>
+
       <PriceInfo price={changePrice} />
+
       <ButtonContainer>
-        <ModalConfirmButton widthPx={"80"} isConfirm={false} onClick={onClose}>
+        <ModalConfirmButton
+          widthPx={"80"}
+          isConfirm={false}
+          onClick={handleCancelClick}
+        >
           취소
         </ModalConfirmButton>
         <ModalConfirmButton

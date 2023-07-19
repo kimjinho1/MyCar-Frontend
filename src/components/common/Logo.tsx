@@ -31,7 +31,6 @@ const LogoDiv = styled.div`
   }
 
   > p {
-    margin: 0;
     font-size: 12px;
     font-weight: bold;
   }

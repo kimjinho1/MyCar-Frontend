@@ -32,7 +32,6 @@ const NoticeListWrap = styled.div`
 `;
 
 const Notice = styled.p`
-  margin: 0;
   margin-bottom: 8px;
   color: grey;
   font-size: 10px;

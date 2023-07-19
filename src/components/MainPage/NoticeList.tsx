@@ -39,7 +39,6 @@ const NoticeListDiv = styled.div`
 
 const NoticeListWrap = styled.div`
   width: 80%;
-  margin: 0;
   display: flex;
   flex-direction: column;
   justify-content: center;

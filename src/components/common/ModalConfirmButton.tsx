@@ -1,10 +1,10 @@
 import styled from "styled-components";
 import shouldForwardProp from "@styled-system/should-forward-prop";
 
-interface ModalButtonProps {
+type ModalButtonProps = {
   widthPx: string;
   isConfirm: boolean;
-}
+};
 
 export const ModalConfirmButton = styled.button.withConfig({
   shouldForwardProp: (prop) =>
