@@ -41,7 +41,12 @@ export const ChangeTrimModal = ({
   const removeOptions = selectedOptions.filter((option) =>
     removeOptionCodes.includes(option.optionCode)
   );
-  const changePrice = newModelInfo.modelPrice - modelInfo.price;
+
+  const changePrice =
+    newModelInfo.modelPrice -
+    modelInfo.price +
+    addOptions.reduce((sum, option) => sum + option.optionPrice, 0) -
+    removeOptions.reduce((sum, option) => sum + option.optionPrice, 0);
 
   const handleCancelClick = () => {
     resetNewIntColor();
@@ -89,7 +94,7 @@ export const ChangeTrimModal = ({
           </TrimInfoWrap>
         </TrimInfoDiv>
       </TrimInfoContainer>
-      <PriceInfo price={changePrice} />
+
       <AddDelOptionModalDiv>
         {addOptions && addOptions.length > 0 && (
           <AddDelOptionInfo isAdd={true} options={addOptions} />
@@ -98,6 +103,8 @@ export const ChangeTrimModal = ({
           <AddDelOptionInfo isAdd={false} options={removeOptions} />
         )}
       </AddDelOptionModalDiv>
+
+      <PriceInfo price={changePrice} />
 
       <ButtonContainer>
         <ModalConfirmButton

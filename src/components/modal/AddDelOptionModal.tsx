@@ -83,7 +83,7 @@ export const AddDelOptionModal = ({
 
 export const AddDelOptionModalDiv = styled.div`
   width: 80%;
-  margin-top: 40px;
+  margin-top: 25px;
   display: flex;
   flex-direction: column;
   justify-content: center;
