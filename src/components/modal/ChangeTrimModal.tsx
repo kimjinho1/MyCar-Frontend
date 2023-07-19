@@ -13,11 +13,14 @@ import { ROUTE_PATH } from "@/Router";
 import { useImageUrl } from "@/hooks/utils/useImageUrl";
 import { PriceInfo } from "./PriceInfo";
 import { ButtonContainer } from "./styles";
+import { newOptionCodesState, selectedOptionState } from "@/stores/optionState";
+import { AddDelOptionModalDiv } from "./AddDelOptionModal";
+import { AddDelOptionInfo } from "./AddDellOptionInfo";
 
-interface ChangeTrimModalProps {
+type ChangeTrimModalProps = {
   newModelInfo: ChangeableCarModelsWithTrim;
   onClose: () => void;
-}
+};
 
 export const ChangeTrimModal = ({
   newModelInfo,
@@ -31,12 +34,19 @@ export const ChangeTrimModal = ({
 
   const resetNewIntColor = useResetRecoilState(newIntColorState);
   const resetNewExtColor = useResetRecoilState(newExtColorState);
+  const resetNewOptionCodes = useResetRecoilState(newOptionCodesState);
 
+  const selectedOptions = useRecoilValue(selectedOptionState);
+  const { addOptions, removeOptionCodes, ...newModel } = newModelInfo;
+  const removeOptions = selectedOptions.filter((option) =>
+    removeOptionCodes.includes(option.optionCode)
+  );
   const changePrice = newModelInfo.modelPrice - modelInfo.price;
 
   const handleCancelClick = () => {
     resetNewIntColor();
     resetNewExtColor();
+    resetNewOptionCodes();
     onClose();
   };
 
@@ -80,6 +90,15 @@ export const ChangeTrimModal = ({
         </TrimInfoDiv>
       </TrimInfoContainer>
       <PriceInfo price={changePrice} />
+      <AddDelOptionModalDiv>
+        {addOptions && addOptions.length > 0 && (
+          <AddDelOptionInfo isAdd={true} options={addOptions} />
+        )}
+        {removeOptions && removeOptions.length > 0 && (
+          <AddDelOptionInfo isAdd={false} options={removeOptions} />
+        )}
+      </AddDelOptionModalDiv>
+
       <ButtonContainer>
         <ModalConfirmButton
           widthPx={"80"}

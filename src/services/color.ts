@@ -8,12 +8,13 @@ import { apiInstance } from "./instance";
 export const getChangeableCarModelsWithTrim = async (
   modelCode: string,
   intColorCode: string,
-  extColorCode: string
+  extColorCode: string,
+  beforeCode: string
 ): Promise<ChangeableCarModelsWithTrim> => {
   const data = await apiInstance.get<ChangeableCarModelsWithTrim>(
-    `/color/change-int-color?modelCode=${modelCode}&intColorCode=${intColorCode}&extColorCode=${extColorCode}`
+    `/color/change-int-color?modelCode=${modelCode}&intColorCode=${intColorCode}&extColorCode=${extColorCode}&beforeCode=${beforeCode}`
   );
-  return data.data
+  return data.data;
 };
 
 export const getExtColorInfos = async (
@@ -23,7 +24,7 @@ export const getExtColorInfos = async (
   const data = await apiInstance.get<ExtColorInfo[]>(
     `/color/ext-color?modelCode=${modelCode}&intColorCode=${intColorCode}`
   );
-  return data.data
+  return data.data;
 };
 
 export const getIntColorInfos = async (
@@ -35,5 +36,5 @@ export const getIntColorInfos = async (
       extColorCode !== undefined ? extColorCode : ""
     }`
   );
-  return data.data
+  return data.data;
 };
