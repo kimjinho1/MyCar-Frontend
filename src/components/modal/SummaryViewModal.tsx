@@ -11,24 +11,23 @@ import {
 import { modelInfoState } from "@/stores/modelState";
 import { selectedOptionState, getTotalPriceState } from "@/stores/optionState";
 import { useRecoilValue } from "recoil";
-import { useNavigate } from "react-router-dom";
-import { ROUTE_PATH } from "@/Router";
+import { useFetchEstimation } from "@/hooks/useFetchEstimation";
 
 interface SummaryViewModalProps {
   onClose: () => void;
 }
 
 export const SummaryViewModal = ({ onClose }: SummaryViewModalProps) => {
-  const navigate = useNavigate();
-
   const modelInfo = useRecoilValue(modelInfoState);
   const intColor = useRecoilValue(selectedIntColorState);
   const extColor = useRecoilValue(selectedExtColorState);
   const options = useRecoilValue(selectedOptionState);
   const totalPrice = useRecoilValue(getTotalPriceState);
 
+  const fetchEstimation = useFetchEstimation();
+
   const handleConfirmClick = () => {
-    navigate(ROUTE_PATH.ESTIMATION);
+    fetchEstimation();
     onClose();
   };
 
@@ -47,7 +46,7 @@ export const SummaryViewModal = ({ onClose }: SummaryViewModalProps) => {
               </SelectedInfoDiv>
             </SelectedInfoListDiv>
           </SummaryViewDiv>
-          <HorizontalLine />
+          <HorizontalLine height={0.3} />
 
           <SummaryViewDiv>
             <p>색상</p>
@@ -62,7 +61,7 @@ export const SummaryViewModal = ({ onClose }: SummaryViewModalProps) => {
               </SelectedInfoDiv>
             </SelectedInfoListDiv>
           </SummaryViewDiv>
-          <HorizontalLine />
+          <HorizontalLine height={0.3} />
 
           <SummaryViewDiv>
             <p>옵션</p>

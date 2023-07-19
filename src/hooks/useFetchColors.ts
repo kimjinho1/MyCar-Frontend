@@ -32,11 +32,13 @@ export const useFetchColors = () => {
         setSelectedIntColor({
           code: newIntColor.code,
           name: newIntColor.name,
+          imagePath: newIntColor.imagePath,
         });
       } else {
         setSelectedIntColor({
           code: intColorInfos[0].intColorCode,
           name: intColorInfos[0].intColorName,
+          imagePath: intColorInfos[0].intColorImagePath,
         });
       }
 
@@ -62,6 +64,7 @@ export const useFetchColors = () => {
         setSelectedExtColor({
           code: extColorInfos[0].extColorCode,
           name: extColorInfos[0].extColorName,
+          imagePath: extColorInfos[0].extColorImagePath,
         });
       }
 

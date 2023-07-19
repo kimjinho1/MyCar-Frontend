@@ -11,7 +11,7 @@ export const ROUTE_PATH = {
   ROOT: "/",
   SELECT_MODEL: (carCode: string) => `/model/${carCode}`,
   MAKING_MODEL: (modelCode: string) => `/model/making/${modelCode}`,
-  ESTIMATION: "/estimation",
+  ESTIMATION: (estimationUrl: string) => `/estimation/${estimationUrl}`,
 };
 
 const RedirectComponent: React.FC = () => {
@@ -60,7 +60,7 @@ const Router: React.FC = () => {
         />
 
         <Route
-          path={"/estimation"}
+          path={"/estimation/:estimationUrl"}
           element={
             <Layout>
               <EstimationPage />

@@ -6,7 +6,7 @@ import {
 } from "@/stores/colorState";
 import { modelInfoState } from "@/stores/modelState";
 import { useState } from "react";
-import { useRecoilState, useRecoilValue} from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { ChangeTrimModal } from "../modal/ChangeTrimModal";
 import { OptionDiv, OptionImageBoxDiv, OptionTitleDiv } from "./styles";
@@ -36,8 +36,9 @@ export const IntColor = () => {
   const handleIntColorBtnClick = (intColorInfo: IntColorInfo) => {
     const intColorCode = intColorInfo.intColorCode;
     const intColorName = intColorInfo.intColorName;
+    const intColorImagePath = intColorInfo.intColorImagePath;
 
-    if (intColorInfo.intColorCode === selectedIntColor.code) {
+    if (intColorCode === selectedIntColor.code) {
       return;
     }
 
@@ -45,7 +46,11 @@ export const IntColor = () => {
     if (!intColorInfo.isSelectable) {
       fetchChangeableCarModelWithTrim(
         modelInfo.code,
-        { code: intColorCode, name: intColorName },
+        {
+          code: intColorCode,
+          name: intColorName,
+          imagePath: intColorImagePath,
+        },
         selectedExtColor,
         setIsOpenChangeTrimModal,
         setChangeableModelInfo
@@ -57,6 +62,7 @@ export const IntColor = () => {
     setSelectedIntColor({
       code: intColorCode,
       name: intColorName,
+      imagePath: intColorImagePath,
     });
 
     /** 외장색상 업데이트 */

@@ -46,10 +46,10 @@ export const useFetchModelFilterAndTrim = () => {
           const trimInfos = await getTrimInfos(getTrimInfosParam);
           setTrimInfos(trimInfos);
         } catch (error: any) {
-      setErrorModalInfo({
-        messages: error.response.data.message,
-        isRedirect: true,
-      });
+          setErrorModalInfo({
+            messages: error.response.data.message,
+            isRedirect: true,
+          });
         }
       }
     };

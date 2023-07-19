@@ -33,7 +33,6 @@ export const useUpdateOption = () => {
   const updateOption = async (optionCode: string, isPressed: boolean) => {
     if (modelCode !== undefined) {
       try {
-        console.log("useUpdateOpton");
         const newOptions = new Map(options);
         const newTuixs = new Map(tuixs);
 

@@ -1,10 +1,6 @@
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { getAutoChoiceOptions, getOptions } from "@/services/option";
-import {
-  optionCodesState,
-  optionsState,
-  tuixsState,
-} from "@/stores/optionState";
+import { optionCodesState, optionsState } from "@/stores/optionState";
 import { OPTION_TYPE, OptionInfo, OptionMap } from "@/types/option";
 import { setErrorModalInfoState } from "@/stores/modalState";
 import { useUpdateTuix } from "./useUpdateTuix";
@@ -13,14 +9,12 @@ export const useFetchOption = () => {
   const setErrorModalInfo = useSetRecoilState(setErrorModalInfoState);
 
   const setOptions = useSetRecoilState(optionsState);
-  const setTuixs = useSetRecoilState(tuixsState);
   const [optionCodes, setOptionCodes] = useRecoilState(optionCodesState);
 
   const updateTuix = useUpdateTuix();
 
   const fetchOption = async (modelCode: string, intColorCode: string) => {
     try {
-      console.log("useFetchOption");
       const newOptions = new Map<string, OptionInfo>();
       const newTuixs = new Map<string, OptionInfo>();
       const newOptionCodes = new Set<string>(optionCodes);
@@ -43,12 +37,7 @@ export const useFetchOption = () => {
       });
 
       setOptions(newOptions);
-      updateTuix(
-        modelCode,
-        newOptions,
-        newTuixs,
-        newOptionCodes
-      );
+      updateTuix(modelCode, newOptions, newTuixs, newOptionCodes);
       setOptionCodes(newOptionCodes);
     } catch (error: any) {
       setErrorModalInfo({
@@ -60,7 +49,6 @@ export const useFetchOption = () => {
 
   return fetchOption;
 };
-
 
 /**
  * UTILS

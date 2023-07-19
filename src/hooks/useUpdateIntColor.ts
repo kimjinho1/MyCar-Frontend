@@ -33,6 +33,7 @@ export const useUpdateIntColor = () => {
       setSelectedIntColor({
         code: intColorInfos[0].intColorCode,
         name: intColorInfos[0].intColorName,
+        imagePath: intColorInfos[0].intColorImagePath,
       });
     } catch (error: any) {
       setErrorModalInfo({

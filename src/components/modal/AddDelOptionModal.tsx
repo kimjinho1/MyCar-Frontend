@@ -17,7 +17,10 @@ interface AddDelOptionModalProps {
   onClose: () => void;
 }
 
-export const AddDelOptionModal = ({ modelCode, onClose }: AddDelOptionModalProps) => {
+export const AddDelOptionModal = ({
+  modelCode,
+  onClose,
+}: AddDelOptionModalProps) => {
   const setOptions = useSetRecoilState(optionsState);
   const setTuixs = useSetRecoilState(tuixsState);
   const [optionCodes, setOptionCodes] = useRecoilState(optionCodesState);

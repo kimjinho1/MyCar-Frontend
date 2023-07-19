@@ -17,7 +17,6 @@ export const useUpdateTuix = () => {
     optionCodes: Set<string>
   ) => {
     try {
-      console.log("useUpdateTuix");
       const newTuixs = new Map<string, OptionInfo>();
       const newOptionCodes = new Set<string>(optionCodes);
 
@@ -32,7 +31,11 @@ export const useUpdateTuix = () => {
       );
       const beforeTuixCode = tuixOptionCodes.join(",");
 
-      const newTuixList = await getTuixs(modelCode, beforeOptionCode, beforeTuixCode);
+      const newTuixList = await getTuixs(
+        modelCode,
+        beforeOptionCode,
+        beforeTuixCode
+      );
 
       newTuixList.map((newTuix) => {
         newTuixs.set(newTuix.optionCode, newTuix);

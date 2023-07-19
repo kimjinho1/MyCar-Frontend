@@ -24,7 +24,6 @@ export const useFetchChangeOption = () => {
     option: OptionInfo,
     setIsOpenChangeOptionModal: React.Dispatch<React.SetStateAction<boolean>>
   ) => {
-    console.log("changeOption");
     try {
       const newOptions = new Map(options);
       const newTuixs = new Map(tuixs);
