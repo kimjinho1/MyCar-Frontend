@@ -1,8 +1,12 @@
 import styled from "styled-components";
 import { ChangeableCarModelsWithTrim } from "@/types/color";
 import { modelInfoState } from "@/stores/modelState";
-import { newIntColorState, selectedIntColorState } from "@/stores/colorState";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import {
+  newExtColorState,
+  newIntColorState,
+  selectedIntColorState,
+} from "@/stores/colorState";
+import { useRecoilValue, useResetRecoilState, useSetRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
 import { ModalConfirmButton, PopUpModal } from "@/components/common";
 import { ROUTE_PATH } from "@/Router";
@@ -25,7 +29,16 @@ export const ChangeTrimModal = ({
   const setSelectedIntColor = useSetRecoilState(selectedIntColorState);
   const newIntColor = useRecoilValue(newIntColorState);
 
+  const resetNewIntColor = useResetRecoilState(newIntColorState);
+  const resetNewExtColor = useResetRecoilState(newExtColorState);
+
   const changePrice = newModelInfo.modelPrice - modelInfo.price;
+
+  const handleCancelClick = () => {
+    resetNewIntColor();
+    resetNewExtColor();
+    onClose();
+  };
 
   const handleConfirmClick = () => {
     setSelectedIntColor({
@@ -38,7 +51,7 @@ export const ChangeTrimModal = ({
   };
 
   return (
-    <PopUpModal onClose={onClose} widthPercent={80}>
+    <PopUpModal onClose={handleCancelClick} widthPercent={80}>
       <HeadText>
         {`${newIntColor.name} 색상은 트림 변경 후 선택 가능합니다.`}
       </HeadText>
@@ -68,7 +81,11 @@ export const ChangeTrimModal = ({
       </TrimInfoContainer>
       <PriceInfo price={changePrice} />
       <ButtonContainer>
-        <ModalConfirmButton widthPx={"80"} isConfirm={false} onClick={onClose}>
+        <ModalConfirmButton
+          widthPx={"80"}
+          isConfirm={false}
+          onClick={handleCancelClick}
+        >
           취소
         </ModalConfirmButton>
         <ModalConfirmButton
