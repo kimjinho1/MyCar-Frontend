@@ -18,5 +18,11 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     overflow-x: hidden;
   }
+  ::-webkit-scrollbar {
+    display: none;
+  }
+  p {
+    margin: 0;
+  }
 `;
 export default GlobalStyle;

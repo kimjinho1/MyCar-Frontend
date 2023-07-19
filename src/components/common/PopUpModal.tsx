@@ -59,6 +59,9 @@ export const ModalContainer = styled.div.withConfig({
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 999;
+
+  max-height: 90vh;
+  overflow-y: auto;
 `;
 
 export const XButton = styled.strong`
