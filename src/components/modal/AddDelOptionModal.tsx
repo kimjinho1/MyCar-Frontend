@@ -91,9 +91,8 @@ export const AddDelOptionModalDiv = styled.div`
 
   > p {
     align-self: flex-start;
-    margin: 0;
     margin: 15px 0;
-    font-size: 12px;
+    font-size: 15px;
     font-weight: bold;
   }
 `;
