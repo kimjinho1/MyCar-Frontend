@@ -3,7 +3,7 @@
 [현대닷컴 견적내기 사이트](https://www.hyundai.com/kr/ko/e) 를 모방한 내차만들기 웹사이트 개발  
 
 ## 백엔드 기술 스택  
-typescript, react, recoil, styled-components  
+TypeScript, React, Recoil, styled-components  
 
 ## 실행 방법
 1. npm 설치 -> https://nodejs.org/ko/download 후 pnpm 설치  
