@@ -17,11 +17,11 @@ import {
 } from "@/types/estimation";
 import { getEstimation } from "@/services/option";
 import { OptionList } from "@/components/EstimationPage";
+import { CheckModal } from "@/components/modal/CheckModal";
 
 export const EstimationPage = () => {
   const { estimationUrl } = useParams();
   const setErrorModalInfo = useSetRecoilState(setErrorModalInfoState);
-  const navigate = useNavigate();
 
   const [modelInfo, setModelInfo] = useState<ModelInfo>(defaultModelInfo);
   const [intColor, setIntColor] = useState<SelectedColor>(defaultColor);
@@ -32,6 +32,16 @@ export const EstimationPage = () => {
     []
   );
   const [optionTotalPrice, setOptionTotalPrice] = useState<number>(0);
+
+  // 모달 관리
+  const [isOpenCheckModal, setIsOpenCheckModal] = useState<boolean>(false);
+  const onClose = () => {
+    setIsOpenCheckModal(false);
+  };
+
+  const handleOnLogoClick = () => {
+    setIsOpenCheckModal(true);
+  };
 
   useEffect(() => {
     const fetchEstimaitionInfo = async () => {
@@ -67,14 +77,17 @@ export const EstimationPage = () => {
     fetchEstimaitionInfo();
   }, [estimationUrl]);
 
-  const onClickLogo = () => {
-    navigate(ROUTE_PATH.ROOT);
-  };
-
   return (
     <PageDiv>
+      {isOpenCheckModal && (
+        <CheckModal
+          onClose={onClose}
+          title={"차량 선택 페이지로 돌아가시겠습니까?"}
+          path={ROUTE_PATH.ROOT}
+        />
+      )}
       <EstimationHeaderDiv>
-        <img src={"/Logo.svg"} alt="현대 로고" onClick={onClickLogo} />
+        <img src={"/Logo.svg"} alt="현대 로고" onClick={handleOnLogoClick} />
       </EstimationHeaderDiv>
 
       <PageWrap>

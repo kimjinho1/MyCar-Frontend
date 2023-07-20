@@ -1,20 +1,33 @@
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
 import { ROUTE_PATH } from "@/Router";
+import { useState } from "react";
+import { CheckModal } from "../modal/CheckModal";
 
 type LogoProps = {
   carName: string;
 };
 
 export const Logo = ({ carName }: LogoProps) => {
-  const navigate = useNavigate();
-  const handleClick = () => {
-    navigate(ROUTE_PATH.ROOT);
+  // 모달 관리
+  const [isOpenCheckModal, setIsOpenCheckModal] = useState<boolean>(false);
+  const onClose = () => {
+    setIsOpenCheckModal(false);
+  };
+
+  const handleOnClickLogo = () => {
+    setIsOpenCheckModal(true);
   };
 
   return (
     <LogoDiv>
-      <img src={"/Logo.svg"} alt="현대 로고" onClick={handleClick} />
+      {isOpenCheckModal && (
+        <CheckModal
+          onClose={onClose}
+          title={"내 차 만들기를 종료하시겠습니까?"}
+          path={ROUTE_PATH.ROOT}
+        />
+      )}
+      <img src={"/Logo.svg"} alt="현대 로고" onClick={handleOnClickLogo} />
       {carName && <p>{carName}</p>}
     </LogoDiv>
   );

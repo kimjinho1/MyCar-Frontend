@@ -37,7 +37,8 @@ export const ChangeTrimModal = ({
   const resetNewOptionCodes = useResetRecoilState(newOptionCodesState);
 
   const selectedOptions = useRecoilValue(selectedOptionState);
-  const { addOptions, removeOptionCodes, ...newModel } = newModelInfo;
+  const addOptions = newModelInfo.addOptions;
+  const removeOptionCodes = newModelInfo.removeOptionCodes;
   const removeOptions = selectedOptions.filter((option) =>
     removeOptionCodes.includes(option.optionCode)
   );

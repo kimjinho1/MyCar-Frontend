@@ -1,42 +1,53 @@
 import styled from "styled-components";
 import { useRecoilValue } from "recoil";
-import { useNavigate } from "react-router-dom";
 import { Logo } from "@/components/common";
 import { VerticalLine } from "@/components/common/VerticalLine";
 import { useState } from "react";
 import { SummaryViewModal } from "../modal/SummaryViewModal";
 import { carInfoState } from "@/stores/carState";
 import { ROUTE_PATH } from "@/Router";
+import { CheckModal } from "../modal/CheckModal";
 
 export const MakingModelHeader = () => {
   const carInfo = useRecoilValue(carInfoState);
   const carCode = carInfo.code;
   const carName = carInfo.name;
 
-  const navigate = useNavigate();
-
-  const handleClick = () => {
-    navigate(ROUTE_PATH.SELECT_MODEL(carCode));
+  // 모델 선택 페이지 이동 모달 관리
+  const [isOpenCheckModal, setIsOpenCheckModal] = useState<boolean>(false);
+  const onCloseCheckModal = () => {
+    setIsOpenCheckModal(false);
+  };
+  const handleOnGoSelectModelPageClick = () => {
+    setIsOpenCheckModal(true);
   };
 
-  // 모달 관리
+  // 모델 옵션들 요약 모달
   const [isOpenModelSummaryModal, setIsOpenModelSummaryModal] =
     useState<boolean>(false);
-  const onClose = () => {
+  const onCloseSummaryModal = () => {
     setIsOpenModelSummaryModal(false);
   };
-
-  const handleOnClick = () => {
+  const handleOnSummaryModalClick = () => {
     setIsOpenModelSummaryModal(true);
   };
 
   return (
     <>
-      {isOpenModelSummaryModal && <SummaryViewModal onClose={onClose} />}
+      {isOpenModelSummaryModal && (
+        <SummaryViewModal onClose={onCloseSummaryModal} />
+      )}
+      {isOpenCheckModal && (
+        <CheckModal
+          onClose={onCloseCheckModal}
+          title={"모델 선택 페이지로 넘어가시겠습니까?"}
+          path={ROUTE_PATH.SELECT_MODEL(carCode)}
+        />
+      )}
       <MakingModelHeaderDiv>
         <Logo carName={carName} />
         <StepWrap>
-          <StepDiv onClick={handleClick}>
+          <StepDiv onClick={handleOnGoSelectModelPageClick}>
             <p>01&nbsp;&nbsp;모델 선택</p>
           </StepDiv>
           <StepDiv>
@@ -45,7 +56,7 @@ export const MakingModelHeader = () => {
           <StepDiv>
             <strong>02&nbsp;&nbsp;내 차 만들기</strong>
           </StepDiv>
-          <RightAlignedStepDiv onClick={handleOnClick}>
+          <RightAlignedStepDiv onClick={handleOnSummaryModalClick}>
             <p>요약 보기</p>
           </RightAlignedStepDiv>
         </StepWrap>
