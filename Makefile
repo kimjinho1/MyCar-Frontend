@@ -1,5 +1,5 @@
 all:
-	pnpm i
+	pnpm install
 	pnpm run dev
 
 build:
