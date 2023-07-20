@@ -6,15 +6,15 @@
 typescript, react, recoil, styled-components  
 
 ## 실행 방법
-1. `git clone https://github.com/kimjinho1/MyCar-Frontend.git mycar_frontend`  
+1. npm 설치 -> https://nodejs.org/ko/download 후 pnpm 설치  
+`npm install -g pnpm` 
 
-2. `cd mycar_frontend`  
+2. `git clone https://github.com/kimjinho1/MyCar-Frontend.git mycar_frontend`  
 
-3. npm 설치 -> https://nodejs.org/ko/download 후 pnpm 설치  
-`npm install pnpm` 
+3. `cd mycar_frontend`  
 
-5. `pnpm install`   
+4. `pnpm install`   
 
-6. `pnpm run dev`   
+5. `pnpm run dev`   
 
-7. http://localhost:5173 접속  
+6. http://localhost:5173 접속  
