@@ -10,9 +10,8 @@ typescript, react, recoil, styled-components
 
 2. `cd mycar_frontend`  
 
-3. npm 설치 -> https://nodejs.org/ko/download  
-
-4. `npm install pnpm`  
+3. npm 설치 -> https://nodejs.org/ko/download 후 pnpm 설치  
+`npm install pnpm` 
 
 5. `pnpm install`   
 
