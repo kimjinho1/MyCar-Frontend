@@ -1,6 +1,5 @@
 import { ChangeOptions, OptionInfo } from "@/types/option";
 import { apiInstance } from "./instance";
-import { EstimationInfo } from "@/types/estimation";
 
 export const getOptions = async (
   modelCode: string,
@@ -70,25 +69,6 @@ export const getTuixs = async (
 ): Promise<OptionInfo[]> => {
   const data = await apiInstance.get<OptionInfo[]>(
     `/option/tuix?modelCode=${modelCode}&beforeOptionCode=${beforeOptionCode}&beforeTuixCode=${beforeTuixCode}`
-  );
-  return data.data;
-};
-
-export const saveEstimation = async (
-  estimationInfo: EstimationInfo
-): Promise<string> => {
-  const data = await apiInstance.post<string>(
-    `/option/estimation`,
-    estimationInfo
-  );
-  return data.data;
-};
-
-export const getEstimation = async (
-  estimationUrl: string
-): Promise<EstimationInfo> => {
-  const data = await apiInstance.get<EstimationInfo>(
-    `/option/estimation?estimationUrl=${estimationUrl}`
   );
   return data.data;
 };

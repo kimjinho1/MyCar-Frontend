@@ -7,8 +7,8 @@ import {
 import { selectedOptionState } from "@/stores/optionState";
 import { setErrorModalInfoState } from "@/stores/modalState";
 import { useNavigate } from "react-router-dom";
-import { saveEstimation } from "@/services/option";
 import { ROUTE_PATH } from "@/Router";
+import { saveEstimation } from "@/services/estimation";
 
 export const useFetchEstimation = () => {
   const setErrorModalInfo = useSetRecoilState(setErrorModalInfoState);
