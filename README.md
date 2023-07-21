@@ -17,4 +17,6 @@ TypeScript, React, Recoil, styled-components
 
 5. `pnpm run dev`   
 
-6. http://localhost:5173 접속  
+6. http://localhost:5173 접속
+
+7. 만약 backend 서버의 url이 localhost:3000이 아니라면 .env의 VITE_BACKEND_URL를 수정해주세요!  
