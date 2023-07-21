@@ -54,13 +54,17 @@ export const useFetchColors = () => {
         (extColor) => extColor.extColorCode === newExtColor.code
       );
       if (
-        !(
-          newExtColor.code !== "" &&
-          newExtColor.name !== "" &&
-          newExtColorInfo !== undefined &&
-          newExtColorInfo.isSelectable
-        )
+        newExtColor.code !== "" &&
+        newExtColor.name !== "" &&
+        newExtColorInfo !== undefined &&
+        newExtColorInfo.isSelectable
       ) {
+        setSelectedExtColor({
+          code: newExtColor.code,
+          name: newExtColor.name,
+          imagePath: newExtColor.imagePath,
+        });
+      } else {
         setSelectedExtColor({
           code: extColorInfos[0].extColorCode,
           name: extColorInfos[0].extColorName,

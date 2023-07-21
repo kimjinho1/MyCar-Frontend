@@ -4,6 +4,7 @@ import { modelInfoState } from "@/stores/modelState";
 import {
   newExtColorState,
   newIntColorState,
+  selectedExtColorState,
   selectedIntColorState,
 } from "@/stores/colorState";
 import { useRecoilValue, useResetRecoilState, useSetRecoilState } from "recoil";
@@ -29,8 +30,10 @@ export const ChangeTrimModal = ({
   const navigate = useNavigate();
 
   const modelInfo = useRecoilValue(modelInfoState);
-  const setSelectedIntColor = useSetRecoilState(selectedIntColorState);
   const newIntColor = useRecoilValue(newIntColorState);
+  const newExtColor = useRecoilValue(newExtColorState);
+  const setSelectedIntColor = useSetRecoilState(selectedIntColorState);
+  const setSelectedExtColor = useSetRecoilState(selectedExtColorState);
 
   const resetNewIntColor = useResetRecoilState(newIntColorState);
   const resetNewExtColor = useResetRecoilState(newExtColorState);
@@ -61,6 +64,11 @@ export const ChangeTrimModal = ({
       code: newIntColor.code,
       name: newIntColor.name,
       imagePath: newIntColor.imagePath,
+    });
+    setSelectedExtColor({
+      code: newExtColor.code,
+      name: newExtColor.name,
+      imagePath: newExtColor.imagePath,
     });
     navigate(ROUTE_PATH.MAKING_MODEL(newModelInfo.modelCode));
     onClose();

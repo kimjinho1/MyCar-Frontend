@@ -8,11 +8,10 @@ import { apiInstance } from "./instance";
 export const getChangeableCarModelsWithTrim = async (
   modelCode: string,
   intColorCode: string,
-  extColorCode: string,
-  beforeCode: string
+  beforeOptionCode: string
 ): Promise<ChangeableCarModelsWithTrim> => {
   const data = await apiInstance.get<ChangeableCarModelsWithTrim>(
-    `/color/change-int-color?modelCode=${modelCode}&intColorCode=${intColorCode}&extColorCode=${extColorCode}&beforeCode=${beforeCode}`
+    `/color/change-int-color?modelCode=${modelCode}&intColorCode=${intColorCode}&beforeOptionCode=${beforeOptionCode}`
   );
   return data.data;
 };

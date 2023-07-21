@@ -29,12 +29,11 @@ export const useFetchChangeableCarModelWithTrim = () => {
   ) => {
     try {
       const newOptionCodes = new Set(optionCodes);
-      const beforeCode = Array.from(optionCodes).join(",");
+      const beforeOptionCode = Array.from(optionCodes).join(",");
       const data = await getChangeableCarModelsWithTrim(
         modelCode,
         intColor.code,
-        extColor.code,
-        beforeCode
+        beforeOptionCode
       );
       setChangeableModelInfo(data);
       setNewIntColor({
